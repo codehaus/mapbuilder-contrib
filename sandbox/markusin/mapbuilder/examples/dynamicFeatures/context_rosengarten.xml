@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
+<OWSContext version="0.0.13" id="ows-context-tie"
+	xmlns="http://www.opengis.net/context"
+	xmlns:wmc="http://www.opengis.net/context"
+	xmlns:xlink="http://www.w3.org/1999/xlink"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:sld="http://www.opengis.net/sld"
+	xmlns:ogc="http://www.opengis.net/ogc"
+	xmlns:ows="http://www.opengis.net/ows"
+	xmlns:param="http;//www.opengis.net/param"
+	xmlns:wfs="http://www.opengis.net/wfs"
+	xmlns:gml="http://www.opengis.net/gml"
+	xsi:schemaLocation="http://www.opengis.net/oc oc_0_0_13.xsd">
+  <General>
+    <Window width="1000" height="800" />
+    <ows:BoundingBox crs="EPSG:258320">
+      <ows:LowerCorner>673327.1626257898 5144497.679584979</ows:LowerCorner>
+      <ows:UpperCorner>687943.5657965919 5157269.895023707</ows:UpperCorner>
+    </ows:BoundingBox>
+    <Title xml:lang="en">Bz10m the features</Title>
+    <KeywordList>
+      <Keyword>moving objects</Keyword>
+      <Keyword>spatiotemporal</Keyword>
+      <Keyword>Bz10m</Keyword>
+    </KeywordList>
+    <Abstract>A prototype for the visualization of spatiotemporal objects in the web</Abstract>
+		<LogoURL width="85" height="47" format="image/gif">
+			<OnlineResource xlink:type="simple" xlink:href="./images/unibzLogo.png"/>
+		</LogoURL>
+    <DescriptionURL format="text/html">
+      <OnlineResource xlink:type="simple" xlink:href="http://localhost:8080" />
+    </DescriptionURL>
+    <ows:ServiceProvider>
+      <ows:ProviderName>Free University Bozen</ows:ProviderName>
+      <ows:ProviderSite xlink:type="simple" xlink:href="http://localhost:8080" />
+      <ows:ServiceContact>
+        <ows:IndividualName>Innerebner Markus</ows:IndividualName>
+        <ows:PositionName>Student</ows:PositionName>
+        <ows:ContactInfo>
+          <ows:Phone>
+            <ows:Voice>000</ows:Voice>
+            <ows:Facsimile>000</ows:Facsimile>
+          </ows:Phone>
+          <ows:Address>
+            <ows:DeliveryPoint>Dominikanerplatz 3, room 213</ows:DeliveryPoint>
+            <ows:City>Bozen</ows:City>
+            <ows:AdministrativeArea>South Tyrol</ows:AdministrativeArea>
+            <ows:PostalCode>39100</ows:PostalCode>
+            <ows:Country>Italy</ows:Country>
+            <ows:ElectronicMailAddress>markus.innerebner@inf.unibz.it</ows:ElectronicMailAddress>
+          </ows:Address>
+          <ows:OnlineResource xlink:type="simple" xlink:href="http://localhost:8080" />
+          <ows:HoursOfService>0700h - 1500h (EST), Monday - Friday</ows:HoursOfService>
+          <ows:ContactInstructions>Just call or email</ows:ContactInstructions>
+        </ows:ContactInfo>
+        <ows:Role>Student</ows:Role>
+      </ows:ServiceContact>
+    </ows:ServiceProvider>
+  </General>
+  <ResourceList>
+    <Layer queryable="1" hidden="0">
+      <Server service="OGC:WMS" version="1.1.1" title="bz10m:censuses Preview">
+        <OnlineResource id="defaultWmsHost" xlink:type="simple" xlink:href="http://rosengarten/geoserver/wms"/>
+      </Server>
+      <Name>bz10m:censuses</Name>
+      <Title>Censuses</Title>
+      <FormatList><Format current="1">image/png</Format></FormatList>
+    </Layer>
+    <Layer queryable="1" hidden="0">
+      <Server service="OGC:WMS" version="1.1.1" title="bz10m:rivers">
+        <OnlineResource xlink:type="simple" xlink:href="http://rosengarten/geoserver/wms"/>
+      </Server>
+      <Name>bz10m:rivers</Name>
+      <Title>Rivers</Title>
+      <FormatList><Format current="1">image/png</Format></FormatList>
+    </Layer>
+        <Layer queryable="1" hidden="0">
+      <Server service="OGC:WMS" version="1.1.1" title="bz10m:buildings Preview">
+        <OnlineResource xlink:type="simple" xlink:href="http://rosengarten/geoserver/wms"/>
+      </Server>
+      <Name>bz10m:buildings</Name>
+      <Title>Buildings</Title>
+      <FormatList><Format current="1">image/png</Format></FormatList>
+    </Layer>
+    <Layer queryable="1" hidden="0">
+      <Server service="OGC:WMS" version="1.1.1" title="bz10m:route10a Preview">
+        <OnlineResource xlink:type="simple" xlink:href="http://rosengarten/geoserver/wms"/>
+      </Server>
+      <Name>bz10m:route10a</Name>
+      <Title>Bus Route 10a</Title>
+      <FormatList><Format current="1">image/png</Format></FormatList>
+    </Layer>
+    <Layer queryable="1" hidden="0">
+      <Server service="OGC:WMS" version="1.1.1" title="bz10m:route4 Preview">
+        <OnlineResource xlink:type="simple" xlink:href="http://rosengarten/geoserver/wms"/>
+      </Server>
+      <Name>bz10m:route4</Name>
+      <Title>Bus Route 4</Title>
+      <FormatList><Format current="1">image/png</Format></FormatList>
+    </Layer>
+  </ResourceList>
+</OWSContext>

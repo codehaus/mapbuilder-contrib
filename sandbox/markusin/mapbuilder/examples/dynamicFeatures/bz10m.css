@@ -1,0 +1,132 @@
+.mainPane {
+	position: absolute;
+	vertical-align: top; 
+	top: 0px;
+	height: 100%;
+	width:60%;
+}
+
+.leftPane {
+	position: absolute;
+	vertical-align: inherit;
+	max-width: 20%;
+	min-height: 50%;
+	top: inherit;
+}
+
+.legendPane {
+	position: relative;
+	top: 0px;
+	left: 10px;
+	/*
+	border: thin;
+	border-style: solid;
+	border-color: black;
+	*/
+}
+
+.mainToolBar {
+	position: relative;
+	top: 20px;
+	left: 5px;
+}
+
+.queryToolBar {
+	position: inherit;
+	bottom: 50%;
+	left: 5px;
+	border: thin;
+	border-style: solid;
+	border-color: black;
+}
+
+
+.rightPane {
+	position: absolute;
+	top: inherit;
+	min-width: 70%;
+	left: 20%;
+	background-color: red;
+}
+
+.mapPane {
+	position: absolute;
+	top: 5px;
+}
+
+.mainMap {
+	position: relative;
+}
+
+.locatorMapPane {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	border: thin;
+	border-color: gray;
+	border-style: solid;
+	background-color: gray;
+}
+
+.cursorTrackPane {
+	position: absolute;
+	top: 0px;
+	right: 0px;
+	border: thin;
+	border-color: gray;
+	border-style: solid;
+}
+
+.mapScalePane {
+	position: absolute;
+	bottom: 10px;
+	right: 0px;
+}
+
+.mapScaleText {
+	position: relative;
+	right: 10%;
+	min-width: 10%;
+	visibility: hidden;
+}
+
+.mapScaleBar {
+	position: relative;
+	min-width: 10%;
+}
+
+.timePane {
+	position: relative;
+	bottom: 5%;
+	left: 0px;
+	height: 30px;
+}
+
+.timestamp {
+	position: inherit;
+	bottom: 5px;
+	left: 0px;
+}
+
+.timeStampButtonBar {
+	position: inherit;
+	left: 20%;
+	bottom: 0%;
+}
+
+.timeSliderPane {
+	position: inherit;
+	text-align: center;
+}
+
+.timeProgressBarPane {
+	position:inherit;
+	right: 5px;
+	bottom: 5px;
+}
+
+.footer {
+	position: absolute;
+	bottom: 1%;
+	left: 1%;
+}
