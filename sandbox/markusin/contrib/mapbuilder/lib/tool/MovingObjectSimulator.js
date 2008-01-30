@@ -184,7 +184,7 @@ function MovingObjectSimulator(toolNode, model) {
 						}
 						delayTime = (instant[1] - prevDate) / objRef.speedFactor;
 						oneIsRunning = true;
-						var timer = window.setTimeout(objRef.run, delayTime, objRef, featureId, instant, step, featureSize);
+						var timer = window.setTimeout(objRef.run, delayTime, objRef, featureId, instant, step);
 						objRef.timers.put(featureId,timer);	
 					}
 				}
@@ -204,22 +204,41 @@ function MovingObjectSimulator(toolNode, model) {
  * @param {Object} featureId the if of the feature to be considered
  * @param {Object} instant the current instant to be considered
  * @param {Object} step the index from which to take the instant next
- * @param {Object} size the size of the feature
  * @param {Object} prevInstant the previous instant of the current one
  */
-	this.run =  function (objRef, featureId, instant, step, size, prevInstant) {
+	this.run =  function (objRef, featureId, instant, step, prevInstant) {
 		var argv = arguments;
 		if(argv) {
 			var objRef = argv[0];
 			var featureId = argv[1];
 			var instant = argv[2];
 			var step = argv[3];
-			var size = argv[4];
-			var prevInstant = argv[5];
+			var prevInstant = argv[4];
 			
-			if(step >= size-2) {
-				instant[0]= featureId;
+			//workaround: find better solution
+			instant[0]= featureId;
+			var nextInstant; 
+			if(!prevInstant) { // first time invocation
+				nextInstant = objRef.model.getTrajectoryByIndex(featureId, ++step);
+				// notify listener
+				objRef.model.callListeners("enableDynamicFeature", featureId);
+				objRef.model.callListeners("updateDynamicFeature", instant);
+				objRef.model.callListeners("updateTimestamp", instant[1]);
+				objRef.model.callListeners("updateTimeBar", instant[1]);	
+			} else {
+				// for the interpolation it's important to have the value of the next
+				instant[3] = prevInstant[1];
+				instant[4] = prevInstant[2];
 				objRef.update(objRef,instant); //updating point
+				nextInstant = objRef.model.getTrajectoryByIndex(featureId, ++step);
+			}
+			
+			if(nextInstant) {
+				var delayTime = (nextInstant[1] - instant[1]) / objRef.speedFactor;
+				objRef.currentFeatureIndex.put(featureId,step);
+				objRef.timers.put(featureId,window.setTimeout(objRef.run, delayTime, objRef, featureId, nextInstant, step, instant));	
+			} else { // means it is the last unit
+				instant[0]= featureId;
 				window.clearTimeout(objRef.timers.get(featureId));
 				objRef.timers.remove(featureId);
 				if(objRef.timers.size() == 0) {
@@ -228,28 +247,6 @@ function MovingObjectSimulator(toolNode, model) {
 				}
 				// send even to the view, to hide remove the marker from the markers layers
 				objRef.model.callListeners("hideDynamicFeature", featureId);
-			} else {
-				//workaround: find better solution
-				instant[0]= featureId;
-				var nextInstant; 
-				if(!prevInstant) { // first time invocation
-					nextInstant = objRef.model.getTrajectoryByIndex(featureId, ++step);
-					
-					// notify listener
-					objRef.model.callListeners("enableDynamicFeature", featureId);
-					objRef.model.callListeners("updateDynamicFeature", instant);
-					objRef.model.callListeners("updateTimestamp", instant[1]);
-					objRef.model.callListeners("updateTimeBar", instant[1]);	
-				} else {
-					// for the interpolation it's important to have the value of the next
-					instant[3] = prevInstant[1];
-					instant[4] = prevInstant[2];
-					objRef.update(objRef,instant); //updating point
-					nextInstant = objRef.model.getTrajectoryByIndex(featureId, ++step);
-				}
-				var delayTime = (nextInstant[1] - instant[1]) / objRef.speedFactor;
-				objRef.currentFeatureIndex.put(featureId,step);
-				objRef.timers.put(featureId,window.setTimeout(objRef.run, delayTime, objRef, featureId, nextInstant, step, size, instant));
 			}
 		}
 	}
@@ -275,7 +272,7 @@ function MovingObjectSimulator(toolNode, model) {
 			if(step == 0) {
 				this.model.callListeners("hideDynamicFeature", featureId);
 				var delayTime = instant - currentMs;
-				var timer = window.setTimeout(this.runFirst, delayTime, this, featureId, instant, step, featureSize);
+				var timer = window.setTimeout(this.run, delayTime, this, featureId, instant, step);
 				this.timers.put(featureId,timer);	
 			} else {
 				this.model.callListeners("enableDynamicFeature", featureId);
