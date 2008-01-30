@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project-modules id="moduleCoreId" project-version="1.5.0">
-<wb-module deploy-name="mapbuilder">
-<wb-resource deploy-path="/server/java" source-path="/mapbuilder"/>
-<property name="context-root" value="server/java"/>
-</wb-module>
-</project-modules>
