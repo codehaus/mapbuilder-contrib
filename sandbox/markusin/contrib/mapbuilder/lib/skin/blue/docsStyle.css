@@ -24,7 +24,7 @@ DT { font-weight: bold; }
 
 PRE { font-size: 120% }
 
-A:active { color: #0000CC; }
+a:active { color: #0000CC; }
 
 A:link { color: #0000CC; }
 

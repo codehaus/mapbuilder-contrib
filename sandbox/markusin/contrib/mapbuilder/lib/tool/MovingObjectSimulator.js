@@ -159,7 +159,13 @@ function MovingObjectSimulator(toolNode, model) {
   this.play = function(objRef) {
 		var oneIsRunning = false;
   	if (!objRef.isRunning) {
-			
+			objRef.model.parentModel.objects.play.enabled=true;
+			// TODO find better solution!
+			var playButtonHtmlId = objRef.model.parentModel.objects.play.htmlTagId;
+  		var el = document.getElementById(playButtonHtmlId);
+  		if (el) {
+  			el.setAttribute("style", "visibility: visible");
+  		}
 			
 			
 			if(objRef.allFeatureIds.size()>0) {
@@ -190,21 +196,6 @@ function MovingObjectSimulator(toolNode, model) {
   }
 	this.model.addListener("loadModel",this.play, this);
 	
-	/**
-	 * 
-	 * @param {Object} objRef
-	 */
-	this.enableButts = function(objRef){
-		var pauseId = objRef.model.parentModel.objects.pause.htmlTagId;
-		var stopId = objRef.model.parentModel.objects.stop.htmlTagId;
-		if(pauseId &&  document.getElementById(pauseId))
-			document.getElementById(pauseId).style="visibility: visbile";
-		if(stopId &&  document.getElementById(stopId))
-			document.getElementById(stopId).style="visibility: visbile";	
-	}
-	this.model.addListener("loadModel", this.enableButts, this);
-	
-	
 	
 	
 	/**
@@ -226,7 +217,9 @@ function MovingObjectSimulator(toolNode, model) {
 			var size = argv[4];
 			var prevInstant = argv[5];
 			
-			if(step >= size-1) {
+			if(step >= size-2) {
+				instant[0]= featureId;
+				objRef.update(objRef,instant); //updating point
 				window.clearTimeout(objRef.timers.get(featureId));
 				objRef.timers.remove(featureId);
 				if(objRef.timers.size() == 0) {
@@ -241,7 +234,6 @@ function MovingObjectSimulator(toolNode, model) {
 				var nextInstant; 
 				if(!prevInstant) { // first time invocation
 					nextInstant = objRef.model.getTrajectoryByIndex(featureId, ++step);
-					delayTime = (nextInstant[1] - instant[1]) / objRef.speedFactor;
 					
 					// notify listener
 					objRef.model.callListeners("enableDynamicFeature", featureId);
@@ -253,10 +245,7 @@ function MovingObjectSimulator(toolNode, model) {
 					instant[3] = prevInstant[1];
 					instant[4] = prevInstant[2];
 					objRef.update(objRef,instant); //updating point
-
-					var nextInstant = objRef.model.getTrajectoryByIndex(featureId, ++step);
-					var delayTime = nextInstant[1] - instant[1];
-					
+					nextInstant = objRef.model.getTrajectoryByIndex(featureId, ++step);
 				}
 				var delayTime = (nextInstant[1] - instant[1]) / objRef.speedFactor;
 				objRef.currentFeatureIndex.put(featureId,step);

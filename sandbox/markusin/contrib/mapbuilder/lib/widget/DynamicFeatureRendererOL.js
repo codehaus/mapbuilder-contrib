@@ -72,8 +72,6 @@ function DynamicFeatureRendererOL(widgetNode, model) {
       }
 		}
 		
-		
-		
 		objRef.olLayer = new OpenLayers.Layer.Markers( "Markers" );
 		objRef.targetModel.map.addLayer(objRef.olLayer);
 		
@@ -109,7 +107,7 @@ function DynamicFeatureRendererOL(widgetNode, model) {
 	 * @param {String} featureId , the id of the dynamic feature to be updated
 	 * @param {Object} movingObjectInstant the instant of the moving object to be updated 
 	 */
-	this.updateDynamicFeature_ = function(objRef, instant) {
+	this._updateDynamicFeature = function(objRef, instant) {
 		var marker = objRef.allMarkers.get(instant[0]);
 		if(marker) {
 			var point = instant[2];
@@ -129,6 +127,7 @@ function DynamicFeatureRendererOL(widgetNode, model) {
 		var fId = instant[0];
 		var marker = objRef.allMarkers.get(fId);
 		if(marker) {
+			var x = marker.display(true);			
 			var pointFrom = instant[4];
 			var pointTo = instant[2];
 			
