@@ -1,0 +1,170 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+
+<html xmlns:vml="urn:schemas-microsoft-com:vml" xmlns:svg=
+"http://www.w3.org/2000/svg" xmlns:xlink=
+"http://www.w3.org/1999/xlink">
+  <head>
+    <meta name="generator" content="HTML Tidy, see www.w3.org">
+    <!-- start css block -->
+    <link rel='StyleSheet' type='text/css' href='../../lib/skin/default/demoStyles.css'>
+    <link rel='StyleSheet' type='text/css' href='../../lib/skin/default/mapStyle.css'><!-- end css block -->
+    <!-- start javascript block -->
+		<script type="text/javascript">
+			var mbConfigUrl="config.xml";
+			MB_IGNORE_CSCS_ERRORS=true;
+			var c3 = null;
+			function init() {
+					//c3 = new CodeThatCalendar(caldef1);
+					mbDoLoad();
+			}
+		</script>
+		<script type="text/javascript" src="../../lib/Mapbuilder.js"></script>
+		<!-- TODO move it into a widget
+		<script type="text/javascript" language="javascript" src="./javascript/codethatcalendar/scripts/codethatcalendarstd.js"></script>
+		<script type="text/javascript" language="javascript" src="./javascript/codethatcalendar/scripts/myCalendar.js"></script> --> 
+    <!-- end javascript block -->
+    <title>Bz10m: An example of a Web-enabled Extension of a STDBMS using SECONDO</title>
+  </head>
+  <body onload="init()">
+    <div class="right">
+      <table border="0">
+        <tr>
+          <td>
+            <table border="0" style="vertical-align: top;">
+							<tr>
+								<td id="legend"/>
+							</tr>	
+              <tr>
+								<td id="locatorMap" style="background-color: white;">
+							</tr>
+							<tr>
+                <td align="left" id="mapScaleText"/>
+							</tr>
+							<tr>
+                <td align="left" id="scalebar"/>
+							</tr>
+							<tr>
+                <td id="aoiForm"/>
+              </tr>
+            </table>
+          </td>
+					<td>
+            <table>
+			        <tr>
+			        	<td>
+			        		<div style="text-align: left" id="mainButtonBar"></div>
+			        		<div style="text-align: right" id="cursorTrack"></div>
+		        		</td>
+			        </tr>
+			        <tr>
+			        	<td colspan="2">
+			        		<table style="background-color: white;" border="0">
+			        			<tr>
+			        				<td colspan="2">
+			        					<div id="mainMapPane"></div>
+			        				</td>
+			        			</tr>
+			        			<tr>	
+			        				<td id="timestamp" style="text-align: left;"></td>
+			        				<td id="mainProgressBar" align="left" style="position: relative;"></td>
+			        			</tr>	
+									</table>
+			        	</td>
+			        </tr>
+			        <tr>
+			          <td style="border: thin">
+			          	<table>
+			          		<tr>
+			          			<td id="tsButtonBar" style="width: 100px; vertical-align: middle"/>
+			          			<td>
+			          				<div style="font-size: xx-small; top: auto; left: auto; text-align: center;">Speed Factor</div>
+			          				<div id="timeSpeedSlider" style="vertical-align: top;"></div>
+			          				
+			          				<br/>
+			          			</td>
+			          		</tr>
+			          	</table>
+								</td>
+			          <td id="timestamp" align="right">
+								</td>					
+			        </tr>
+      			</table>
+					</td>
+				</tr>
+        <tr align="center">
+          <td id="queryPanel" valign="top" colspan="2">
+            <div id='webServiceFormId'>
+              <form id='webServiceForm_form'>
+                <table border="1" width="100%">
+                  <tr>
+                    <td>
+                      <div align="left">
+                        Please choose one of the following bus
+                        lines (moving points): <select name=
+                        'feature' id='feature'>
+                          <!-- TBD load them automatically -->
+
+                          <option value="linea10a">
+                            Linea10a
+                          </option>
+
+                          <option value="linea4">
+                            Linea4
+                          </option>
+                        </select>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div style="color:red; float: left;">
+                        <input id="fromDateField" name=
+                        "fromDateField" type="text" value=
+                        "11/20/2006 06:00:47"> <img alt="" src=
+                        "images/calendar.gif" onclick=
+                        "c3.popup('fromDateField');"> <input id=
+                        "toDateField" name="toDateField" type=
+                        "text" value="11/20/2006 06:30:00"> <img
+                        alt="" src="images/calendar.gif" onclick=
+                        "c3.popup('toDateField');">
+                      </div>
+                      <div style="text-align: right; float: right;">
+                        <input name="Retrieve" onclick=
+                        "javascript:config.objects.webServiceForm.submitForm();"
+                         type="button" value="Start Query">
+                      </div>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td>
+                      
+                    </td>
+                  </tr>
+                </table>
+              </form>
+            </div>
+            <!-- webServiceFormId -->
+          </td>
+        </tr>
+        <tr align="right">
+          <td colspan="2">
+            <table>
+              <tr>
+                <td align="right">Powered by <a href=
+                "http://mapbuilder.sourceforge.net">Community Map
+                Builder</a></td>
+
+                <td><img src=
+                "./javascript/mapbuilder/lib/skin/default/images/Icon.gif"
+                 alt=""></td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+      </table>
+		</div><!-- /right -->
+    <noscript>this page requires Javascript to be enabled</noscript>
+  </body>
+</html>
+

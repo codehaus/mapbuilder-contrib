@@ -1,0 +1,167 @@
+.mainPane {
+	position: absolute;
+	vertical-align: top; 
+	top: 0px;
+	height: 100%;
+	width:60%;
+}
+
+.leftPane {
+	position: absolute;
+	vertical-align: inherit;
+	max-width: 20%;
+	min-height: 50%;
+	top: inherit;
+}
+
+.legendPane {
+	position: relative;
+	top: 0px;
+	left: 10px;
+	/*
+	border: thin;
+	border-style: solid;
+	border-color: black;
+	*/
+}
+
+.mainToolBar {
+	position: relative;
+	top: 20px;
+	left: 5px;
+}
+
+.queryToolBar {
+	position: relative;
+	top: 40px;
+	left: 5px;
+	float: left;
+}
+
+.queryToolBar {
+	
+}
+
+
+.rightPane {
+	position: absolute;
+	top: inherit;
+	min-width: 70%;
+	left: 20%;
+	background-color: red;
+}
+
+.mapPane {
+	position: absolute;
+	top: 5px;
+}
+
+.mainMap {
+	position: relative;
+}
+
+.locatorMapPane {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	border: thin;
+	border-color: gray;
+	border-style: solid;
+	background-color: gray;
+	filter:alpha(opacity=70);
+	-moz-opacity:0.7;
+	-khtml-opacity: 0.7;
+	opacity: 0.7;
+}
+
+.cursorTrackPane div {
+	position: absolute;
+	top: 0px;
+	right: 0px;
+	background-color: lightgray;
+	filter:alpha(opacity=70);
+	-moz-opacity:0.7;
+	-khtml-opacity: 0.7;
+	opacity: 0.7;
+}
+
+.mapScalePane {
+	position: absolute;
+	bottom: 10px;
+	right: 0px;
+}
+
+.mapScaleText {
+	position: relative;
+	right: 10%;
+	min-width: 10%;
+	visibility: hidden;
+}
+
+.mapScaleBar {
+	position: relative;
+	min-width: 10%;
+}
+
+.timePane {
+	position: relative;
+	bottom: 5%;
+	left: 0px;
+	height: 50px;
+	width: 700px;
+	float: none;
+}
+
+.timestamp {
+	position: inherit;
+	bottom: 5px;
+	left: 0px;
+	background-color:transparent;
+	border: none;
+	color:#000000;
+	font-family: Verdana,geneva,arial,sans-serif;
+	font-size:8pt;
+	font-size-adjust:none;
+	font-stretch:normal;
+	font-style:normal;
+	font-variant:normal;
+	font-weight:normal;
+	line-height:normal;
+}
+
+.timestampPane {
+	position: inherit;
+	float: 	inherit;
+	left: 0%;
+	bottom: 0%;
+}
+
+.timeStampButtonBar {
+	position: absolute;;
+	float: 	inherit;
+	left: 0px;
+	top: 20px;
+	visibility: hidden;
+}
+
+.timeSliderPane {
+	position: absolute;
+	float: 	none;
+	bottom: 0px;
+	left: 12%;
+	top: 22px;
+}
+
+.timeProgressBarPane {
+	position: absolute;
+	float: 	inherit;
+	right: 0px;
+	top: 0px;
+	vertical-align: top;
+}
+
+.footer {
+	position: absolute;
+	bottom: 1%;
+	left: 1%;
+}

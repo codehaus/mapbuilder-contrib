@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<MapbuilderConfig version="0.2.1" id="DemisMapExample"
+ xmlns="http://mapbuilder.sourceforge.net/mapbuilder"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="http://mapbuilder.sourceforge.net/mapbuilder ../javascript/mapbuilder/lib/schemas/config.xsd">
+ <models>
+  <OwsContext id="mainMap">
+   <defaultModelUrl>context_maps.xml</defaultModelUrl>
+   <widgets>
+    <MapPaneOL id="mainMapWidget">
+     <htmlTagId>mainMapPane</htmlTagId>
+     <fixedSize>true</fixedSize>
+    </MapPaneOL>
+    <MapScaleBar id="scalebar">
+     <displaySystem>metric</displaySystem>
+     <minWidth>100</minWidth>
+     <maxWidth>150</maxWidth>
+     <divisions>4</divisions>
+     <subdivisions>2</subdivisions>
+     <showMinorMeasures>true</showMinorMeasures>
+     <abbreviateLabel>true</abbreviateLabel>
+     <singleLine>true</singleLine>
+     <align>center</align>
+    </MapScaleBar>
+    <MapScaleText id="mapScaleText" />
+    <AoiForm id="aoiForm">
+     <stylesheet>aoiForm.xsl</stylesheet>
+    </AoiForm>
+    <CursorTrack id="cursorTrack">
+     <showPx>true</showPx>
+     <showXY>true</showXY>
+     <showLatLong>false</showLatLong>
+     <showMGRS>false</showMGRS>
+    </CursorTrack>
+    <Legend id="legend">
+     <stylesheet>legend.xsl</stylesheet>
+    </Legend>
+    <LegendGraphic id="legendGraphic" />
+    <ModelUrlInput id="urlInput" />
+    <QueryWidget id="queryPane">
+      <targetModel>gml2DynamicFeatureTemplate</targetModel>
+      <requestStylesheet>wfs_GetFeature.xsl</requestStylesheet>
+      <webServiceUrl>http://rosengarten/bz10m/wfs</webServiceUrl>
+      <dynamicProperty>history</dynamicProperty>
+      <fromDateId>fromDate</fromDateId>
+      <toDateId>toDate</toDateId>      
+      <dateFormat>%Y-%m-%dT%H:%M</dateFormat>
+      <timeFormat>24</timeFormat>
+      <showTime>true</showTime>
+    </QueryWidget>
+    <OverviewMap id="locatorWidget">
+     <htmlTagId>locatorMap</htmlTagId>
+     <width>120</width>
+     <minimizable>true</minimizable>
+    </OverviewMap>
+   </widgets>
+  </OwsContext>
+  <DynamicFeatureCollection id="gml2DynamicFeatureTemplate">
+   <method>post</method>
+   <widgets>
+    <DynamicFeatureRendererOL id="vectorGraphicsRenderer">
+     <targetModel>mainMap</targetModel>
+     <stylesheet>bz10m2wfs.xsl</stylesheet>
+     <iconURL>http://www.inf.unibz.it/dis/bz10m/images/busRound.png</iconURL>
+     <iconOpacity>0.9</iconOpacity>
+     <iconSize>10,10</iconSize>
+    </DynamicFeatureRendererOL>
+    <!-- Widgets that are only visible when data are loaded from the model -->
+      <Button id="play">
+        <buttonBar>tsButtonBar</buttonBar>
+        <targetModel>mainMap</targetModel>
+        <class>RadioButton</class>
+        <enabledSrc>/images/PlayEnable.png</enabledSrc>
+        <disabledSrc>/images/PlayDisable.png</disabledSrc>
+        <tooltip>Starts the simulation</tooltip>
+        <action>movingObjectSimulator.play()</action>
+      </Button>
+      <Button id="pause">
+        <buttonBar>tsButtonBar</buttonBar>
+        <targetModel>mainMap</targetModel>
+        <class>RadioButton</class>
+        <enabledSrc>/images/PauseEnable.png</enabledSrc>
+        <disabledSrc>/images/PauseDisable.png</disabledSrc>
+        <tooltip>pause the movie</tooltip>
+        <action>movingObjectSimulator.pause()</action>
+      </Button>
+      <Button id="stop">
+        <buttonBar>tsButtonBar</buttonBar>
+        <targetModel>mainMap</targetModel>
+        <class>RadioButton</class>
+        <enabledSrc>/images/StopEnable.png</enabledSrc>
+        <disabledSrc>/images/StopDisable.png</disabledSrc>
+        <tooltip>stop and rewind to beginning</tooltip>
+        <action>movingObjectSimulator.stop()</action>
+      </Button>
+    <Slider id="timeSpeedSlider">
+     <htmlTagId>timeSpeedSlider</htmlTagId>
+     <width>121</width>
+     <height>26</height>
+     <defaultValue>10</defaultValue>
+     <minValue>1</minValue>
+     <maxValue>20</maxValue>
+     <valueInterval>1</valueInterval>
+     <tooltipDown>Decrements the time-speed factor</tooltipDown>
+     <tooltipUp>Increments the time-speed factor</tooltipUp>
+     <targetModel>mainMap</targetModel>
+    </Slider>
+    <ProgressBar id="timeProgressBar">
+     <htmlMainProgressBarId>mainProgressBar</htmlMainProgressBarId>
+     <htmlProgressBarId>timeProgressBar</htmlProgressBarId>
+     <htmlStartTagId>idPBStart</htmlStartTagId>
+     <htmlEndTagId>idPBEnd</htmlEndTagId>
+     <width>262</width>
+     <height>30</height>
+     <intervalNumber>200</intervalNumber>
+     <valueInterval>1</valueInterval>
+     <targetModel>mainMap</targetModel>
+    </ProgressBar>
+    <TimestampWidget id="timestamp">
+     <htmlTagId>timestamp</htmlTagId>
+     <showDate>true</showDate>
+     <targetModel>mainMap</targetModel>
+    </TimestampWidget>
+   </widgets>
+   <tools>
+    <MovingObjectSimulator id="movingObjectSimulator">
+     <targetModel>mainMap</targetModel>
+     <startPointDiff>0</startPointDiff>
+     <speedFactor>10</speedFactor>
+    </MovingObjectSimulator>
+    <!-- 
+     <DynamicFeatureSelectHandler id="featureHighlighter">
+     <targetModel>mainMap</targetModel>
+     </DynamicFeatureSelectHandler>
+    -->
+   </tools>
+   <namespace>
+    xmlns:gml="http://www.opengis.net/gml"
+    xmlns:app="http://www.inf.unibz.it/dis/bz10m"
+    xmlns:wfs="http://www.opengis.net/wfs"
+   </namespace>
+   <nodeSelectXPath>//gml:featureMember</nodeSelectXPath>
+   <dynamicPropertyComponentType>gml:TimeSlice</dynamicPropertyComponentType>
+   <boundedBy>gml:EnvelopeWithTimePeriod</boundedBy>
+   <maxFeatureSize>10</maxFeatureSize>
+   <maxFeatureMemberSize>10</maxFeatureMemberSize>
+   <trace id="tracer">
+    <url>http://rosengarten/bz10m/trace</url>
+   </trace>
+  </DynamicFeatureCollection>
+ </models>
+ <widgets>
+  <Back id="back">
+   <buttonBar>mainButtonBar</buttonBar>
+   <targetModel>mainMap</targetModel>
+   <class>Button</class>
+   <disabledSrc>/images/UndoDisable.png</disabledSrc>
+  </Back>
+  <Forward id="forward">
+   <buttonBar>mainButtonBar</buttonBar>
+   <targetModel>mainMap</targetModel>
+   <class>Button</class>
+   <disabledSrc>/images/RedoDisable.png</disabledSrc>
+  </Forward>
+  <ZoomIn id="zoomIn">
+   <buttonBar>mainButtonBar</buttonBar>
+   <targetModel>mainMap</targetModel>
+   <class>RadioButton</class>
+   <selected>true</selected>
+   <enabledSrc>/images/ZoomInEnable.png</enabledSrc>
+   <disabledSrc>/images/ZoomInDisable.png</disabledSrc>
+  </ZoomIn>
+  <ZoomOut id="zoomOut">
+   <buttonBar>mainButtonBar</buttonBar>
+   <targetModel>mainMap</targetModel>
+   <class>RadioButton</class>
+   <enabledSrc>/images/ZoomOutEnable.png</enabledSrc>
+   <disabledSrc>/images/ZoomOutDisable.png</disabledSrc>
+  </ZoomOut>
+  <DragPan id="dragPan">
+   <buttonBar>mainButtonBar</buttonBar>
+   <targetModel>mainMap</targetModel>
+   <class>RadioButton</class>
+   <enabledSrc>/images/PanEnable.png</enabledSrc>
+   <disabledSrc>/images/PanDisable.png</disabledSrc>
+  </DragPan>
+  <SetAoi id="setAoi">
+   <buttonBar>mainButtonBar</buttonBar>
+   <targetModel>mainMap</targetModel>
+   <class>RadioButton</class>
+   <enabledSrc>/images/SetAoiEnable.png</enabledSrc>
+   <disabledSrc>/images/SetAoiDisable.png</disabledSrc>
+  </SetAoi>
+  <Reset id="reset">
+   <buttonBar>mainButtonBar</buttonBar>
+   <targetModel>mainMap</targetModel>
+   <class>Button</class>
+   <disabledSrc>/images/ResetExtentDisable.png</disabledSrc>
+  </Reset>
+ </widgets>
+ <skinDir>../../lib/skin/default</skinDir>
+</MapbuilderConfig>
