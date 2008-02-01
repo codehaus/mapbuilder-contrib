@@ -11,18 +11,20 @@
      <htmlTagId>mainMapPane</htmlTagId>
      <fixedSize>true</fixedSize>
     </MapPaneOL>
+    <!-- 
     <MapScaleBar id="scalebar">
      <displaySystem>metric</displaySystem>
      <minWidth>100</minWidth>
-     <maxWidth>150</maxWidth>
+     <maxWidth>200</maxWidth>
      <divisions>4</divisions>
      <subdivisions>2</subdivisions>
      <showMinorMeasures>true</showMinorMeasures>
      <abbreviateLabel>true</abbreviateLabel>
-     <singleLine>true</singleLine>
+     <singleLine>false</singleLine>
      <align>center</align>
     </MapScaleBar>
     <MapScaleText id="mapScaleText" />
+    -->
     <AoiForm id="aoiForm">
      <stylesheet>aoiForm.xsl</stylesheet>
     </AoiForm>
@@ -40,7 +42,8 @@
     <QueryWidget id="queryPane">
       <targetModel>gml2DynamicFeatureTemplate</targetModel>
       <requestStylesheet>wfs_GetFeature.xsl</requestStylesheet>
-      <webServiceUrl>http://rosengarten/bz10m/wfs</webServiceUrl>
+      <!-- webServiceUrl>http://maps.inf/xsecondo/wfs</webServiceUrl-->
+      <webServiceUrl>http://furchetta.inf.unibz.it/bz10m/wfs</webServiceUrl>
       <dynamicProperty>history</dynamicProperty>
       <fromDateId>fromDate</fromDateId>
       <toDateId>toDate</toDateId>      
@@ -61,7 +64,7 @@
     <DynamicFeatureRendererOL id="vectorGraphicsRenderer">
      <targetModel>mainMap</targetModel>
      <stylesheet>bz10m2wfs.xsl</stylesheet>
-     <iconURL>http://www.inf.unibz.it/dis/bz10m/images/busRound.png</iconURL>
+     <iconURL>http://maps.inf.unibz.it/bz10m/images/busRound.png</iconURL>
      <iconOpacity>0.9</iconOpacity>
      <iconSize>10,10</iconSize>
     </DynamicFeatureRendererOL>
@@ -73,6 +76,7 @@
         <enabledSrc>/images/PlayEnable.png</enabledSrc>
         <disabledSrc>/images/PlayDisable.png</disabledSrc>
         <tooltip>Starts the simulation</tooltip>
+        <!--mouseHandler>movingObjectSimulator</mouseHandler-->
         <action>movingObjectSimulator.play()</action>
       </Button>
       <Button id="pause">
@@ -144,9 +148,11 @@
    <boundedBy>gml:EnvelopeWithTimePeriod</boundedBy>
    <maxFeatureSize>10</maxFeatureSize>
    <maxFeatureMemberSize>10</maxFeatureMemberSize>
+   <!--
    <trace id="tracer">
-    <url>http://rosengarten/bz10m/trace</url>
-   </trace>
+     url>http://maps.inf/xsecondo/trace</url>
+    <url>http://furchetta.inf.unibz.it/bz10m/trace</url>
+   </trace> -->
   </DynamicFeatureCollection>
  </models>
  <widgets>
@@ -199,4 +205,5 @@
   </Reset>
  </widgets>
  <skinDir>../../lib/skin/default</skinDir>
+ <proxyUrl>../../server/php/proxy.php/?url=</proxyUrl>
 </MapbuilderConfig>

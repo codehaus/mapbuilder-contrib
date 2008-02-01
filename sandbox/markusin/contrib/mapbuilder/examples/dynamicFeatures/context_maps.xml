@@ -13,10 +13,14 @@
 	xsi:schemaLocation="http://www.opengis.net/oc oc_0_0_13.xsd">
   <General>
     <Window width="700" height="600" />
-    <ows:BoundingBox crs="EPSG:258320">
+    <ows:BoundingBox crs="EPSG:900913">
+      <ows:LowerCorner>1256089.6 5854665.5</ows:LowerCorner>
+      <ows:UpperCorner>1267593.4 5862748</ows:UpperCorner>
+    </ows:BoundingBox>
+    <!-- ows:BoundingBox crs="EPSG:258320">
       <ows:LowerCorner>673327.1626257898 5144497.679584979</ows:LowerCorner>
       <ows:UpperCorner>687943.5657965919 5157269.895023707</ows:UpperCorner>
-    </ows:BoundingBox>
+    </ows:BoundingBox-->
     <Title xml:lang="en">Bz10m the features</Title>
     <KeywordList>
       <Keyword>moving objects</Keyword>
@@ -58,9 +62,9 @@
     </ows:ServiceProvider>
   </General>
   <ResourceList>
-    <Layer queryable="1" hidden="0">
+    <Layer queryable="1" hidden="1">
       <Server service="OGC:WMS" version="1.1.1" title="bz10m:censuses Preview">
-        <OnlineResource id="defaultWmsHost" xlink:type="simple" xlink:href="https://www.inf.unibz.it/dis/geoserver/wms"/>
+        <OnlineResource id="defaultWmsHost" xlink:type="simple" xlink:href="http://maps.inf.unibz.it/geoserver/wms"/>
       </Server>
       <Name>bz10m:censuses</Name>
       <Title>Censuses</Title>
@@ -68,46 +72,50 @@
     </Layer>
     <Layer queryable="1" hidden="0">
       <Server service="OGC:WMS" version="1.1.1" title="bz10m:rivers">
-        <OnlineResource xlink:type="simple" xlink:href="https://www.inf.unibz.it/dis/geoserver/wms"/>
+        <OnlineResource xlink:type="simple" xlink:href="http://maps.inf.unibz.it/geoserver/wms"/>
       </Server>
       <Name>bz10m:rivers</Name>
       <Title>Rivers</Title>
       <FormatList><Format current="1">image/png</Format></FormatList>
     </Layer>
-    <Layer queryable="1" hidden="0">
+    <Layer queryable="1" hidden="1">
       <Server service="OGC:WMS" version="1.1.1" title="bz10m:buildings Preview">
-        <OnlineResource xlink:type="simple" xlink:href="https://www.inf.unibz.it/dis/geoserver/wms"/>
+        <OnlineResource xlink:type="simple" xlink:href="http://maps.inf.unibz.it/geoserver/wms"/>
       </Server>
+      <SRS>EPSG:900913</SRS>
       <Name>bz10m:buildings</Name>
       <Title>Buildings</Title>
       <FormatList><Format current="1">image/png</Format></FormatList>
     </Layer>
     <Layer queryable="1" hidden="0">
       <Server service="OGC:WMS" version="1.1.1" title="bz10m:route10a Preview">
-        <OnlineResource xlink:type="simple" xlink:href="https://www.inf.unibz.it/dis/geoserver/wms"/>
+        <OnlineResource xlink:type="simple" xlink:href="http://maps.inf.unibz.it/geoserver/wms"/>
       </Server>
+      <SRS>EPSG:900913</SRS>
       <Name>bz10m:route10a</Name>
       <Title>Bus Route 10a</Title>
       <FormatList><Format current="1">image/png</Format></FormatList>
     </Layer>
 		<DynamicLayer queryable="1" hidden="0">
-      <Server service="OGC:WFS" version="1.1.1" title="bz10m:route10a Preview">
-        <OnlineResource xlink:type="simple" xlink:href="https://www.inf.unibz.it/bz10m/wfs"/>
+      <Server service="OGC:WFS" version="1.1.1" title="Moving Bus">
+        <OnlineResource xlink:type="simple" xlink:href="http://maps.inf.unibz.it/geoserver/wms"/>
       </Server>
+      <SRS>EPSG:258320</SRS>
       <Name>linea10a</Name>
       <Title>Linea 10a</Title>
     </DynamicLayer>
 		<DynamicLayer queryable="1" hidden="0">
-      <Server service="OGC:WFS" version="1.1.1" title="bz10m:route10a Preview">
-        <OnlineResource xlink:type="simple" xlink:href="https://www.inf.unibz.it/bz10m/wfs"/>
+      <Server service="OGC:WFS" version="1.1.1" title="Moving Bus">
+        <OnlineResource xlink:type="simple" xlink:href="http://maps.inf.unibz.it/geoserver/wms"/>
       </Server>
+      <SRS>EPSG:258320</SRS>
       <Name>linea10b</Name>
       <Title>Linea 10b</Title>
     </DynamicLayer>
 <!--
     <Layer queryable="1" hidden="0">
       <Server service="OGC:WMS" version="1.1.1" title="bz10m:route4 Preview">
-        <OnlineResource xlink:type="simple" xlink:href="https://www.inf.unibz.it/dis/geoserver/wms"/>
+        <OnlineResource xlink:type="simple" xlink:href="http://maps.inf.unibz.it/geoserver/wms"/>
       </Server>
       <Name>bz10m:route4</Name>
       <Title>Bus Route 4</Title>

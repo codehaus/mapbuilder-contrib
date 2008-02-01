@@ -26,11 +26,11 @@ PRE { font-size: 120% }
 
 a:active { color: #0000CC; }
 
-A:link { color: #0000CC; }
+a:link { color: #0000CC; }
 
-A:visited { color: #336633; }
+a:visited { color: #336633; }
 
-A:hover { color: #FF0000; }
+a:hover { color: #FF0000; }
 
 A.banner { text-decoration: none; color: white; }
 
@@ -39,7 +39,7 @@ H1 {
   font: normal 18pt;  
   color: #3366cc; 
   margin: 0; 
-  margin-top: 10; 
+  margin-top: 10px; 
   width: 100%; 
   border-bottom: 1pt solid #3366cc; 
   text-align: left}
@@ -58,7 +58,7 @@ H6 { font-size: 100%; font-weight: bold; }
   font-size: 80%;  
   color: #3366cc; 
   margin: 0; 
-  margin-bottom: 10; 
+  margin-bottom: 10px; 
   width: 100%; 
   border-top: 1pt solid #3366cc; 
   text-align: right;

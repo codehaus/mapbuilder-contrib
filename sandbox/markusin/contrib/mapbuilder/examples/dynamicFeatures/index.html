@@ -10,7 +10,9 @@
     <link rel='StyleSheet' type='text/css' href='bz10m.css'/>
 				<!-- todo move into widget --> 
 				<link rel="stylesheet" type="text/css" media="all" href="../../lib/util/jscalendar-1.0/calendar-win2k-cold-1.css" title="win2k-cold-1" />
-    <!-- end css block -->
+    <!-- end css block 
+		<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAAu1HXNRXZN63-oajhG5ZZrxTU6vVGE_6HPIGriPp-1fA_F22rWRQ_u2LPIIDIHgoVjCgXRF_Ck_dmUQ"
+      type="text/javascript"></script>-->
 		<script>
     	// URL of Mapbuilder configuration file.
     	var mbConfigUrl='config.xml';
@@ -35,12 +37,14 @@
   		<div id="rightPane" class="rightPane">
   			<div id="mapPane" class="mapPane">
 	  			<div id="mainMapPane" class="mainMap"></div>
-	  			<div id="locatorMap" class="locatorMapPane" style="background-color: white"></div>
+	  			<div id="locatorMap" class="locatorMapPane"></div>
   				<div id="cursorTrack" class="cursorTrackPane"></div>
-  				<div id="scalePane" class="mapScalePane">
+					<!--
+					<div id="scalePane" class="mapScalePane">
   					<div id="scalebar" class="mapScaleBar"></div>
   					<div id="mapScaleText" class="mapScaleText"></div>
 		 			</div>
+					-->
 		 			<div id="timePane" class="timePane">
   					<div id="timestamp" class="timeStampPane"></div>
   					<div id="tsButtonBar" class="timeStampButtonBar"></div>
@@ -52,8 +56,8 @@
   	</div>
   	<div class="footer">
   		<div id="poweredByPane" class="poweredByPane">
-  			Powered by <a href="http://mapbuilder.sourceforge.net">Community Map Builder</a>
   			<img src="../../lib/skin/default/images/Icon.gif" alt=""/>
+  			Powered by <a href="http://mapbuilder.sourceforge.net">Community Map Builder</a>
   		</div>
     </div>
     <noscript>this page requires Javascript to be enabled</noscript>

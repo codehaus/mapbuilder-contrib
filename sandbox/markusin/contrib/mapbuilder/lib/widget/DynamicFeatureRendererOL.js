@@ -54,7 +54,7 @@ function DynamicFeatureRendererOL(widgetNode, model) {
 	 */
 	this.init = function(objRef){
 		objRef.proj = new Proj4js.Proj( objRef.targetModel.getSRS() );
-    objRef.epsg4326 = new Proj4js.Proj("EPSG:4326");
+    objRef.epsg4326 = new Proj4js.Proj("EPSG:900913");
 	}
 	this.model.addListener("loadModel", this.init, this );
 	

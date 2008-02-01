@@ -12,6 +12,6 @@
     $Id: mapbuilderConfig.xml 1620 2005-08-10 15:19:16Z madair1 $
   -->
   <proxyUrl>/mapbuilderContrib/server/php/proxy.php</proxyUrl>
-  <serializeUrl>/mapbuilderContrib/server/php/serializer.php</serializeUrl>
+  <serializeUrl>./mapbuilderContrib/server/php/serializer.php</serializeUrl>
 </MapbuilderConfig>
 

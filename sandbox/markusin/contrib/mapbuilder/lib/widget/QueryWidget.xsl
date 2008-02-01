@@ -55,6 +55,7 @@ $Id: QueryWidget.xsl 2546 2007-01-23 12:07:39Z markusin $
 	 						To Date:<br/>
 							<input type="text" name="toDate" id="{$toDateId}" value="2006-11-20T06:30"/>
 		        </div>
+						<input type="hidden" name="srs" id="{$srs}" value="2006-11-20T06:30"/>
 			      <div style="text-align: left; float: none;">
 			        <input name="Retrieve" onclick="javascript:config.objects.{$formId}.submitForm();" type="button" value="Start Query"/>
 		        </div>
@@ -71,7 +72,7 @@ $Id: QueryWidget.xsl 2546 2007-01-23 12:07:39Z markusin $
 			<option>
 			  <xsl:attribute name="value">
 	   			<xsl:value-of select="current()/wmc:Name" />
-				</xsl:attribute> 
+				</xsl:attribute>
 				<xsl:value-of select="current()/wmc:Title"/>
 			</option>
 		</xsl:if>
