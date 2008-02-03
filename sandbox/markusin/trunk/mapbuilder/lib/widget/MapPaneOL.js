@@ -111,7 +111,7 @@ function MapPaneOL(widgetNode, model) {
     var layers = layerId ?
         [objRef.getLayer(objRef, layerId)] :
         objRef.model.map.layers;
-    for (var i in layers) {
+		for (var i = 0; i < layers.length; i++) {
       if (layers[i].CLASS_NAME.indexOf('OpenLayers.Layer.WMS') == 0) {
         layers[i].mergeNewParams({uniqueId: uniqueId});
       }
@@ -183,7 +183,7 @@ MapPaneOL.prototype.paint = function(objRef, refresh) {
   //     this needs to be solved
   var resolutions=objRef.widgetNode.selectSingleNode("mb:resolutions");
   resolutions = resolutions ? resolutions.firstChild.nodeValue.split(",") : null;
-  for (var r in resolutions) {
+	for (var r = 0; r < resolutions.length; r++) {
     resolutions[r] = parseFloat(resolutions[r]);
   }
 
@@ -192,7 +192,7 @@ MapPaneOL.prototype.paint = function(objRef, refresh) {
   if(scales){
     scales = scales.firstChild.nodeValue.split(",");
     resolutions = new Array();
-    for (var s in scales) {
+		for (var s = 0; s < scales.length; s++) {
       resolutions.push(OpenLayers.Util.getResolutionFromScale(scales[s], units));
     }
   }
@@ -257,7 +257,7 @@ MapPaneOL.prototype.paint = function(objRef, refresh) {
       //@TODO: check if the firstChild is really needed
       var resolutions =baseLayerNode.selectSingleNode("ows:TileSet/ows:Resolutions");
       resolutions = resolutions ? resolutions.firstChild.nodeValue.split(",") : null;
-      for (var r in resolutions) {
+			for (var r = 0; r < resolutions.length; r++) {
          resolutions[r] = parseFloat(resolutions[r]);
       }
       //overrule tileSize in the Context with the one from the BaseLayer

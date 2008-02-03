@@ -135,9 +135,10 @@ OverviewMap.prototype.addOverviewMap = function(objRef) {
     }
 
     // make all layers visible
-    for (var i in options.layers) {
-      options.layers[i].setVisibility(true);
-    }
+	    // make all layers visible
+		for (var i = 0; i < options.layers.length; i++) {
+			options.layers[i].setVisibility(true);
+		}
   }
 }
 

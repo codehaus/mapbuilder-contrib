@@ -190,7 +190,7 @@ function GmlRendererOL(widgetNode, model) {
       var models = [objRef.model];
       // get configurations from source models, if any
       if (objRef.model.mergeModels) {
-        for (var i in objRef.model.mergeModels) {
+				for (var i = 0; i < objRef.model.mergeModels.length; i++) {
           models.push(objRef.model.mergeModels[i]);
         }
       }
@@ -330,7 +330,7 @@ function GmlRendererOL(widgetNode, model) {
       // remove hidden features
       var hiddenFeatures = objRef.hiddenFeatures.toString().split(/,/);
       objRef.hiddenFeatures = new Array();
-      for (var i in hiddenFeatures) {
+			for (var i = 0; i < hiddenFeatures.length; i++) {
         if (hiddenFeatures[i]) {
           objRef.hideFeature(objRef, hiddenFeatures[i]);
         }
