@@ -521,7 +521,7 @@ Proj4js.common = {
       phi += dphi;
       if (Math.abs(dphi) <= .0000000001) return phi;
     }
-    alert("phi2z has NoConvergence");
+    //alert("phi2z has NoConvergence");
     return (-9999);
   },
 

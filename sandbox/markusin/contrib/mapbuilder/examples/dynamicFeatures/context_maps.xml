@@ -104,7 +104,7 @@
       <Name>linea10a</Name>
       <Title>Linea 10a</Title>
     </DynamicLayer>
-		<DynamicLayer queryable="1" hidden="0">
+		<DynamicLayer queryable="0" hidden="0">
       <Server service="OGC:WFS" version="1.1.1" title="Moving Bus">
         <OnlineResource xlink:type="simple" xlink:href="http://maps.inf.unibz.it/geoserver/wms"/>
       </Server>

@@ -55,7 +55,21 @@ $Id: QueryWidget.xsl 2546 2007-01-23 12:07:39Z markusin $
 	 						To Date:<br/>
 							<input type="text" name="toDate" id="{$toDateId}" value="2006-11-20T06:30"/>
 		        </div>
-						<input type="hidden" name="srs" id="{$srs}" value="2006-11-20T06:30"/>
+						<xsl:for-each select="wmc:ResourceList/wmc:DynamicLayer">
+							<xsl:if test="current()[@queryable='1']">
+								<input type="hidden">
+									<xsl:attribute name="name">
+						   			<xsl:value-of select="concat('srs_',current()/wmc:Name)" />
+									</xsl:attribute>
+									<xsl:attribute name="id">
+						   			<xsl:value-of select="concat('srs_',current()/wmc:Name)" />
+									</xsl:attribute>
+								  <xsl:attribute name="value">
+						   			<xsl:value-of select="current()/wmc:SRS" />
+									</xsl:attribute>
+								</input>
+							</xsl:if>						
+						</xsl:for-each>	
 			      <div style="text-align: left; float: none;">
 			        <input name="Retrieve" onclick="javascript:config.objects.{$formId}.submitForm();" type="button" value="Start Query"/>
 		        </div>

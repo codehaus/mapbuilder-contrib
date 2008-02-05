@@ -138,11 +138,7 @@
      </DynamicFeatureSelectHandler>
     -->
    </tools>
-   <namespace>
-    xmlns:gml="http://www.opengis.net/gml"
-    xmlns:app="http://www.inf.unibz.it/dis/bz10m"
-    xmlns:wfs="http://www.opengis.net/wfs"
-   </namespace>
+   <namespace>xmlns:gml="http://www.opengis.net/gml"</namespace>
    <nodeSelectXPath>//gml:featureMember</nodeSelectXPath>
    <dynamicPropertyComponentType>gml:TimeSlice</dynamicPropertyComponentType>
    <boundedBy>gml:EnvelopeWithTimePeriod</boundedBy>
