@@ -53,7 +53,7 @@ function DynamicFeatureRendererOL(widgetNode, model) {
 	 * @param {Object} objRef
 	 */
 	this.init = function(objRef){
-		objRef.proj = new Proj4js.Proj( objRef.targetModel.getSRS() );
+		objRef.proj = new Proj4js.Proj("EPSG:258320");
     objRef.epsg4326 = new Proj4js.Proj("EPSG:900913");
 	}
 	this.model.addListener("loadModel", this.init, this );
@@ -83,7 +83,7 @@ function DynamicFeatureRendererOL(widgetNode, model) {
 			var marker = new OpenLayers.Marker(position,objRef.icon.clone());
 			marker.setOpacity(objRef.opacity);
 			objRef.olLayer.addMarker(marker);
-			marker.display(false);
+//			marker.display(false);
 			objRef.allMarkers.put(allFeatureIds[index],marker);
 		}
 		objRef.model.setParam('gmlRendererLayer', objRef.olLayer);
@@ -128,49 +128,49 @@ function DynamicFeatureRendererOL(widgetNode, model) {
 		var marker = objRef.allMarkers.get(fId);
 		if(marker) {
 			var x = marker.display(true);			
-			var pointFrom = instant[4];
-			var pointTo = instant[2];
 			
-			if(pointFrom) {
-				var pFrom = pointFrom;
-				var pTo = pointTo;
+			if(instant[4]) {
+				var pointFrom = new OpenLayers.Geometry.Point(instant[4][0],instant[4][1]);
+				var pointTo = new OpenLayers.Geometry.Point(instant[2][0],instant[2][1]);
 				
-				Proj4js.transform(objRef.proj, objRef.epsg4326, pFrom);
-				Proj4js.transform(objRef.proj, objRef.epsg4326, pTo);
+				var pFrom = Proj4js.transform(objRef.proj, objRef.epsg4326, pointFrom);
+				var pTo = Proj4js.transform(objRef.proj, objRef.epsg4326, pointTo);
 				
-				var pFrom = objRef.targetModel.map.getPixelFromLonLat(new OpenLayers.LonLat(pFrom[0],pFrom[1]));
-				var pTo = objRef.targetModel.map.getPixelFromLonLat(new OpenLayers.LonLat(pTo[0],pTo[1]));
-				var distance = objRef.distance(pFrom.x, pFrom.y, pTo.x, pTo.y);
+				//pFrom = objRef.targetModel.map.getPixelFromLonLat(new OpenLayers.LonLat(pFrom.x,pFrom.y));
+				//pTo = objRef.targetModel.map.getPixelFromLonLat(new OpenLayers.LonLat(pTo.x,pTo.y));
 				var MIN_DISTANCE = 5; // TODO move into config param
-				if(distance > MIN_DISTANCE) {
+				if(pFrom.distanceTo(pTo) > MIN_DISTANCE) {
 					var f = Math.round(distance / MIN_DISTANCE);
 					if(f>1) {
 						var tFrom = instant[3].getTime();
 						var tTo = instant[1].getTime();
 						var timeDiff =  tTo - tFrom;
 						var timeSegm = timeDiff / f;
-						var p = new Array(0,0);
 						var currentT = 0;
 						for(var i=0; i< f-1; i++){
 							currentT += timeSegm;
-							objRef.interpolate(tFrom+currentT, p, pointFrom, tFrom, pointTo, tTo);
+							var interpolatedPoint = objRef.interpolate(tFrom+currentT, pointFrom, tFrom, pointTo, tTo);
+							//interpolatedPoint = objRef.targetModel.map.getPixelFromLonLat(new OpenLayers.LonLat(interpolatedPoint.x,interpolatedPoint.y))
 							marker.icon.url = 'http://www.inf.unibz.it/dis/bz10m/images/bus.gif';
-							window.setTimeout(objRef.paint, (timeSegm / window.movingObjectSimulator.speedFactor), objRef, marker, p);
+							window.setTimeout(objRef.paint, (timeSegm / window.movingObjectSimulator.speedFactor), objRef, marker, interpolatedPoint);
 						}
 						marker.icon.url = 'http://www.inf.unibz.it/dis/bz10m/images/busRound.png';
-						window.setTimeout(objRef.paint, (timeSegm / window.movingObjectSimulator.speedFactor), objRef, marker, pointTo);
+						window.setTimeout(objRef.paint, (timeSegm / window.movingObjectSimulator.speedFactor), objRef, marker, pTo);
 						
 					} else {
 						marker.icon.url = 'http://www.inf.unibz.it/dis/bz10m/images/busRound.png';
-						objRef.paint(objRef, marker, pointTo);
+						objRef.paint(objRef, marker, pTo);
 					}
 				} else {
 					marker.icon.url = 'http://www.inf.unibz.it/dis/bz10m/images/busRound.png';
-					objRef.paint(objRef, marker, pointTo);
+					objRef.paint(objRef, marker, pTo);
 				}
 			} else {
 				marker.icon.url = 'http://www.inf.unibz.it/dis/bz10m/images/busRound.png';
-				objRef.paint(objRef, marker, pointTo);
+				var pointTo = new OpenLayers.Geometry.Point(instant[2][0],instant[2][1]);
+				var pTo = Proj4js.transform(objRef.proj, objRef.epsg4326, pointTo);
+				//pTo = objRef.targetModel.map.getPixelFromLonLat(new OpenLayers.LonLat(pTo.x,pTo.y));
+				objRef.paint(objRef, marker, pTo);
 			}
 			marker.events.register("mouseover", marker, function(evt) {
 				var popup = objRef.allPopups.get(fId);
@@ -284,17 +284,14 @@ function DynamicFeatureRendererOL(widgetNode, model) {
 	/**
 	 * Linear Interpolation of 2 points;
 	 * @param {Object} t the timestamp on which to interpolate
-	 * @param {Object} p the point where to set the interpolated value
-	 * @param {Object} p0 the start point
-	 * @param {Object} t0 the start timestamp
-	 * @param {Object} p1 the end poin
-	 * @param {Object} t1 the end timestamp
+	 * @param {Object} newPoint the point where to set the interpolated value
+	 * @param {Object} pFrom the start point
+	 * @param {Object} tFrom the start timestamp
+	 * @param {Object} pTo the end poin
+	 * @param {Object} tTo the end timestamp
 	 */
-	this.interpolate = function(t, p, p0, t0, p1, t1) {	
-		var x = parseInt(p0[0]) + ((t - t0)/(t1 - t0))*(parseInt(p1[0]) - parseInt(p0[0]));
-		var y = parseInt(p0[1]) + ((t - t0)/(t1 - t0))*(parseInt(p1[1]) - parseInt(p0[1]));
-		p[0] = x;
-		p[1] = y;
+	this.interpolate = function(t, pFrom, tFrom, pTo, tTo) {
+		return new OpenLayers.Geometry.Point(parseInt(pFrom.x) + ((t - tFrom)/(tTo - tFrom))*(parseInt(pTo.x) - parseInt(pFrom.x)), parseInt(pFrom.y) + ((t - tFrom)/(tTo - tFrom))*(parseInt(pTo.y) - parseInt(pFrom.y)));
 	}
 	
 	/**
@@ -308,10 +305,17 @@ function DynamicFeatureRendererOL(widgetNode, model) {
 		return Math.sqrt(PX * PX + PY * PY);
 	}
 	
+	/**
+	 * 
+	 * @param {Object} objRef
+	 * @param {Object} marker the openlayer marker to be updated
+	 * @param {Object} p the openlayer pixel object with the new values
+	 */
 	this.paint = function(objRef, marker, p) {
-			if(p && p[0] && p[1]){
-					marker.lonlat.lon = p[0];
-					marker.lonlat.lat = p[1];
+			if(p){
+					marker.lonlat.lon = p.x;
+					marker.lonlat.lat = p.y;
+					marker.display(true);
 					objRef.olLayer.drawMarker(marker);
 			}
 	}
