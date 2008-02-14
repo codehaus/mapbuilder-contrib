@@ -1,6 +1,6 @@
 /*
 License: LGPL as per: http://www.gnu.org/copyleft/lesser.html
-$Id: ModelBase.js 3739 2007-12-13 22:58:36Z ahocevar $
+$Id: ModelBase.js 3729 2007-12-12 16:36:12Z ahocevar $
 */
 
 // Ensure this object's dependancies are loaded.
@@ -77,11 +77,7 @@ function ModelBase(modelNode, parentModel) {
   var namespace = modelNode.selectSingleNode("mb:namespace");
   if (namespace) {
     this.namespace = namespace.firstChild.nodeValue;
-  }   <namespace>
-    xmlns:gml="http://www.opengis.net/gml"
-    xmlns:app="http://www.inf.unibz.it/dis/bz10m"
-    xmlns:wfs="http://www.opengis.net/wfs"
-   </namespace>
+  }
 
   var templateAttr = modelNode.attributes.getNamedItem("template");
   if (templateAttr) {
@@ -297,32 +293,16 @@ function ModelBase(modelNode, parentModel) {
   this.finishLoading = function() {
     // the following two lines are needed for IE; set the namespace for selection
     if(this.doc){
-    	if(! _SARISSA_IS_SAFARI){
-	      this.doc.setProperty("SelectionLanguage", "XPath");
-	      if (this.namespace) {
-					this.namespace = this.namespace.replace(/\n/g, " ");
-					var ns = this.namespace.split(" ");
-					this.namespace = "";
-					var first = true;
-					for(var i=0; i<ns.length; i++) {
-						if(ns[i].length > 0) {
-							if(first) {
-								this.namespace=this.namespace.concat(ns[i]);
-								first=false;
-							} else {
-								this.namespace=this.namespace.concat(" ").concat(ns[i]);	
-							}
-						}
-					}
-		  		Sarissa.setXpathNamespaces(this.doc, this.namespace);
-		  	}
-			}
+     if(! _SARISSA_IS_SAFARI){
+      this.doc.setProperty("SelectionLanguage", "XPath");
+      if(this.namespace) Sarissa.setXpathNamespaces(this.doc, this.namespace);
+		}
 
-    	// Show the newly loaded XML document
-    	if(this.debug) mbDebugMessage(this, "Loading Model:"+this.id+" "+(new XMLSerializer()).serializeToString(this.doc));
+      // Show the newly loaded XML document
+      if(this.debug) mbDebugMessage(this, "Loading Model:"+this.id+" "+(new XMLSerializer()).serializeToString(this.doc));
       
-    	this.callListeners("loadModel");
-  	}
+      this.callListeners("loadModel");
+    }
   }
 
   /**
@@ -372,7 +352,7 @@ function ModelBase(modelNode, parentModel) {
   this.deleteTemplates = function() {
     if (this.templates) {
       var model;
-      while( model==this.templates.pop() ) {
+      while( model=this.templates.pop() ) {
         model.setParam("newModel");
         var parentNode = this.modelNode.parentNode;
         parentNode.removeChild(model.modelNode);

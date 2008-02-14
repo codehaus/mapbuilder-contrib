@@ -1,6 +1,6 @@
 /*
 License: LGPL as per: http://www.gnu.org/copyleft/lesser.html
-$Id: FeatureSelectHandler.js 3739 2007-12-13 22:58:36Z ahocevar $
+$Id: FeatureSelectHandler.js 3723 2007-12-11 23:32:54Z ahocevar $
 */
 
 // Ensure this object's dependancies are loaded.

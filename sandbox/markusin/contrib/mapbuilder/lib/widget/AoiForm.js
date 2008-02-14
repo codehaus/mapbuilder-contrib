@@ -2,7 +2,7 @@
 Author:       Mike Adair mike.adairATccrs.nrcan.gc.ca
 License:      LGPL as per: http://www.gnu.org/copyleft/lesser.html
 
-$Id: AoiForm.js 3739 2007-12-13 22:58:36Z ahocevar $
+$Id: AoiForm.js 3712 2007-12-10 22:53:00Z ahocevar $
 */
 
 // Ensure this object's dependancies are loaded.

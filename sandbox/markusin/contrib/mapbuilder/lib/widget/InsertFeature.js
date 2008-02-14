@@ -1,6 +1,6 @@
 /*
 License: LGPL as per: http://www.gnu.org/copyleft/lesser.html
-$Id: InsertFeature.js 3616 2007-11-19 21:24:52Z ahocevar $
+$Id: InsertFeature.js 3604 2007-11-15 03:36:22Z ahocevar $
 */
 
 // Ensure this object's dependancies are loaded.

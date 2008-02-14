@@ -2,7 +2,7 @@
 Author:       Cameron Shorter cameronAtshorter.net
 License:      LGPL as per: http://www.gnu.org/copyleft/lesser.html
 
-$Id: MapPaneOL.js 3783 2007-12-22 12:25:05Z ahocevar $
+$Id: MapPaneOL.js 3827 2008-02-04 09:45:59Z ahocevar $
 */
 
 // Ensure this object's dependancies are loaded.
@@ -101,15 +101,16 @@ function MapPaneOL(widgetNode, model) {
    * Called after a feature has been added to a WFS.  This function triggers
    * the WMS basemaps to be redrawn.  A timestamp param is added to the URL
    * to ensure the basemap image is not cached.
+   * This function is triggered by the refreshWmsLayers event. If this event
+   * is fired with a <layerId> as param, only that layer will be refreshed.
+   * @param objRef reference to this widget
    */
   this.refreshWmsLayers = function(objRef) {
-    // TBD IMO it is crazy to reload all layers, just because
-    // one layer that holds WFS data changed. We should switch
-    // all of feature editing to OL WFS layers ASAP, then we
-    // can compare with typeName and only reload the correct
-    // layer
+    var layerId = objRef.model.getParam("refreshWmsLayers");
     var uniqueId = (new Date()).getTime();
-    var layers = objRef.model.map.layers;
+    var layers = layerId ?
+        [objRef.getLayer(objRef, layerId)] :
+        objRef.model.map.layers;
     for (var i in layers) {
       if (layers[i].CLASS_NAME.indexOf('OpenLayers.Layer.WMS') == 0) {
         layers[i].mergeNewParams({uniqueId: uniqueId});
@@ -175,7 +176,7 @@ MapPaneOL.prototype.paint = function(objRef, refresh) {
   minResolution=(minResolution) ? parseFloat(minResolution.firstChild.nodeValue) : undefined;
   
   //units
-  var units = proj.units == 'meters' ? 'm' : proj.units;
+  var units = proj.getUnits() == 'meters' ? 'm' : proj.getUnits();
   
   //resolutions
   //TBD: if resolutions is both set here and for the baselayer and they are different weird things may happen
@@ -209,12 +210,13 @@ MapPaneOL.prototype.paint = function(objRef, refresh) {
     node.style.width = objRef.model.getWindowWidth()+"px";
     node.style.height = objRef.model.getWindowHeight()+"px";
   }
-    
+  
   //default map options
   var mapOptions = {
         controls:[],
-        projection: proj.srsCode,
+        projection: proj,
         units: units,
+        fractionalZoom: true,
         maxExtent: maxExtent,
         maxResolution: maxResolution,
         minResolution: minResolution,
@@ -248,7 +250,7 @@ MapPaneOL.prototype.paint = function(objRef, refresh) {
       var baseSrs = baseLayerNode.selectSingleNode("ows:TileSet/ows:SRS");
       if(baseSrs) objRef.model.setSRS(baseSrs.firstChild.nodeValue);
       //overrule the units in the Context with the updated SRS units
-      units = proj.units == 'meters' ? 'm' : proj.units;
+      units = proj.getUnits() == 'meters' ? 'm' : proj.getUnits();
       //overrule the boundingbox in the Context with the maxExtent from the BaseLayer
       var maxExtentNode = baseLayerNode.selectSingleNode("ows:TileSet/ows:BoundingBox");
       if(maxExtentNode) maxExtent = new OpenLayers.Bounds(maxExtentNode.selectSingleNode('@minx').nodeValue,maxExtentNode.selectSingleNode('@miny').nodeValue,maxExtentNode.selectSingleNode('@maxx').nodeValue,maxExtentNode.selectSingleNode('@maxy').nodeValue);
@@ -285,7 +287,7 @@ MapPaneOL.prototype.paint = function(objRef, refresh) {
       
       var baseLayerOptions = {
               units: units,
-              projection: proj.srsCode,
+              projection: proj,
               maxExtent: maxExtent,
              
               alpha: false,            //option for png transparency with ie6
@@ -328,6 +330,7 @@ MapPaneOL.prototype.paint = function(objRef, refresh) {
             },
             baseLayerOptions
           );
+          objRef.model.map.fractionalZoom = false;
         break;
     
         case "GMAP":
@@ -349,7 +352,8 @@ MapPaneOL.prototype.paint = function(objRef, refresh) {
               baseLayerType=G_HYBRID_MAP;
           }
           baseLayer = new OpenLayers.Layer.Google( baseLayerName , {type: baseLayerType, minZoomLevel: 0, maxZoomLevel:19, sphericalMercator: sphericalMercator }, baseLayerOptions );
-
+          objRef.model.map.numZoomLevels = 20;
+          objRef.model.map.fractionalZoom = false;
         break;
     
         case "YMAP":
@@ -359,6 +363,7 @@ MapPaneOL.prototype.paint = function(objRef, refresh) {
           //check if we have spherical projection
           var sphericalMercator = (objRef.model.getSRS()=='EPSG:900913')?true:false;          
           baseLayer = new OpenLayers.Layer.Yahoo(  baseLayerName , { maxZoomLevel:21, sphericalMercator: sphericalMercator }, baseLayerOptions );
+          objRef.model.map.fractionalZoom = false;
         break;
     
         case "VE":
@@ -380,6 +385,7 @@ MapPaneOL.prototype.paint = function(objRef, refresh) {
               baseLayerType=VEMapStyle.Hybrid;
           }
           baseLayer = new OpenLayers.Layer.VirtualEarth( baseLayerName,{minZoomLevel: 0, maxZoomLevel: 21,type: baseLayerType});
+          objRef.model.map.fractionalZoom = false;
         break;
     
         case "MultiMap":
@@ -387,6 +393,7 @@ MapPaneOL.prototype.paint = function(objRef, refresh) {
            //check if we have spherical projection
           var sphericalMercator = (objRef.model.getSRS()=='EPSG:900913')?true:false;          
           baseLayer = new OpenLayers.Layer.MultiMap( baseLayerName , { maxZoomLevel:21, sphericalMercator: sphericalMercator }, baseLayerOptions );
+          objRef.model.map.fractionalZoom = false;
         break;
         default:
           alert(mbGetMessage("layerTypeNotSupported", service));
@@ -417,7 +424,6 @@ MapPaneOL.prototype.paint = function(objRef, refresh) {
   else {
     objRef.deleteAllLayers(objRef);
   }
-  
     
   var layers = objRef.model.getAllLayers();
   if (!objRef.oLlayers){
@@ -729,7 +735,7 @@ MapPaneOL.prototype.addLayer = function(objRef, layerNode) {
           isBaseLayer: false,
           displayOutsideMaxExtent: objRef.displayOutsideMaxExtent
      };
-
+     
   switch(service){
     // WMS Layer (Untiled)
     case "OGC":
@@ -821,6 +827,7 @@ MapPaneOL.prototype.addLayer = function(objRef, layerNode) {
         },
         layerOptions
       );
+      objRef.model.map.fractionalZoom = false;
     break;
 
     // WFS Layer

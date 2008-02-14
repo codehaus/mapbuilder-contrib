@@ -1,6 +1,6 @@
 /*
 License: LGPL as per: http://www.gnu.org/copyleft/lesser.html
-$Id: Config.js 3753 2007-12-19 21:47:32Z ahocevar $
+$Id: Config.js 3746 2007-12-18 11:29:22Z ahocevar $
 */
 
 // Ensure this object's dependancies are loaded.

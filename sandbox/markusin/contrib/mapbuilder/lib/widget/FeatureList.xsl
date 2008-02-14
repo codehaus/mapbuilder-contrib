@@ -6,7 +6,7 @@
 Description: Convert a GML Feature or FeatureCollection into a HTML form.
 Author:      Cameron Shorter cameron ATshorter.net
 Licence:     LGPL as per: http://www.gnu.org/copyleft/lesser.html
-$Id: FeatureList.xsl 3739 2007-12-13 22:58:36Z ahocevar $
+$Id: FeatureList.xsl 3716 2007-12-11 01:19:54Z ahocevar $
 $Name$
 -->
 

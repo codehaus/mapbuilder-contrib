@@ -2,7 +2,7 @@
 Author:       Andreas Hocevar andreas.hocevarATgmail.com
 License:      LGPL as per: http://www.gnu.org/copyleft/lesser.html
 
-$Id: GmlRendererBase.js 3684 2007-12-05 23:41:01Z ahocevar $
+$Id: GmlRendererBase.js 3669 2007-12-03 23:38:45Z ahocevar $
 */
 
 // Ensure this object's dependancies are loaded.

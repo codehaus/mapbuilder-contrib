@@ -6,7 +6,7 @@ Purpose: This servlet will write the body content of a request to a file.
  *        Set the output directory as servlet init-param in web.xml
  
 License: LGPL as per: http://www.gnu.org/copyleft/lesser.html
-$Id: ProxyRedirect.java 3655 2007-11-28 21:48:50Z ahocevar $
+$Id: ProxyRedirect.java 3650 2007-11-28 00:26:06Z rdewit $
 **************************************************************************/
 package mapbuilder;
 

@@ -11,7 +11,7 @@ Description: provides a list of layers and controls for them (delete/visibility/
 Author:      Mike Adair
 Licence:     LGPL as specified in http://www.gnu.org/copyleft/lesser.html 
 
-$Id: LayerControlSld.xsl 3681 2007-12-05 23:09:17Z ahocevar $
+$Id: LayerControlSld.xsl 3607 2007-11-16 05:06:51Z rdewit $
 $Name:  $
 -->
   <xsl:output method="xml" encoding="utf-8" />

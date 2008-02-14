@@ -138,35 +138,43 @@ function DynamicFeatureRendererOL(widgetNode, model) {
 				
 				//pFrom = objRef.targetModel.map.getPixelFromLonLat(new OpenLayers.LonLat(pFrom.x,pFrom.y));
 				//pTo = objRef.targetModel.map.getPixelFromLonLat(new OpenLayers.LonLat(pTo.x,pTo.y));
-				var MIN_DISTANCE = 5; // TODO move into config param
-				if(pFrom.distanceTo(pTo) > MIN_DISTANCE) {
-					var f = Math.round(distance / MIN_DISTANCE);
-					if(f>1) {
+				var MIN_DISTANCE = 10; // TODO move into config param
+				var pixFrom = objRef.targetModel.map.getPixelFromLonLat(new OpenLayers.LonLat(pFrom.x,pFrom.y));
+				var pixTo = objRef.targetModel.map.getPixelFromLonLat(new OpenLayers.LonLat(pTo.x,pTo.y));
+				var distance = objRef.pixelDistance(pixFrom, pixTo);
+				if(distance > MIN_DISTANCE) {
+					var segments = Math.round(distance / MIN_DISTANCE);
+					if(segments > 1) {
 						var tFrom = instant[3].getTime();
 						var tTo = instant[1].getTime();
 						var timeDiff =  tTo - tFrom;
-						var timeSegm = timeDiff / f;
+						var timeSegm = timeDiff / segments;
 						var currentT = 0;
-						for(var i=0; i< f-1; i++){
+						var values = new Array();
+						for(var i=0; i< segments-1; i++){
+							var state = new Array();
 							currentT += timeSegm;
 							var interpolatedPoint = objRef.interpolate(tFrom+currentT, pointFrom, tFrom, pointTo, tTo);
 							//interpolatedPoint = objRef.targetModel.map.getPixelFromLonLat(new OpenLayers.LonLat(interpolatedPoint.x,interpolatedPoint.y))
-							marker.icon.url = 'http://www.inf.unibz.it/dis/bz10m/images/bus.gif';
-							window.setTimeout(objRef.paint, (timeSegm / window.movingObjectSimulator.speedFactor), objRef, marker, interpolatedPoint);
+//							state[0]= currentT / window.movingObjectSimulator.speedFactor;
+//							state[1] = interpolatedPoint;
+//							values[i]= state;
+							window.setTimeout(objRef.ippaint, (timeSegm / window.movingObjectSimulator.speedFactor), objRef, marker, interpolatedPoint);
 						}
-						marker.icon.url = 'http://www.inf.unibz.it/dis/bz10m/images/busRound.png';
-						window.setTimeout(objRef.paint, (timeSegm / window.movingObjectSimulator.speedFactor), objRef, marker, pTo);
-						
+						//objRef.interpolatedPaint(objRef, marker, values, 0);
+						//marker.icon.url = 'http://www.inf.unibz.it/dis/bz10m/images/busRound.png';
+						//window.setTimeout(objRef.paint, (timeDiff / window.movingObjectSimulator.speedFactor), objRef, marker, pTo);
+						delete values;
 					} else {
-						marker.icon.url = 'http://www.inf.unibz.it/dis/bz10m/images/busRound.png';
+						marker.setUrl('http://www.inf.unibz.it/dis/bz10m/images/busRound.png');
 						objRef.paint(objRef, marker, pTo);
 					}
 				} else {
-					marker.icon.url = 'http://www.inf.unibz.it/dis/bz10m/images/busRound.png';
+					marker.setUrl('http://www.inf.unibz.it/dis/bz10m/images/busRound.png');
 					objRef.paint(objRef, marker, pTo);
 				}
 			} else {
-				marker.icon.url = 'http://www.inf.unibz.it/dis/bz10m/images/busRound.png';
+				marker.setUrl('http://www.inf.unibz.it/dis/bz10m/images/busRound.png');
 				var pointTo = new OpenLayers.Geometry.Point(instant[2][0],instant[2][1]);
 				var pTo = Proj4js.transform(objRef.proj, objRef.epsg4326, pointTo);
 				//pTo = objRef.targetModel.map.getPixelFromLonLat(new OpenLayers.LonLat(pTo.x,pTo.y));
@@ -299,10 +307,10 @@ function DynamicFeatureRendererOL(widgetNode, model) {
 	 * @param {Object} p0
 	 * @param {Object} p1
 	 */
-	this.distance = function(x0,y0,x1,y1) {
-		var PX = x0 - x1;
-		var PY = y0 - y1;
-		return Math.sqrt(PX * PX + PY * PY);
+	this.pixelDistance = function(pixelFrom, pixelTo) {
+		var pX = pixelFrom.x - pixelTo.x;
+		var pY = pixelFrom.y - pixelTo.y;
+		return Math.sqrt(pX * pX + pY * pY);
 	}
 	
 	/**
@@ -319,5 +327,35 @@ function DynamicFeatureRendererOL(widgetNode, model) {
 					objRef.olLayer.drawMarker(marker);
 			}
 	}
-
+	
+	this.ippaint = function(objRef, marker, p) {
+			marker.setUrl('http://www.inf.unibz.it/dis/bz10m/images/bus.gif');
+			if(p){
+					marker.lonlat.lon = p.x;
+					marker.lonlat.lat = p.y;
+					marker.display(true);
+					objRef.olLayer.drawMarker(marker);
+			}
+	}
+	
+	
+	this.interpolatedPaint = function(objRef, marker, values, step){
+  	var argv = arguments;
+  	if (argv) {
+  		var objRef = argv[0];
+  		var marker = argv[1];
+  		var values = argv[2];
+  		var step = argv[3];
+  	}
+  	if (step < values.length) {
+			var st = step;
+			step++;
+  		marker.setUrl('http://www.inf.unibz.it/dis/bz10m/images/bus.gif');
+  		objRef.paint(objRef, marker, values[st][1]);
+  		window.setTimeout(objRef.interpolatedPaint, values[st][0], objRef, marker, values, st);
+  	}
+  	else {
+  		delete values;
+  	}
+  }
 }

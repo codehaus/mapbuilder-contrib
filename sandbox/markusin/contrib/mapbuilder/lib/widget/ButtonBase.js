@@ -1,6 +1,6 @@
 /*
 License: LGPL as per: http://www.gnu.org/copyleft/lesser.html
-$Id: ButtonBase.js 3688 2007-12-06 00:14:32Z ahocevar $
+$Id: ButtonBase.js 3678 2007-12-05 22:39:34Z ahocevar $
 */
 
 // Ensure this object's dependancies are loaded.

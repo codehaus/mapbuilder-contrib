@@ -1,6 +1,6 @@
 /*
 License: LGPL as per: http://www.gnu.org/copyleft/lesser.html
-$Id: WidgetBaseXSL.js 3739 2007-12-13 22:58:36Z ahocevar $
+$Id: WidgetBaseXSL.js 3814 2008-01-28 09:08:27Z ahocevar $
 */
 
 mapbuilder.loadScript(baseDir+"/widget/WidgetBase.js");
@@ -85,6 +85,7 @@ function WidgetBaseXSL(widgetNode,model) {
 
       //if (objRef.debug) mbDebugMessage(objRef, "source:"+(new XMLSerializer()).serializeToString(objRef.model.doc));
       objRef.resultDoc = objRef.model.doc; // resultDoc sometimes modified by prePaint()
+      objRef.model.setParam("prePaint", objRef);
       objRef.prePaint(objRef);
 
       //confirm inputs
@@ -114,6 +115,7 @@ function WidgetBaseXSL(widgetNode,model) {
   	    }
       }
       objRef.postPaint(objRef);
+      objRef.model.setParam("postPaint", objRef);
     }
   }
   // Call paint when model changes

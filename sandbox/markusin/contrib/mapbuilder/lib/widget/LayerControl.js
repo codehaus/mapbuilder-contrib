@@ -1,6 +1,6 @@
 /*
 License: GPL as per: http://www.gnu.org/copyleft/gpl.html
-$Id: LayerControl.js 3681 2007-12-05 23:09:17Z ahocevar $
+$Id: LayerControl.js 3607 2007-11-16 05:06:51Z rdewit $
 */
 
 // Ensure this object's dependancies are loaded.

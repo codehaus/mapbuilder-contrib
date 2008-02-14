@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <xs:schema targetNamespace="http://mapbuilder.sourceforge.net/mapbuilder" xmlns:mb="http://mapbuilder.sourceforge.net/mapbuilder" xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="0.2.1">
   <xs:annotation>
-    <xs:appinfo>$Id: config.xsd 3753 2007-12-19 21:47:32Z ahocevar $</xs:appinfo>
+    <xs:appinfo>$Id: config.xsd 3818 2008-01-31 12:01:59Z ahocevar $</xs:appinfo>
     <xs:documentation xml:lang="en">
       <xs:description>Application schema for Mapbuilder runtime configuration</xs:description>
       <xs:copyright>License: LGPL as per: http://www.gnu.org/copyleft/lesser.html</xs:copyright>
@@ -609,6 +609,11 @@
               <xs:documentation>The model which will be populated with the server response from a transaction request.</xs:documentation>
             </xs:annotation>
           </xs:element>
+          <xs:element name="appendOnEdit" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>Should a new empty feature be appended to the model after creating one? Default is true.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
           <xs:element name="featureXpath" type="xs:string">
             <xs:annotation>
               <xs:documentation>Xpath of the gml:coordinates in the FeatureCollection that will be updated.</xs:documentation>
@@ -850,7 +855,11 @@
       <xs:extension base="mb:AbstractWidgetBaseType">
         <xs:sequence>
           <xs:element name="loadingSrc" type="mb:urlPathType" minOccurs="0"/>
-          <xs:element name="maxExtent" type="xs:string" minOccurs="0"/>
+          <xs:element name="maxExtent" type="xs:string" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Sets the maximum extent of the map. This is not the initial extent when the map is loaded (that's the bounding box from the context), but it is the maximum extent that the user can navigate around in.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
           <xs:element name="maxResolution" type="xs:double" minOccurs="0"/>
           <xs:element name="minResolution" type="xs:double" minOccurs="0"/>
           <xs:element name="resolutions" type="xs:string" minOccurs="0">
@@ -1163,6 +1172,9 @@
     <xs:annotation>
       <xs:documentation>Popup using OpenLayers popups.</xs:documentation>
     </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="mb:TipWidgetBaseType"/>
+    </xs:complexContent>
   </xs:complexType>
   <xs:complexType name="TraceType">
     <xs:annotation>

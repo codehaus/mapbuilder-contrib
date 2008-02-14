@@ -5,7 +5,7 @@ Description: parses an OGC context document to generate a GetFeatureInfo url
 Author:      Nedjo
 Licence:     LGPL as specified in http://www.gnu.org/copyleft/lesser.html .
 
-$Id: GetFeatureInfo.xsl 3616 2007-11-19 21:24:52Z ahocevar $
+$Id: GetFeatureInfo.xsl 3599 2007-11-13 16:28:26Z ahocevar $
 $Name$
 -->
 <xsl:stylesheet version="1.0" xmlns:wmc="http://www.opengis.net/context" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ows="http://www.opengis.net/ows">

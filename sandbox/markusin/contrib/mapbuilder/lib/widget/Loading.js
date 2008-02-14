@@ -1,6 +1,6 @@
 /*
 License: LGPL as per: http://www.gnu.org/copyleft/lesser.html
-$Id: Loading.js 3739 2007-12-13 22:58:36Z ahocevar $
+$Id: Loading.js 3702 2007-12-09 23:24:11Z ahocevar $
 */
 
 // Ensure this object's dependancies are loaded.

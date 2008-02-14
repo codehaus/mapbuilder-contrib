@@ -2,7 +2,7 @@
 Author:       Gertjan van Oosten gertjan at west dot nl
 License:      LGPL as per: http://www.gnu.org/copyleft/lesser.html
 
-$Id: OverviewMap.js 3686 2007-12-05 23:58:14Z ahocevar $
+$Id: OverviewMap.js 3820 2008-02-01 12:45:34Z ahocevar $
 */
 
 // Ensure this object's dependancies are loaded.
@@ -135,9 +135,9 @@ OverviewMap.prototype.addOverviewMap = function(objRef) {
     }
 
     // make all layers visible
-		for (var i = 0; i < options.layers.length; i++) {
-			options.layers[i].setVisibility(true);
-		}
+    for (var i=0; i<options.layers.length; i++) {
+      options.layers[i].setVisibility(true);
+    }
   }
 }
 

@@ -1,6 +1,6 @@
 /*
 License: LGPL as per: http://www.gnu.org/copyleft/lesser.html
-$Id: TipWidgetOL.js 3616 2007-11-19 21:24:52Z ahocevar $
+$Id: TipWidgetOL.js 3576 2007-11-11 02:30:49Z ahocevar $
 */
 
 // Ensure this object's dependancies are loaded.

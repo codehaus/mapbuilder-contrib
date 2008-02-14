@@ -2,7 +2,7 @@
 Author:       Mike Adair  mike.adairATccrs.nrcan.gc.ca
 License:      LGPL as per: http://www.gnu.org/copyleft/lesser.html
 
-$Id: WebServiceRequest.js 3690 2007-12-06 10:15:26Z ahocevar $
+$Id: WebServiceRequest.js 3689 2007-12-06 10:12:59Z ahocevar $
 */
 
 // Ensure this object's dependancies are loaded.

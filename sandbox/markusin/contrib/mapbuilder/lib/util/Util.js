@@ -2,7 +2,7 @@
 License:      LGPL as per: http://www.gnu.org/copyleft/lesser.html
 Dependancies: Sarissa
 
-$Id: Util.js 3783 2007-12-22 12:25:05Z ahocevar $
+$Id: Util.js 3821 2008-02-01 13:58:30Z ahocevar $
 */
 
 // some basic browser detection
@@ -690,6 +690,15 @@ function sld2UrlParam(node) {
  * @return OpenLayers style object
  */
 function sld2OlStyle(node) {
+  // OpenLayers SLD parsing
+  var ruleNode = node.selectSingleNode("wmc:SLD/sld:FeatureTypeStyle");
+  if (ruleNode) {
+    var format = new OpenLayers.Format.SLD();
+    return new OpenLayers.Format.SLD().parseUserStyle(ruleNode);
+  }
+  
+  // fallback to native SLD parsing for older OwsContext docs
+  
   // sld-conform default style
   var defaultStyle = {
             fillColor: "#808080",

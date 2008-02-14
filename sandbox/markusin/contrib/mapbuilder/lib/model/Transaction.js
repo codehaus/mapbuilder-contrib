@@ -1,6 +1,6 @@
 /*
 License: LGPL as per: http://www.gnu.org/copyleft/lesser.html
-$Id: Transaction.js 3658 2007-11-29 19:26:53Z ahocevar $
+$Id: Transaction.js 3657 2007-11-29 09:04:26Z gjvoosten $
 */
 
 // Ensure this object's dependancies are loaded.

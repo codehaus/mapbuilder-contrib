@@ -1,7 +1,7 @@
 /*
 License: LGPL as per: http://www.gnu.org/copyleft/lesser.html
 Dependancies: Context
-$Id: MovieLoop.js 3783 2007-12-22 12:25:05Z ahocevar $
+$Id: MovieLoop.js 3782 2007-12-22 12:16:45Z ahocevar $
 */
 
 // Ensure this object's dependancies are loaded.

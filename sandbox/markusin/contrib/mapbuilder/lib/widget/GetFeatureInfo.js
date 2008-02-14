@@ -1,7 +1,7 @@
 /*
 License: LGPL as per: http://www.gnu.org/copyleft/lesser.html
 Dependancies: Context
-$Id: GetFeatureInfo.js 3739 2007-12-13 22:58:36Z ahocevar $
+$Id: GetFeatureInfo.js 3703 2007-12-10 00:48:43Z rdewit $
 */
 
 // Ensure this object's dependancies are loaded.

@@ -103,13 +103,10 @@ if(_SARISSA_HAS_DOM_FEATURE && document.implementation.hasFeature("XPath", "3.0"
             var ns = namespaces[i];
             var colonPos = ns.indexOf(":");
             var assignPos = ns.indexOf("=");
-            if(colonPos > 0) {
-							if(assignPos > colonPos+1){
+            if(colonPos > 0 && assignPos > colonPos+1){
                 var prefix = ns.substring(colonPos+1, assignPos);
                 var uri = ns.substring(assignPos+2, ns.length-1);
                 oDoc._sarissa_xpathNamespaces[prefix] = uri;
-							} else{  // do not set namespace
-							}
             }else{
                 throw "Bad format on namespace declaration(s) given";
             };

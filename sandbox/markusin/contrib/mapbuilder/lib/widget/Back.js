@@ -1,7 +1,7 @@
 /*
 Author:       Steven Ottens AT geodan.nl
 License: LGPL as per: http://www.gnu.org/copyleft/lesser.html
-$Id: Back.js 3616 2007-11-19 21:24:52Z ahocevar $
+$Id: Back.js 3587 2007-11-12 12:24:58Z ahocevar $
 */
 
 // Ensure this object's dependancies are loaded.

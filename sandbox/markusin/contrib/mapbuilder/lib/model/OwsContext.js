@@ -1,6 +1,6 @@
 /*
 License: LGPL as per: http://www.gnu.org/copyleft/lesser.html
-$Id: OwsContext.js 3739 2007-12-13 22:58:36Z ahocevar $
+$Id: OwsContext.js 3821 2008-02-01 13:58:30Z ahocevar $
 */
 
 // Ensure this object's dependancies are loaded.
@@ -141,7 +141,7 @@ function OwsContext(modelNode, parent) {
    * @return Proj Object of  The Spatial Reference System.
    */
   this.initProj=function(objRef) {
-    objRef.proj=new Proj4js.Proj(objRef.getSRS());
+    objRef.proj=new OpenLayers.Projection(objRef.getSRS());
   }
   this.addFirstListener( "loadModel", this.initProj, this );
 

@@ -1,6 +1,6 @@
 /*
 License: LGPL as per: http://www.gnu.org/copyleft/lesser.html
-$Id: Timestamp.js 3739 2007-12-13 22:58:36Z ahocevar $
+$Id: Timestamp.js 3714 2007-12-10 23:50:12Z ahocevar $
 */
 
 // Ensure this object's dependancies are loaded.

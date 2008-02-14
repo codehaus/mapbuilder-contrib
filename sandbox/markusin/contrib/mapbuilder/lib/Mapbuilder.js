@@ -1,6 +1,6 @@
 /*
 License: LGPL as per: http://www.gnu.org/copyleft/lesser.html
-$Id: Mapbuilder.js 3753 2007-12-19 21:47:32Z ahocevar $
+$Id: Mapbuilder.js 3819 2008-02-01 00:31:29Z ahocevar $
 */
 
 /** get a time stamp at start of the page load */
@@ -175,7 +175,10 @@ function Mapbuilder() {
         // add to dom tree, except if we are using IE and want to load ordered
         document.getElementsByTagName('head')[0].appendChild(script);
       }
-      this.loadingScripts.push(script);
+      if (document.readyState) {
+        // this is only needed for IE
+        this.loadingScripts.push(script);
+      }
     }
   }
    
@@ -239,20 +242,22 @@ function Mapbuilder() {
   }
 
   //derive the baseDir value by looking for the script tag that loaded this file
-  var head = document.getElementsByTagName('head')[0];
-  var nodes = head.childNodes;
-  for (var i=0; i<nodes.length; ++i ){
-    var src = nodes.item(i).src;
-    if (src) {
-      //var index = src.indexOf("/Mapbuilder.js");
-      // Modified so it will work with original or compressed file
-      var index = src.indexOf("/Mapbuilder.js");
-      if (index>=0) {
-        baseDir = src.substring(0, index);
-      } else {
-        index = src.indexOf("/MapbuilderCompressed.js");
+  if (!baseDir) {
+    var head = document.getElementsByTagName('head')[0];
+    var nodes = head.childNodes;
+    for (var i=0; i<nodes.length; ++i ){
+      var src = nodes.item(i).src;
+      if (src) {
+        //var index = src.indexOf("/Mapbuilder.js");
+        // Modified so it will work with original or compressed file
+        var index = src.indexOf("/Mapbuilder.js");
         if (index>=0) {
           baseDir = src.substring(0, index);
+        } else {
+          index = src.indexOf("/MapbuilderCompressed.js");
+          if (index>=0) {
+            baseDir = src.substring(0, index);
+          }
         }
       }
     }

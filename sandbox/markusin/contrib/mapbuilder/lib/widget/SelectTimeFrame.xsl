@@ -9,7 +9,7 @@ Description: Displays the Title value from a Web Map Context document
 Author:      Mike Adair
 Licence:     LGPL as per: http://www.gnu.org/copyleft/lesser.html
 
-$Id: SelectTimeFrame.xsl 3681 2007-12-05 23:09:17Z ahocevar $
+$Id: SelectTimeFrame.xsl 3607 2007-11-16 05:06:51Z rdewit $
 $Name:  $
 -->
 
