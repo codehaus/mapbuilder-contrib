@@ -2,17 +2,19 @@
 <MapbuilderConfig version="0.2.1" id="DemisMapExample"
  xmlns="http://mapbuilder.sourceforge.net/mapbuilder"
  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
- xsi:schemaLocation="http://mapbuilder.sourceforge.net/mapbuilder ../javascript/mapbuilder/lib/schemas/config.xsd">
+ xsi:schemaLocation="http://mapbuilder.sourceforge.net/mapbuilder ../../lib/schemas/config.xsd">
  <models>
   <OwsContext id="mainMap">
    <defaultModelUrl>context_maps.xml</defaultModelUrl>
    <widgets>
     <MapPaneOL id="mainMapWidget">
-     <htmlTagId>mainMapPane</htmlTagId>
-     <fixedSize>true</fixedSize>
+      <htmlTagId>mainMapPane</htmlTagId>
+      <fixedSize>true</fixedSize>
+      <!--singleTile>false</singleTile-->
+      <!--displayOutsideMaxExtent>true</displayOutsideMaxExtent-->
     </MapPaneOL>
     <!-- 
-    <MapScaleBar id="scalebar">
+    <MapScaleBar id="scalebar"> 
      <displaySystem>metric</displaySystem>
      <minWidth>100</minWidth>
      <maxWidth>200</maxWidth>
@@ -42,8 +44,8 @@
     <QueryWidget id="queryPane">
       <targetModel>gml2DynamicFeatureTemplate</targetModel>
       <requestStylesheet>wfs_GetFeature.xsl</requestStylesheet>
-      <!-- webServiceUrl>http://maps.inf/xsecondo/wfs</webServiceUrl-->
-      <webServiceUrl>http://furchetta.inf.unibz.it/bz10m/wfs</webServiceUrl>
+      <webServiceUrl>http://maps.inf/xsecondo/wfs</webServiceUrl>
+      <!--webServiceUrl>http://furchetta.inf.unibz.it/bz10m/wfs</webServiceUrl-->
       <dynamicProperty>history</dynamicProperty>
       <fromDateId>fromDate</fromDateId>
       <toDateId>toDate</toDateId>      
@@ -58,6 +60,30 @@
     </OverviewMap>
    </widgets>
   </OwsContext>
+  <!-- 
+  <OwsContext id="locator">
+    <defaultModelUrl>data/contextLocator.xml</defaultModelUrl>
+    <widgets>
+      <MapPaneOL id="locatorWidget">
+        <htmlTagId>locatorMap</htmlTagId>
+      </MapPaneOL>
+      <AoiBoxDHTML id="aoiBoxLocator">
+        <htmlTagId>locatorMap</htmlTagId>
+        <stylesheet>../lib/widget/GmlRenderer.xsl</stylesheet>
+        <lineColor>red</lineColor>
+        <lineWidth>2</lineWidth>
+        <crossSize>15</crossSize>
+        <mapContainerId>locatorContainer</mapContainerId>
+      </AoiBoxDHTML>
+    </widgets>
+    <tools>
+      <AoiMouseHandler id="locatorAoi"/>
+      <ZoomToAoi id="locatorZoomToAoi">
+        <targetModel>mainMap</targetModel>
+      </ZoomToAoi>
+    </tools>
+  </OwsContext>
+   -->
   <DynamicFeatureCollection id="gml2DynamicFeatureTemplate">
    <method>post</method>
    <widgets>
