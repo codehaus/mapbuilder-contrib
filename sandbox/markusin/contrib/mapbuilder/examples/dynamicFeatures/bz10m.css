@@ -62,8 +62,8 @@
 
 .locatorMapPane {
 	position: absolute;
-	top: 0px;
-	left: 0px;
+	bottom: 0px;
+	right: 0px;
 	border: thin;
 	border-color: gray;
 	border-style: solid;

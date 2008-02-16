@@ -158,39 +158,69 @@ function MovingObjectSimulator(toolNode, model) {
    */
   this.play = function(objRef) {
 		var oneIsRunning = false;
-  	if (!objRef.isRunning) {
-			objRef.model.parentModel.objects.play.enabled=true;
-			// TODO find better solution!
-			var playButtonHtmlId = objRef.model.parentModel.objects.play.htmlTagId;
-  		var el = document.getElementById(playButtonHtmlId);
-  		if (el) {
-  			el.setAttribute("style", "visibility: visible");
-  		}
-			
-			
-			if(objRef.allFeatureIds.size()>0) {
-				for(var i=0; i < objRef.allFeatureIds.size(); i++) {
-					var featureId = objRef.allFeatureIds.keys[i];
-					var featureSize = objRef.allFeatureIds.get(featureId);
-					var step = objRef.currentFeatureIndex.get(featureId);
-					if(step < featureSize) {
-						var instant = objRef.model.getTrajectoryByIndex(featureId,step);
-						var prevDate = null;
-						var delayTime = null;
-						if(step == 0) {
-							prevDate = objRef.startDate;
-						} else {
-							prevDate = objRef.model.getTrajectoryByIndex(featureId,step-1)[1];
-						}
-						delayTime = (instant[1] - prevDate) / objRef.speedFactor;
-						oneIsRunning = true;
-						var timer = window.setTimeout(objRef.run, delayTime, objRef, featureId, instant, step);
-						objRef.timers.put(featureId,timer);	
-					}
+		if (objRef) {
+			if (!objRef.isRunning) {
+				objRef.model.parentModel.objects.play.enabled = true;
+				// TODO find better solution!
+				var playButtonHtmlId = objRef.model.parentModel.objects.play.htmlTagId;
+				var el = document.getElementById(playButtonHtmlId);
+				if (el) {
+					el.setAttribute("style", "visibility: visible");
 				}
-				this.isRunning = oneIsRunning;
-			} else {
-				alert("No dynamic feature was specified and queried");
+				
+				
+				if (objRef.allFeatureIds.size() > 0) {
+					for (var i = 0; i < objRef.allFeatureIds.size(); i++) {
+						var featureId = objRef.allFeatureIds.keys[i];
+						var featureSize = objRef.allFeatureIds.get(featureId);
+						var step = objRef.currentFeatureIndex.get(featureId);
+						if (step < featureSize) {
+							var instant = objRef.model.getTrajectoryByIndex(featureId, step);
+							var prevDate = null;
+							var delayTime = null;
+							if (step == 0) {
+								prevDate = objRef.startDate;
+							}
+							else {
+								prevDate = objRef.model.getTrajectoryByIndex(featureId, step - 1)[1];
+							}
+							delayTime = (instant[1] - prevDate) / objRef.speedFactor;
+							oneIsRunning = true;
+							var timer = window.setTimeout(objRef.run, delayTime, objRef, featureId, instant, step);
+							objRef.timers.put(featureId, timer);
+						}
+					}
+					objRef.isRunning = oneIsRunning;
+				}
+				else {
+					alert("No dynamic feature was specified and queried");
+				}
+			}
+		} else {
+			if (!this.isRunning) {
+	  		if (this.allFeatureIds.size() > 0) {
+					for (var i = 0; i < this.allFeatureIds.size(); i++) {
+						var featureId = this.allFeatureIds.keys[i];
+						var featureSize = this.allFeatureIds.get(featureId);
+						var step = this.currentFeatureIndex.get(featureId);
+						if (step < featureSize) {
+							var instant = this.model.getTrajectoryByIndex(featureId, step);
+							var prevDate = null;
+							var delayTime = null;
+							if (step == 0) {
+								prevDate = this.startDate;
+							}
+							else {
+								prevDate = this.model.getTrajectoryByIndex(featureId, step - 1)[1];
+							}
+							delayTime = (instant[1] - prevDate) / this.speedFactor;
+							oneIsRunning = true;
+							var timer = window.setTimeout(this.run, delayTime, this, featureId, instant, step);
+							this.timers.put(featureId, timer);
+						}
+					}
+					this.isRunning = oneIsRunning;
+				}
 			}
 		}
   }

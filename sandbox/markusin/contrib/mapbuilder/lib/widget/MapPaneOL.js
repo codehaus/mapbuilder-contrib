@@ -351,7 +351,8 @@ MapPaneOL.prototype.paint = function(objRef, refresh) {
             default:
               baseLayerType=G_HYBRID_MAP;
           }
-          baseLayer = new OpenLayers.Layer.Google( baseLayerName , {type: baseLayerType, minZoomLevel: 0, maxZoomLevel:19, sphericalMercator: sphericalMercator }, baseLayerOptions );
+					
+          baseLayer = new OpenLayers.Layer.Google( baseLayerName , {type: baseLayerType, 'minZoomLevel': 0, 'maxZoomLevel':19, sphericalMercator: sphericalMercator }, baseLayerOptions );
           objRef.model.map.numZoomLevels = 20;
           objRef.model.map.fractionalZoom = false;
         break;
