@@ -62,6 +62,15 @@
     </ows:ServiceProvider>
   </General>
   <ResourceList>
+  	<ows:BaseLayer>
+    <Server service="Google"/>
+      <Name>Google Hybrid</Name>
+      <ows:TileSet>
+        <ows:SRS>EPSG:900913</ows:SRS>
+        <ows:BoundingBox SRS="EPSG:900913" minx="-20037508" miny="-20037508" maxx="20037508" maxy="20037508.34"/> 
+        <ows:Layers>hybrid</ows:Layers>
+      </ows:TileSet>
+    </ows:BaseLayer>
     <Layer queryable="1" hidden="1">
       <Server service="OGC:WMS" version="1.1.1" title="bz10m:censuses Preview">
         <OnlineResource id="defaultWmsHost" xlink:type="simple" xlink:href="http://maps.inf.unibz.it/geoserver/wms"/>

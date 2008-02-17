@@ -5,7 +5,7 @@
  xsi:schemaLocation="http://mapbuilder.sourceforge.net/mapbuilder ../../lib/schemas/config.xsd">
  <models>
   <OwsContext id="mainMap">
-   <defaultModelUrl>context_maps.xml</defaultModelUrl>
+   <defaultModelUrl>../data/context/mapsBz10m.xml</defaultModelUrl>
    <widgets>
     <MapPaneOL id="mainMapWidget">
       <htmlTagId>mainMapPane</htmlTagId>
@@ -45,7 +45,7 @@
     <QueryWidget id="queryPane">
       <targetModel>gml2DynamicFeatureTemplate</targetModel>
       <requestStylesheet>wfs_GetFeature.xsl</requestStylesheet>
-      <webServiceUrl>http://maps.inf/xsecondo/wfs</webServiceUrl>
+      <webServiceUrl>http://maps.inf.unibz.it/xsecondo/wfs</webServiceUrl>
       <!--webServiceUrl>http://furchetta.inf.unibz.it/bz10m/wfs</webServiceUrl-->
       <dynamicProperty>history</dynamicProperty>
       <fromDateId>fromDate</fromDateId>

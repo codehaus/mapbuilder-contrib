@@ -71,6 +71,13 @@ function DynamicFeatureCollection(modelNode, parent) {
 		return this.maxTimeInstant;
 	}
 	
+	/**
+	 * 
+	 */
+	this.getEnvelopWithTimePeriod = function() {
+		return new Array(getMinTimeInstant(), getMaxTimeInstant());
+	}
+	
 	this.init = function(objRef) {
 		if(modelNode.selectSingleNode("mb:trace")) {
 			objRef.parentModel.trace = true;
@@ -207,6 +214,18 @@ function DynamicFeatureCollection(modelNode, parent) {
 	 */
 	this.getTrajectory = function(featureId) {
 		return this.features.get(featureId);
+	}
+	
+	/**
+ 	 * 
+ 	 * @param {Object} featureId
+ 	*/
+	this.first = function(featureId) {
+		var dynamicProperty = this.getFeatureById(featureId);
+		if(dynamicProperty){
+			return dynamicProperty[0];
+		}
+		return null;
 	}
 	
 	
