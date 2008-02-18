@@ -42,7 +42,7 @@ function DynamicFeatureRendererOL(widgetNode, model) {
 	var opacityNode = widgetNode.selectSingleNode("mb:iconOpacity");
 	this.opacity = opacityNode ? opacityNode.firstChild.nodeValue : "0.8";
 	
-	this.markers = new OpenLayers.Layer.Markers("Markers");
+	this.markers = new OpenLayers.Layer.Markers("Markers", {calculateInRange: function(){return true}});
 	var	iconSize = new OpenLayers.Size(this.size[0],this.size[1]);
 	this.icon = new OpenLayers.Icon(this.iconURL, iconSize, new OpenLayers.Pixel(-(iconSize.w/2), -iconSize.h));
 	this.allMarkers = new Hashtable(); // for each featureMember an own marker
@@ -72,7 +72,7 @@ function DynamicFeatureRendererOL(widgetNode, model) {
       }
 		}
 		
-		objRef.olLayer = new OpenLayers.Layer.Markers( "Markers" );
+		objRef.olLayer = new OpenLayers.Layer.Markers("Markers", {calculateInRange: function(){return true}});
 		objRef.targetModel.map.addLayer(objRef.olLayer);
 		
 		var allFeatureIds = objRef.model.getAllFeatureIds();
@@ -80,22 +80,15 @@ function DynamicFeatureRendererOL(widgetNode, model) {
 			// workaround, setting it to that value
 			var p = objRef.model.getTrajectoryByIndex(allFeatureIds[index],0)[2];
 			var position = new OpenLayers.LonLat(p[0],p[1]);
-			var marker = new OpenLayers.Marker(position,objRef.icon.clone());
+			
+			var marker = new OpenLayers.Marker(position, objRef.icon.clone());
 			marker.setOpacity(objRef.opacity);
 			objRef.olLayer.addMarker(marker);
-//			marker.display(false);
 			objRef.allMarkers.put(allFeatureIds[index],marker);
 		}
 		objRef.model.setParam('gmlRendererLayer', objRef.olLayer);
   }
   this.model.addListener("refresh",this.init, this);
-  //TBD I (ahocevar) am not exactly sure why using the newModel
-  // event breaks InsertFeature and DeleteFeature, but only
-  // when used for the first time when no vector rendering was
-  // done before on the GmlRendererLayer. I added a call for the
-  // refreshGmlRenderes listeners in DeleteFeature.js and
-  // InsertFeature.js, and if we listen to that event here
-  // it works.
   this.model.addListener("refreshGmlRenderers",this.init, this);
 	
 	/**
@@ -233,7 +226,7 @@ function DynamicFeatureRendererOL(widgetNode, model) {
 			objRef.makers.removeMarker(marker);
 		}
 		point = timeInstant[2];
-		marker = new OpenLayers.Marker(new OpenLayers.LonLat(point[0],point[1]),busIcon.clone);
+		marker = new OpenLayers.Marker(new OpenLayers.LonLat(point[0],point[1]),busIcon.clone );
 		marker.setOpacity(opacity);
 		marker.events.register('dbclick', marker, function(evt) { alert(this.icon.url); Event.stop(evt); });
 		markers.addMarker(marker);
