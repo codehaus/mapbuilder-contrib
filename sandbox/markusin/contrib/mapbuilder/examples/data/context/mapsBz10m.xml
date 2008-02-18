@@ -71,31 +71,6 @@
         <ows:Layers>hybrid</ows:Layers>
       </ows:TileSet>
     </ows:BaseLayer>
-    <Layer queryable="1" hidden="1">
-      <Server service="OGC:WMS" version="1.1.1" title="bz10m:censuses Preview">
-        <OnlineResource id="defaultWmsHost" xlink:type="simple" xlink:href="http://maps.inf.unibz.it/geoserver/wms"/>
-      </Server>
-      <Name>bz10m:censuses</Name>
-      <Title>Censuses</Title>
-      <FormatList><Format current="1">image/png</Format></FormatList>
-    </Layer>
-    <Layer queryable="1" hidden="0">
-      <Server service="OGC:WMS" version="1.1.1" title="bz10m:rivers">
-        <OnlineResource xlink:type="simple" xlink:href="http://maps.inf.unibz.it/geoserver/wms"/>
-      </Server>
-      <Name>bz10m:rivers</Name>
-      <Title>Rivers</Title>
-      <FormatList><Format current="1">image/png</Format></FormatList>
-    </Layer>
-    <Layer queryable="1" hidden="1">
-      <Server service="OGC:WMS" version="1.1.1" title="bz10m:buildings Preview">
-        <OnlineResource xlink:type="simple" xlink:href="http://maps.inf.unibz.it/geoserver/wms"/>
-      </Server>
-      <SRS>EPSG:900913</SRS>
-      <Name>bz10m:buildings</Name>
-      <Title>Buildings</Title>
-      <FormatList><Format current="1">image/png</Format></FormatList>
-    </Layer>
     <Layer queryable="1" hidden="0">
       <Server service="OGC:WMS" version="1.1.1" title="bz10m:route10a Preview">
         <OnlineResource xlink:type="simple" xlink:href="http://maps.inf.unibz.it/geoserver/wms"/>

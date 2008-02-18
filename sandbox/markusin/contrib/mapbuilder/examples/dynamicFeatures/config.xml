@@ -10,6 +10,7 @@
     <MapPaneOL id="mainMapWidget">
       <htmlTagId>mainMapPane</htmlTagId>
       <fixedSize>true</fixedSize>
+      <!-- loadingSrc>true</loadingSrc-->
       <!--singleTile>false</singleTile-->
       <!--displayOutsideMaxExtent>true</displayOutsideMaxExtent-->
     </MapPaneOL>
