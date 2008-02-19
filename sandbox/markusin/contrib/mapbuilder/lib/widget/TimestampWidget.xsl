@@ -16,7 +16,7 @@ $Id: TimestampWidget.xsl 2576 2007-02-19 09:14:01Z markusin $
   
   <!-- text value params -->
   <xsl:param name="showDate">false</xsl:param>
-	<xsl:param name="timeStampLabel">Current Timestamp: </xsl:param>
+	<xsl:param name="timeStampLabel">Time: </xsl:param>
   
   <!-- The name of the form for the output of the current timestamp -->
   <xsl:param name="formName"/>

@@ -46,13 +46,13 @@ function TimestampWidget(widgetNode, model) {
 			var timeStampField = document.getElementById(objRef.formName).timeStamp;
 			if(timeStampField) {
 				if(objRef.displayDate) {
-					if(objRef.displayDate < tStamp) {
-						objRef.displayDate = tStamp;
-						timeStampField.value = tStamp.toLocaleString();
+					if(objRef.displayDate.getTime() < tStamp) {
+						objRef.displayDate.setTime(tStamp);
+						timeStampField.value = objRef.displayDate.toLocaleString();
 					}
 				} else {
-					objRef.displayDate = tStamp;
-					timeStampField.value = tStamp.toLocaleString();	
+					objRef.displayDate = new Date(tStamp);
+					timeStampField.value = objRef.displayDate.toLocaleString();	
 				}
 			}
 		}

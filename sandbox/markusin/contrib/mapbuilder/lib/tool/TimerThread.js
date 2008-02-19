@@ -32,18 +32,10 @@ function TimerThread(toolNode, model) {
     clearInterval(objRef.interval);
 		
 		var startTime = objRef.model.getMinTimeInstant();
-		var endTime = objRef.model.getMaxTimeInstant();
+		objRef.endTime = objRef.model.getMaxTimeInstant().getTime();
+		objRef.dynamicFeatureIds = objRef.model.getAllFeatureIds();
 		
-		var featuresIds = objRef.model.getAllFeatureIds();
-		objRef.features = new Hashtable();
-		for (var i = 0; i < featuresIds.size(); i++) {
-			objRef.model.callListeners("enableDynamicFeature", featureId[i], timestamp);
-			var unit = objRef.model.first(featureId[i]);
-			objRef.features.put(featureId[i], unit);
-		}
-		
-  	//alert("about to set timer for "+this.delay+" millisecs: "+workString); 
-    this.interval = setInterval(run,objRef, timestamp);
+    objRef.run(objRef, startTime.getTime(), objRef.delay);
   }
 	this.model.addListener("loadModel",this.init, this);
 	
@@ -52,34 +44,36 @@ function TimerThread(toolNode, model) {
 	 * @param {Object} objRef
 	 * @param {Object} timestamp
 	 */
-	this.run = function(objRef, timestamp, delay){
+	this.run = function(objRef, tStamp, delay){
 		var argv = arguments;
 		if(argv) {
 			var objRef = argv[0];
-			var timestamp = argv[1];
-			var delay = argv[2];
-  		timestamp += delay; 
-			if(timestamp>=objRef.endTime) {
+			var tStamp = argv[1];
+			tStamp += delay;
+			if(tStamp >= objRef.endTime) {
 				clearInterval(objRef.timer);
-			// notify listeners
-			} else {
-				for (var i = 0; i < objRef.allFeatureIds.size(); i++) {
-					
-				}
-				this.timer = setTimeout(run, objRef, timestamp, delay);
+			} else { 
+				objRef.notify(objRef, tStamp); // notify all listeners
+				this.timer = setTimeout(objRef.run, delay, objRef, tStamp, delay);
 			}
 		}	
-			// notify all listeners
-		}
   }
 	
-	this.notify =  function (objRef, timestamp) {
-		objRef.model.callListeners("updateDynamicFeature", timestamp);
-		objRef.model.callListeners("updateTimestamp", timestamp);
-		objRef.model.callListeners("updateTimeBar", timestamp);
+	/**
+	 * 
+	 * @param {Object} objRef
+	 * @param {Object} timestamp
+	 */
+	this.notify =  function (objRef, tStamp) {
+		for(var i = 0; i < objRef.dynamicFeatureIds.length; i++) {
+			var fId = objRef.dynamicFeatureIds[i];
+			var coordinate = objRef.model.getCoordinate(objRef.model, fId, tStamp);
+			objRef.model.callListeners("updateDynamicFeature", new Array(fId, coordinate));
+		}
+//		objRef.model.callListeners("updateDynamicFeature", tStamp);
+		objRef.model.callListeners("updateTimestamp", tStamp);
+		objRef.model.callListeners("updateTimeBar", tStamp);
 	}
-	
-	
 	
   
 }

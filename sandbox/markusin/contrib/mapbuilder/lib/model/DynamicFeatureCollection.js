@@ -28,14 +28,12 @@ function DynamicFeatureCollection(modelNode, parent) {
 		this.nodeSelectXpath = "//gml:featureMember";
 	}
 	
-	this.dynamicPropertyType = "gml:history";
-	
-	// is the representation of the dynamic feature. Could be: history, track as GML standards and units as new introduced datatype 
-	var dynamicPropertyComponentTypeNode = modelNode.selectSingleNode("mb:dynamicPropertyComponentType");
-	if (dynamicPropertyComponentTypeNode) {
-	  this.dynamicPropertyComponent = dynamicPropertyComponentTypeNode.firstChild.nodeValue;
+	// is the representation of the dynamic feature. Can be: TimeSlice, MovingObjectStatus or MovingObjectUnit 
+	var dynamicPropertyTypeNode = modelNode.selectSingleNode("mb:dynamicPropertyType");
+	if (dynamicPropertyTypeNode) {
+	  this.dynamicPropertyType = dynamicPropertyTypeNode.firstChild.nodeValue;
 	} else {
-	  this.dynamicPropertyComponent = "gml:MovingObjectUnit";
+	  this.dynamicPropertyType = "gml:MovingObjectUnit";
 	}
 	
 	var boundedByNode = modelNode.selectSingleNode("mb:boundedBy");
@@ -56,6 +54,7 @@ function DynamicFeatureCollection(modelNode, parent) {
 	//declare an instance
 	this.locations = new Hashtable();
 	this.features = new Hashtable();
+	this.unitBuffer = new Hashtable();
 	
 	var minTimeInstant;
 	var maxTimeInstant;
@@ -98,87 +97,97 @@ function DynamicFeatureCollection(modelNode, parent) {
 		}
 		var root = objRef.doc.firstChild; 
 		
-		if(root.nodeName.toLowerCase() == "exceptionreport") {
+		if (root.nodeName.toLowerCase() == "exceptionreport") {
 			var errorMessage = root.firstChild.firstChild;
-			if(errorMessage) {
-				alert(errorMessage.firstChild.nodeValue);	
-			} else {
-				alert("An exception has occured. See stacktrace on server!");	
+				if (errorMessage) {
+					alert(errorMessage.firstChild.nodeValue);
+				} else {
+				alert("An exception has occured. See stacktrace on server!");
 			}
-		} else if(root.nodeName.toLowerCase() == "wfs:featurecollection") {
-				if(root.childNodes.length > 0) {
-					var featureMemberNodes = objRef.doc.selectNodes(objRef.nodeSelectXpath);
-					for(var i = 0; i < featureMemberNodes.length; i++) {
-						var prefix = featureMemberNodes[i].prefix;
-						//var fid = featureMemberNodes[i].getAttribute((prefix) ? prefix+"id" : "id");
-						var fid = featureMemberNodes[i].getAttribute("id");
-						var trajectory = new Array(); // contains one or more continuousTrajectories
-						// there should only be one, defined in the grammar 
-						var dynamicProperty = featureMemberNodes[i].firstChild.selectSingleNode(objRef.dynamicPropertyType);
-						//contains the sequence of the states or intervals of the moving entity
-						var dynamicComponents = dynamicProperty.selectNodes(objRef.dynamicPropertyComponent);
-						for(var j = 0; j < dynamicComponents.length; j++) {
-							var dynamicComponent =  dynamicComponents[j];
-							//var id = dynamicComponent.getAttribute((prefix) ? prefix+"id" : "id");
-							var id = dynamicComponent.getAttribute("id");
-							var time = setISODate(dynamicComponent.selectSingleNode("gml:validTime/gml:TimeInstant/gml:timePosition").firstChild.nodeValue);
-							var locationNode = dynamicComponent.selectSingleNode("gml:location");
-							//var locationId = locationNode.getAttribute((prefix) ? prefix+"id" : "id");
-							var locationId = locationNode.getAttribute("id");
-							if(locationId){
-								var point = locationNode.selectSingleNode("gml:Point/gml:pos").firstChild.nodeValue.split(' ');
-								objRef.locations.put(locationId, point);
-							} else { 
-								locationId = locationNode.getAttribute("xlink:href").replace(/#/g,"");
-							}
-							trajectory.push(new Array(id,time,locationId));
+		} else if (root.nodeName.toLowerCase() == "wfs:featurecollection") {
+			if (root.childNodes.length > 0) {
+				var featureMemberNodes = objRef.doc.selectNodes(objRef.nodeSelectXpath);
+				for (var i = 0; i < featureMemberNodes.length; i++) {
+					var prefix = featureMemberNodes[i].prefix;
+					//var fid = featureMemberNodes[i].getAttribute((prefix) ? prefix+"id" : "id");
+					var fid = featureMemberNodes[i].getAttribute("id");
+					var trajectory = new Array(); // contains one or more continuousTrajectories
+					// there should only be one, defined in the grammar 
+					var dynamicProperty = featureMemberNodes[i].firstChild.selectSingleNode("gml:history");
+					//contains the sequence of the states or intervals of the moving entity
+					var dynamicComponents = dynamicProperty.selectNodes(objRef.dynamicPropertyType);
+					for (var j = 0; j < dynamicComponents.length; j++) {
+						var dynamicComponent = dynamicComponents[j];
+						//var id = dynamicComponent.getAttribute((prefix) ? prefix+"id" : "id");
+						var id = dynamicComponent.getAttribute("id");
+						// here I have to distinguish now!!
+						var fromTime = setISODate(dynamicComponent.selectSingleNode("gml:validTime/gml:TimePeriod/gml:beginPosition").firstChild.nodeValue);
+						var toTime = setISODate(dynamicComponent.selectSingleNode("gml:validTime/gml:TimePeriod/gml:endPosition").firstChild.nodeValue);
+						var timePeriod = new Array(fromTime, toTime);
+						var locationNode = dynamicComponent.selectSingleNode("gml:location");
+						//var locationId = locationNode.getAttribute((prefix) ? prefix+"id" : "id");
+						var locationId = locationNode.getAttribute("id");
+						if (locationId) {
+							var locations = locationNode.selectNodes("gml:Point/gml:pos");
+							var fromPoint = locations[0].firstChild.nodeValue.split(' ');
+							var toPoint = locations[1].firstChild.nodeValue.split(' ');
+							// indexing location
+							objRef.locations.put(locationId, new Array(fromPoint, toPoint));
 						}
+						else {
+							locationId = locationNode.getAttribute("xlink:href").replace(/#/g, "");
+						}
+						trajectory.push(new Array(timePeriod, locationId));
+						if (j == 0) {
+							objRef.unitBuffer.put(fid, new Array(timePeriod, objRef.locations.get(locationId)));
+						}
+						// TODO remove??
 						objRef.features.put(fid, trajectory);
 					}
-					delete featureMemberNodes;
-				
-				// setting temporal min and max values
+					
+					// setting temporal min and max values
 					var boundedByNode = objRef.doc.firstChild.firstChild.selectSingleNode(objRef.boundedBy);
-					if(boundedByNode) {
+					if (boundedByNode) {
 						var timeValues = boundedByNode.selectNodes("gml:timePosition");
 						objRef.minTimeInstant = setISODate(timeValues[0].firstChild.nodeValue);
 						objRef.maxTimeInstant = setISODate(timeValues[1].firstChild.nodeValue);
-						//timeValues = null;
-					} 
+					//timeValues = null;
+					}
 					else {
 						objRef.minTimeInstant = objRef.features.getValueFromIndex(0)[0][0][1];
-						var last = objRef.features.getValueFromIndex(objRef.features.size()-1);
-						last = last[last.length-1];
-						objRef.maxTimeInstant = last[last.length-1][1];
+						var last = objRef.features.getValueFromIndex(objRef.features.size() - 1);
+						last = last[last.length - 1];
+						objRef.maxTimeInstant = last[last.length - 1][1];
 					}
-					if(objRef.trace) {
+					if (objRef.trace) {
 						loadModelTime = Date.now() - loadModelTime;
 						//alert("Transfer: Server -> Client: " + objRef.transferTime + "ms ** Building up the model:" + loadModelTime + "ms");
 						
 						var traceElement = document.createElement('trace');
 						var transferTime = document.createElement("TransferTime");
-						transferTime.setAttribute("unit",	"ms");
-						transferTime.setAttribute("description","Time to transfer the request to the server and getting back the result");
+						transferTime.setAttribute("unit", "ms");
+						transferTime.setAttribute("description", "Time to transfer the request to the server and getting back the result");
 						var transferTimeValue = document.createTextNode(objRef.transferTime);
 						transferTime.appendChild(transferTimeValue);
 						
 						var modelInitTime = document.createElement("ModelInitTime");
-						modelInitTime.setAttribute("unit","ms");
-						modelInitTime.setAttribute("description","Time to generate the model structure on client side");
+						modelInitTime.setAttribute("unit", "ms");
+						modelInitTime.setAttribute("description", "Time to generate the model structure on client side");
 						var modelInitTimeValue = document.createTextNode(loadModelTime);
-						modelInitTime.appendChild(modelInitTimeValue); 
+						modelInitTime.appendChild(modelInitTimeValue);
 						
 						traceElement.appendChild(transferTime);
 						traceElement.appendChild(modelInitTime);
 						
 						var log = (new XMLSerializer()).serializeToString(traceElement);
-		        var xmlHttp = new XMLHttpRequest();
-        		var sUri = objRef.traceUrl;
+						var xmlHttp = new XMLHttpRequest();
+						var sUri = objRef.traceUrl;
 						xmlHttp.open(objRef.method, sUri, objRef.async);
-        		xmlHttp.setRequestHeader("content-type",objRef.contentType);
-          	xmlHttp.setRequestHeader("serverUrl",sUri);
+						xmlHttp.setRequestHeader("content-type", objRef.contentType);
+						xmlHttp.setRequestHeader("serverUrl", sUri);
 						xmlHttp.send(log);
-        }
+					}
+				}
 			}
 		}
   }
@@ -277,6 +286,64 @@ function DynamicFeatureCollection(modelNode, parent) {
 			}
 		}
 		return featureIndices;
+	}
+	
+	/**
+	 * 
+	 * @param {Object} objRef
+	 * @param {Object} fId
+	 * @param {Object} instant
+	 */
+	this.getUnitByInstant = function(objRef, fId, instant){
+  	var dynamicProperty = this.getFeatureById(fId);
+		if(dynamicProperty){
+			for(var i=0; i <dynamicProperty.length -1; i++) {
+				var unit = dynamicProperty[i];
+				if (unit[0][0].getTime() <= instant && instant <= unit[0][1].getTime()) {
+					if(typeof(unit[1]) == "string") { // uuid is point to a location
+						unit[1] = this.locations.get(unit[1]);					
+					}
+					return unit;
+				}
+			}
+		}
+		return null;
+	}
+	
+	/**
+	 * 
+	 * @param {Object} objRef
+	 * @param {Object} fId
+	 * @param {Object} timestamp
+	 */
+	this.getCoordinate = function(objRef, fId, instant) {
+		var buffer = this.unitBuffer.get(fId);
+		var point;
+		if (buffer[0][0].getTime() <= instant && instant <= buffer[0][1].getTime()) { //candidate, so interpolate
+			var pFrom = buffer[1][0];
+			var pTo = buffer[1][1];
+			var tFrom = buffer[0][0];
+			var tTo = buffer[0][1];
+		
+			var x = parseInt(pFrom[0]) + ((instant - tFrom) / (tTo - tFrom)) * (parseInt(pTo[0]) - parseInt(pFrom[0]));
+			var y = parseInt(pFrom[1]) + ((instant - tFrom) / (tTo - tFrom)) * (parseInt(pTo[1]) - parseInt(pFrom[1]));
+			point = new OpenLayers.Geometry.Point(x, y);
+		} else {
+			var unit = this.getUnitByInstant(objRef, fId, instant);
+			if (!unit) {
+	  		return null;
+			} else {
+				var pFrom = unit[1][0];
+				var pTo = unit[1][1];
+				var tFrom = unit[0][0];
+				var tTo = unit[0][1];
+				
+				var x = parseInt(pFrom[0]) + ((instant - tFrom) / (tTo - tFrom)) * (parseInt(pTo[0]) - parseInt(pFrom[0]));
+				var y = parseInt(pFrom[1]) + ((instant - tFrom) / (tTo - tFrom)) * (parseInt(pTo[1]) - parseInt(pFrom[1]));
+				point = new OpenLayers.Geometry.Point(x, y);
+			}
+		}
+		return point;
 	}
 	
 	/**

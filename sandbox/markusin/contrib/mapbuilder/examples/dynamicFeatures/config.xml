@@ -46,9 +46,9 @@
     <QueryWidget id="queryPane">
       <targetModel>gml2DynamicFeatureTemplate</targetModel>
       <requestStylesheet>wfs_GetFeature.xsl</requestStylesheet>
-      <webServiceUrl>http://maps.inf.unibz.it/xsecondo/wfs</webServiceUrl>
-      <!--webServiceUrl>http://furchetta.inf.unibz.it/bz10m/wfs</webServiceUrl-->
-      <dynamicProperty>history</dynamicProperty>
+      <!--webServiceUrl>http://maps.inf.unibz.it/xsecondo/wfs</webServiceUrl-->
+      <webServiceUrl>http://furchetta.inf.unibz.it/bz10m/wfs</webServiceUrl>
+      <dynamicPropertyType>gml:MovingObjectUnit</dynamicPropertyType>
       <fromDateId>fromDate</fromDateId>
       <toDateId>toDate</toDateId>      
       <dateFormat>%Y-%m-%dT%H:%M</dateFormat>
@@ -125,18 +125,18 @@
         <tooltip>stop and rewind to beginning</tooltip>
         <action>movingObjectSimulator.stop()</action>
       </Button>
-    <Slider id="timeSpeedSlider">
-     <htmlTagId>timeSpeedSlider</htmlTagId>
-     <width>121</width>
-     <height>26</height>
-     <defaultValue>10</defaultValue>
-     <minValue>1</minValue>
-     <maxValue>20</maxValue>
-     <valueInterval>1</valueInterval>
-     <tooltipDown>Decrements the time-speed factor</tooltipDown>
-     <tooltipUp>Increments the time-speed factor</tooltipUp>
-     <targetModel>mainMap</targetModel>
-    </Slider>
+      <!-- Slider id="timeSpeedSlider">
+       <htmlTagId>timeSpeedSlider</htmlTagId>
+       <width>121</width>
+       <height>26</height>
+       <defaultValue>10</defaultValue>
+       <minValue>1</minValue>
+       <maxValue>20</maxValue>
+       <valueInterval>1</valueInterval>
+       <tooltipDown>Decrements the time-speed factor</tooltipDown>
+       <tooltipUp>Increments the time-speed factor</tooltipUp>
+       <targetModel>mainMap</targetModel>
+      </Slider -->
     <ProgressBar id="timeProgressBar">
      <htmlMainProgressBarId>mainProgressBar</htmlMainProgressBarId>
      <htmlProgressBarId>timeProgressBar</htmlProgressBarId>
@@ -155,20 +155,19 @@
     </TimestampWidget>
    </widgets>
    <tools>
-    <MovingObjectSimulator id="movingObjectSimulator">
+    <TimerThread id="timerThread">
+      <targetModel>mainMap</targetModel>
+      <every>0.5</every>
+    </TimerThread>
+     <!--MovingObjectSimulator id="movingObjectSimulator">
      <targetModel>mainMap</targetModel>
      <startPointDiff>0</startPointDiff>
      <speedFactor>10</speedFactor>
-    </MovingObjectSimulator>
-    <!-- 
-     <DynamicFeatureSelectHandler id="featureHighlighter">
-     <targetModel>mainMap</targetModel>
-     </DynamicFeatureSelectHandler>
-    -->
+    </MovingObjectSimulator -->
    </tools>
    <namespace>xmlns:gml="http://www.opengis.net/gml"</namespace>
    <nodeSelectXPath>//gml:featureMember</nodeSelectXPath>
-   <dynamicPropertyComponentType>gml:TimeSlice</dynamicPropertyComponentType>
+   <dynamicPropertyType>gml:MovingObjectUnit</dynamicPropertyType>
    <boundedBy>gml:EnvelopeWithTimePeriod</boundedBy>
    <maxFeatureSize>10</maxFeatureSize>
    <maxFeatureMemberSize>10</maxFeatureMemberSize>

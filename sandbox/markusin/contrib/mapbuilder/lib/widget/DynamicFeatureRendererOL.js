@@ -48,48 +48,52 @@ function DynamicFeatureRendererOL(widgetNode, model) {
 	this.allMarkers = new Hashtable(); // for each featureMember an own marker
 	this.allPopups = new Hashtable(); // for each featureMember an own popup
 	
-	/**
-	 * 
-	 * @param {Object} objRef
-	 */
-	this.init = function(objRef){
-		objRef.proj = new Proj4js.Proj("EPSG:258320");
-    objRef.epsg4326 = new Proj4js.Proj("EPSG:900913");
-	}
-	this.model.addListener("loadModel", this.init, this );
-	
 
 	/**
 	 * 
 	 * @param {Object} objRef
 	 */
-  this.init = function(objRef) {
-  	if (objRef.olLayer) {
+	this.init = function(objRef) {
+		if(!objRef.sourceSrs) {
+			objRef.sourceSrs = new OpenLayers.Projection("EPSG:258320");
+		}
+		if(!objRef.destSrs) {
+			objRef.destSrs = new OpenLayers.Projection("EPSG:900913");
+		}
+ 		if (objRef.olLayer) {
 			objRef.model.setParam('gmlRendererLayer', null);
 			if (objRef.targetModel.map == objRef.map) {
-        objRef.olLayer.destroy();
-        objRef.olLayer = null;
-      }
+    		objRef.olLayer.destroy();
+     		objRef.olLayer = null;
+   		}
 		}
-		
+			
 		objRef.olLayer = new OpenLayers.Layer.Markers("Markers", {calculateInRange: function(){return true}});
 		objRef.targetModel.map.addLayer(objRef.olLayer);
-		
-		var allFeatureIds = objRef.model.getAllFeatureIds();
-		for(var index in allFeatureIds) {
-			// workaround, setting it to that value
-			var p = objRef.model.getTrajectoryByIndex(allFeatureIds[index],0)[2];
-			var position = new OpenLayers.LonLat(p[0],p[1]);
 			
-			var marker = new OpenLayers.Marker(position, objRef.icon.clone());
+		var allFeatureIds = objRef.model.getAllFeatureIds();
+		for(var i = 0; i < allFeatureIds.length; i++){
+			var fId = allFeatureIds[i];
+			// workaround, setting it to that value
+			var position = objRef.model.getCoordinate(objRef, fId, objRef.model.getMinTimeInstant().getTime());
+			var marker;
+			if (position) {
+	  		marker = new OpenLayers.Marker(position, objRef.icon.clone());
+				marker.display(true);
+	  	} else {
+				marker = new OpenLayers.Marker(new OpenLayers.LonLat(0,0), objRef.icon.clone());
+				marker.display(false);
+			}
+			
 			marker.setOpacity(objRef.opacity);
 			objRef.olLayer.addMarker(marker);
-			objRef.allMarkers.put(allFeatureIds[index],marker);
+			objRef.allMarkers.put(fId, marker);
 		}
 		objRef.model.setParam('gmlRendererLayer', objRef.olLayer);
-  }
-  this.model.addListener("refresh",this.init, this);
-  this.model.addListener("refreshGmlRenderers",this.init, this);
+ 	}
+	this.model.addListener("loadModel", this.init, this );
+	this.model.addListener("refresh",this.init, this);
+	this.model.addListener("refreshGmlRenderers",this.init, this);
 	
 	/**
 	 * Note: this function is not working: it will not set the moving point to the right
@@ -104,7 +108,7 @@ function DynamicFeatureRendererOL(widgetNode, model) {
 		var marker = objRef.allMarkers.get(instant[0]);
 		if(marker) {
 			var point = instant[2];
-			cs_transform(objRef.proj, objRef.epsg4326, point);
+			cs_transform(objRef.sourceSrs, objRef.destSrs, point);
 			var lonLat = new OpenLayers.LonLat(point[0],point[1]);
 			marker.moveTo(objRef.targetModel.map.getPixelFromLonLat(lonLat));
 		}
@@ -116,99 +120,80 @@ function DynamicFeatureRendererOL(widgetNode, model) {
 	 * @param {Object} objRef the model of that widget
 	 * @param {Object} instant the instant of the moving object to be updated 
 	 */
-	this.updateDynamicFeature = function(objRef, instant) {
-		var fId = instant[0];
-		var marker = objRef.allMarkers.get(fId);
-		if(marker) {
-			var x = marker.display(true);			
-			
-			if(instant[4]) {
-				var pointFrom = new OpenLayers.Geometry.Point(instant[4][0],instant[4][1]);
-				var pointTo = new OpenLayers.Geometry.Point(instant[2][0],instant[2][1]);
-				
-				var pFrom = Proj4js.transform(objRef.proj, objRef.epsg4326, pointFrom);
-				var pTo = Proj4js.transform(objRef.proj, objRef.epsg4326, pointTo);
-				
-				//pFrom = objRef.targetModel.map.getPixelFromLonLat(new OpenLayers.LonLat(pFrom.x,pFrom.y));
-				//pTo = objRef.targetModel.map.getPixelFromLonLat(new OpenLayers.LonLat(pTo.x,pTo.y));
-				var MIN_DISTANCE = 10; // TODO move into config param
-				var pixFrom = objRef.targetModel.map.getPixelFromLonLat(new OpenLayers.LonLat(pFrom.x,pFrom.y));
-				var pixTo = objRef.targetModel.map.getPixelFromLonLat(new OpenLayers.LonLat(pTo.x,pTo.y));
-				var distance = objRef.pixelDistance(pixFrom, pixTo);
-				if(distance > MIN_DISTANCE) {
-					var segments = Math.round(distance / MIN_DISTANCE);
-					if(segments > 1) {
-						var tFrom = instant[3].getTime();
-						var tTo = instant[1].getTime();
-						var timeDiff =  tTo - tFrom;
-						var timeSegm = timeDiff / segments;
-						var currentT = 0;
-						var values = new Array();
-						for(var i=0; i< segments-1; i++){
-							var state = new Array();
-							currentT += timeSegm;
-							var interpolatedPoint = objRef.interpolate(tFrom+currentT, pointFrom, tFrom, pointTo, tTo);
-							//interpolatedPoint = objRef.targetModel.map.getPixelFromLonLat(new OpenLayers.LonLat(interpolatedPoint.x,interpolatedPoint.y))
-//							state[0]= currentT / window.movingObjectSimulator.speedFactor;
-//							state[1] = interpolatedPoint;
-//							values[i]= state;
-							window.setTimeout(objRef.ippaint, (timeSegm / window.movingObjectSimulator.speedFactor), objRef, marker, interpolatedPoint);
-						}
-						//objRef.interpolatedPaint(objRef, marker, values, 0);
-						//marker.icon.url = 'http://www.inf.unibz.it/dis/bz10m/images/busRound.png';
-						//window.setTimeout(objRef.paint, (timeDiff / window.movingObjectSimulator.speedFactor), objRef, marker, pTo);
-						delete values;
-					} else {
-						marker.setUrl('http://www.inf.unibz.it/dis/bz10m/images/busRound.png');
-						objRef.paint(objRef, marker, pTo);
-					}
-				} else {
-					marker.setUrl('http://www.inf.unibz.it/dis/bz10m/images/busRound.png');
-					objRef.paint(objRef, marker, pTo);
-				}
-			} else {
-				marker.setUrl('http://www.inf.unibz.it/dis/bz10m/images/busRound.png');
-				var pointTo = new OpenLayers.Geometry.Point(instant[2][0],instant[2][1]);
-				var pTo = Proj4js.transform(objRef.proj, objRef.epsg4326, pointTo);
-				//pTo = objRef.targetModel.map.getPixelFromLonLat(new OpenLayers.LonLat(pTo.x,pTo.y));
-				objRef.paint(objRef, marker, pTo);
-			}
-			marker.events.register("mouseover", marker, function(evt) {
-				var popup = objRef.allPopups.get(fId);
-		    if (popup != null) {
-					if(!popup.div) {
-            popup = null;
-					} else if (popup.visible()) {
-						objRef.targetModel.map.removePopup(popup);
-	          popup.destroy();
-	          popup = null;
-	        }
-		    }
-		    if (popup == null) {
-					popup = new OpenLayers.Popup(fId, marker.lonlat, new OpenLayers.Size(200,200), "Current Feature", true);
-				} 
-	        var content = '<table border="1">';
-					content += '<tr><td>Bus Line:</td><td>Linea 10a</td></tr>';
-					content += '<tr><td>Id:</td><td>' + fId +'</td></tr>';
-					content += '<tr><td>Current location:</td><td>' + marker.lonlat.lon + '<br/>' + marker.lonlat.lat + '</td></tr>';
-					content += '<tr><td>Current time:</td><td>' + instant[1].toLocaleString() + '</td></tr>';
-					content += '<tr><td>Current Oil consume:</td><td>5.00 ml/s</td></tr>';
-					content += '</table>';
-	        popup.setContentHTML(content);
-	        popup.setBackgroundColor("yellow");
-	        popup.setOpacity(0.9);
-	        objRef.targetModel.map.addPopup(popup);
-					objRef.allPopups.put(fId,popup);
-				if(!popup.visible()) {
-					popup.show();
-				}
-	    	Event.stop(evt);
-			});
-			marker.events.register("mouseout", marker, function(evt) {
-				var popup = objRef.allPopups.get(fId);
-				popup.hide();
-				Event.stop(evt);		
-			});
+	this.updateDynamicFeature = function(objRef, idAndPoint) {
+		var marker = objRef.allMarkers.get(idAndPoint[0]);
+		var point = idAndPoint[1];
+		if(marker && point) {
+			var x = marker.display(true);
+			point.transform(objRef.sourceSrs, objRef.destSrs);
+			objRef.paint(objRef, marker, point);
+
+//			marker.events.register("mouseover", marker, function(evt) {
+//				var popup = objRef.allPopups.get(fId);
+//		    if (popup != null) {
+//					if(!popup.div) {
+//            popup = null;
+//					} else if (popup.visible()) {
+//						objRef.targetModel.map.removePopup(popup);
+//	          popup.destroy();
+//	          popup = null;
+//	        }
+//		    }
+//		    if (popup == null) {
+//					popup = new OpenLayers.Popup(fId, marker.lonlat, new OpenLayers.Size(200,200), "Current Feature", true);
+//				} 
+//	        var co//			marker.events.register("mouseover", marker, function(evt) {
+//				var popup = objRef.allPopups.get(fId);
+//		    if (popup != null) {
+//					if(!popup.div) {
+//            popup = null;
+//					} else if (popup.visible()) {
+//						objRef.targetModel.map.removePopup(popup);
+//	          popup.destroy();
+//	          popup = null;
+//	        }
+//		    }
+//		    if (popup == null) {
+//					popup = new OpenLayers.Popup(fId, marker.lonlat, new OpenLayers.Size(200,200), "Current Feature", true);
+//				} 
+//	        var content = '<table border="1">';
+//					content += '<tr><td>Bus Line:</td><td>Linea 10a</td></tr>';
+//					content += '<tr><td>Id:</td><td>' + fId +'</td></tr>';
+//					content += '<tr><td>Current location:</td><td>' + marker.lonlat.lon + '<br/>' + marker.lonlat.lat + '</td></tr>';
+//					content += '<tr><td>Current time:</td><td>' + instant[1].toLocaleString() + '</td></tr>';
+//					content += '<tr><td>Current Oil consume:</td><td>5.00 ml/s</td></tr>';
+//					content += '</table>';
+//	        popup.setContentHTML(content);
+//	        popup.setBackgroundColor("yellow");
+//	        popup.setOpacity(0.9);
+//	        objRef.targetModel.map.addPopup(popup);
+//					objRef.allPopups.put(fId,popup);
+//				if(!popup.visible()) {
+//					popup.show();
+//				}
+//	    	Event.stop(evt);
+//			});ntent = '<table border="1">';
+//					content += '<tr><td>Bus Line:</td><td>Linea 10a</td></tr>';
+//					content += '<tr><td>Id:</td><td>' + fId +'</td></tr>';
+//					content += '<tr><td>Current location:</td><td>' + marker.lonlat.lon + '<br/>' + marker.lonlat.lat + '</td></tr>';
+//					content += '<tr><td>Current time:</td><td>' + instant[1].toLocaleString() + '</td></tr>';
+//					content += '<tr><td>Current Oil consume:</td><td>5.00 ml/s</td></tr>';
+//					content += '</table>';
+//	        popup.setContentHTML(content);
+//	        popup.setBackgroundColor("yellow");
+//	        popup.setOpacity(0.9);
+//	        objRef.targetModel.map.addPopup(popup);
+//					objRef.allPopups.put(fId,popup);
+//				if(!popup.visible()) {
+//					popup.show();
+//				}
+//	    	Event.stop(evt);
+//			});
+//			marker.events.register("mouseout", marker, function(evt) {
+//				var popup = objRef.allPopups.get(fId);
+//				popup.hide();
+//				Event.stop(evt);		
+//			});
 		}
 	}
   this.model.addListener("updateDynamicFeature", this.updateDynamicFeature, this);
@@ -316,7 +301,6 @@ function DynamicFeatureRendererOL(widgetNode, model) {
 			if(p){
 					marker.lonlat.lon = p.x;
 					marker.lonlat.lat = p.y;
-					marker.display(true);
 					objRef.olLayer.drawMarker(marker);
 			}
 	}

@@ -31,6 +31,7 @@ $Id: QueryWidget.xsl 2546 2007-01-23 12:07:39Z markusin $
 	<xsl:param name="formId"/>
 	<xsl:param name="fromDateId"/>
 	<xsl:param name="toDateId"/>
+	<xsl:param name="dynamicPropertyType"/>
 
   <!-- Main html -->
   <xsl:template match="/wmc:OWSContext">
@@ -54,6 +55,7 @@ $Id: QueryWidget.xsl 2546 2007-01-23 12:07:39Z markusin $
 		      		<input type="text" name="fromDate" id="{$fromDateId}" value="2006-11-20T06:00"/><br/>
 	 						To Date:<br/>
 							<input type="text" name="toDate" id="{$toDateId}" value="2006-11-20T06:30"/>
+									<input type="hidden" name="dynamicPropertyType" id="dynamicPropertyType" value="{$dynamicPropertyType}"/>
 		        </div>
 						<xsl:for-each select="wmc:ResourceList/wmc:DynamicLayer">
 							<xsl:if test="current()[@queryable='1']">

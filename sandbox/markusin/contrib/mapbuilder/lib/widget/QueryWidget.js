@@ -38,6 +38,11 @@ function QueryWidget(widgetNode, model) {
   if (fromDateIdNode) {
     this.fromDateId = fromDateIdNode.firstChild.nodeValue;
   }
+		
+		var dynamicPropertyTypeNode = widgetNode.selectSingleNode("mb:dynamicPropertyType");    
+  if (dynamicPropertyTypeNode) {
+    this.dynamicPropertyType = dynamicPropertyTypeNode.firstChild.nodeValue;
+  }
 	
 	var toDateIdNode = widgetNode.selectSingleNode("mb:toDateId");    
   if (toDateIdNode) {
@@ -69,10 +74,11 @@ function QueryWidget(widgetNode, model) {
 	this.showTime = (timeFormatNode && timeFormatNode.firstChild.nodeValue=="false") ? false : true;
 
 	this.formName = "queryForm_" + mbIds.getId();
-  this.stylesheet.setParameter("formName", this.formName);
-  this.stylesheet.setParameter("fromDateId", this.fromDateId);
+ this.stylesheet.setParameter("formName", this.formName);
+ this.stylesheet.setParameter("fromDateId", this.fromDateId);
 	this.stylesheet.setParameter("toDateId", this.toDateId);
 	this.stylesheet.setParameter("formId", this.htmlTagId);
+	this.stylesheet.setParameter("dynamicPropertyType", this.dynamicPropertyType);
 	this.formElements = new Object();
   // We might have a request stylesheet to fill for a more complex post
 	
@@ -128,6 +134,7 @@ function QueryWidget(widgetNode, model) {
       this.requestStylesheet.setParameter("resourceName", this.formElements["feature"])
       this.requestStylesheet.setParameter("fromDateField", this.formElements["fromDate"])
       this.requestStylesheet.setParameter("toDateField", this.formElements["toDate"])
+						this.requestStylesheet.setParameter("dynamicPropertyType", this.formElements["dynamicPropertyType"])
   
       var layer = this.requestStylesheet.transformNodeToObject(this.model.doc); 
       if (this.debug) mbDebugMessage(this, "Transformed: "+ (new XMLSerializer()).serializeToString(layer));

@@ -31,7 +31,7 @@
   <xsl:param name="featureSrs" />
   <xsl:param name="fromDateField" />
   <xsl:param name="toDateField" />
-  <xsl:param name="dynamicFeatureType">gml:history</xsl:param>
+  <xsl:param name="dynamicPropertyType"/>
 
   <!-- template rule matching source root element -->
 
@@ -45,7 +45,7 @@
       <wmc:Title>Bz10m</wmc:Title>
 
       <wfs:GetFeature version="1.0.0" service="WFS" maxFeatures="{$maxFeatures}">
-        <wfs:Query typeName="{$resourceName}" dynamicFeatureType="{$dynamicFeatureType}">
+        <wfs:Query typeName="{$resourceName}" dynamicPropertyType="{$dynamicPropertyType}">
           <ogc:Filter>
             <ogc:And>
               <xsl:if test="$bBoxMinX">
@@ -69,7 +69,7 @@
               <xsl:if test="$fromDateField">
                 <ogc:PropertyIsBetween>
                   <ogc:PropertyName>
-                  	<xsl:value-of select="$dynamicFeatureType" />
+                  	<xsl:value-of select="$dynamicPropertyType" />
 									</ogc:PropertyName>
                   <ogc:LowerBoundary>
                     <ogc:Literal>

@@ -196,7 +196,7 @@ function ProgressBar(widgetNode, model) {
 	 */	
 	this.updateTimeBar = function(objRef, currentInstant) {
 		var sepMs = objRef.separatorDate.getTime();
-		if(currentInstant.getTime() > sepMs) {
+		if(currentInstant > sepMs) {
 			objRef.value = objRef.progressBar.getValue() + 1;
 			objRef.progressBar.setValue(objRef.value);
 			objRef.separatorDate = new Date(sepMs + objRef.difference );
