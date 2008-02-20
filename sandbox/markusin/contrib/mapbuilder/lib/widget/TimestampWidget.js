@@ -62,9 +62,9 @@ function TimestampWidget(widgetNode, model) {
 	 * @param {Object} objRef
 	 */
 	this.resetTimestamp = function (objRef) {
-		if( objRef.showDate ) {
+		if (objRef.showDate && objRef.formName) {
 			var timeStampField = document.getElementById(objRef.formName).timeStamp;
-			if(timeStampField) {
+			if (timeStampField) {
 				timeStampField.value = objRef.model.getMinTimeInstant().toLocaleString();
 			}
 		}
