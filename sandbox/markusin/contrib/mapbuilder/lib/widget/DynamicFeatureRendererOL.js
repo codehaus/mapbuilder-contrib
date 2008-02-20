@@ -123,11 +123,15 @@ function DynamicFeatureRendererOL(widgetNode, model) {
 	this.updateDynamicFeature = function(objRef, idAndPoint) {
 		var marker = objRef.allMarkers.get(idAndPoint[0]);
 		var point = idAndPoint[1];
-		if(marker && point) {
-			var x = marker.display(true);
-			point.transform(objRef.sourceSrs, objRef.destSrs);
-			objRef.paint(objRef, marker, point);
-
+		if(marker) {
+			if (point) {
+	  		marker.display(true);
+	  		point.transform(objRef.sourceSrs, objRef.destSrs);
+	  		objRef.paint(objRef, marker, point);
+	  	} else {
+				marker.display(false);
+			}		 
+	  } 
 //			marker.events.register("mouseover", marker, function(evt) {
 //				var popup = objRef.allPopups.get(fId);
 //		    if (popup != null) {
@@ -194,7 +198,7 @@ function DynamicFeatureRendererOL(widgetNode, model) {
 //				popup.hide();
 //				Event.stop(evt);		
 //			});
-		}
+//		}
 	}
   this.model.addListener("updateDynamicFeature", this.updateDynamicFeature, this);
 	
@@ -301,16 +305,6 @@ function DynamicFeatureRendererOL(widgetNode, model) {
 			if(p){
 					marker.lonlat.lon = p.x;
 					marker.lonlat.lat = p.y;
-					objRef.olLayer.drawMarker(marker);
-			}
-	}
-	
-	this.ippaint = function(objRef, marker, p) {
-			marker.setUrl('http://www.inf.unibz.it/dis/bz10m/images/bus.gif');
-			if(p){
-					marker.lonlat.lon = p.x;
-					marker.lonlat.lat = p.y;
-					marker.display(true);
 					objRef.olLayer.drawMarker(marker);
 			}
 	}

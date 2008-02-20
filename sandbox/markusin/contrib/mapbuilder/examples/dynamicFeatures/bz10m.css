@@ -157,12 +157,32 @@
 	top: 22px;
 }
 
-.timeProgressBarPane {
+.timeControlPane {
 	position: absolute;
 	float: 	inherit;
 	right: 0px;
 	top: 0px;
 	vertical-align: top;
+	width: 280px;
+}
+
+.timeProgressBarPane div {
+	top: 25px;
+}
+
+
+.timeControlPane input {
+	background-color:transparent;
+	border:0px none blue;
+	color:#000000;
+	font-family:Verdana,geneva,arial,sans-serif;
+	font-size:8pt;
+	font-size-adjust:none;
+	font-stretch:normal;
+	font-style:normal;
+	font-variant:normal;
+	font-weight:normal;
+	line-height:normal;
 }
 
 .footer {
@@ -215,3 +235,4 @@
         padding-top:2px;
         background-color:#FFF;
 }
+

@@ -20,6 +20,9 @@ mapbuilder.loadScript(baseDir+"/tool/ToolBase.js");
 function TimerThread(toolNode, model) {
   ToolBase.apply(this, new Array(toolNode, model));
 	
+	// workaround to be able to invoke the command
+	window.timerThread = this;
+	
 	 //set the interval
   var seconds = toolNode.selectSingleNode("mb:every");
   if (seconds) {
@@ -32,29 +35,38 @@ function TimerThread(toolNode, model) {
     clearInterval(objRef.interval);
 		
 		var startTime = objRef.model.getMinTimeInstant();
+		objRef.currentTime = startTime.getTime();
 		objRef.endTime = objRef.model.getMaxTimeInstant().getTime();
 		objRef.dynamicFeatureIds = objRef.model.getAllFeatureIds();
 		
-    objRef.run(objRef, startTime.getTime(), objRef.delay);
+    objRef.run(objRef, objRef.delay);
   }
 	this.model.addListener("loadModel",this.init, this);
 	
 	/**
 	 * 
 	 * @param {Object} objRef
+	 * @param {Object} newTimestamp
+	 */
+	this.setCurrentTime = function(objRef, newTimestamp){
+  	this.currentTime = newTimestamp;
+  }
+	/**
+	 * 
+	 * @param {Object} objRef
 	 * @param {Object} timestamp
 	 */
-	this.run = function(objRef, tStamp, delay){
+	this.run = function(objRef, delay){
 		var argv = arguments;
 		if(argv) {
 			var objRef = argv[0];
-			var tStamp = argv[1];
-			tStamp += delay;
-			if(tStamp >= objRef.endTime) {
+			var delay = argv[1];
+			objRef.currentTime += delay;
+			if(objRef.currentTime >= objRef.endTime) {
 				clearInterval(objRef.timer);
 			} else { 
-				objRef.notify(objRef, tStamp); // notify all listeners
-				this.timer = setTimeout(objRef.run, delay, objRef, tStamp, delay);
+				objRef.notify(objRef, objRef.currentTime); // notify all listeners
+				this.timer = setTimeout(objRef.run, delay, objRef, delay);
 			}
 		}	
   }

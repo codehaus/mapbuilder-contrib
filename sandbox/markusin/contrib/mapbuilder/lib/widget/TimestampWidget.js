@@ -46,10 +46,8 @@ function TimestampWidget(widgetNode, model) {
 			var timeStampField = document.getElementById(objRef.formName).timeStamp;
 			if(timeStampField) {
 				if(objRef.displayDate) {
-					if(objRef.displayDate.getTime() < tStamp) {
-						objRef.displayDate.setTime(tStamp);
-						timeStampField.value = objRef.displayDate.toLocaleString();
-					}
+					objRef.displayDate.setTime(tStamp);
+					timeStampField.value = objRef.displayDate.toLocaleString();
 				} else {
 					objRef.displayDate = new Date(tStamp);
 					timeStampField.value = objRef.displayDate.toLocaleString();	

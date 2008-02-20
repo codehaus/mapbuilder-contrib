@@ -137,7 +137,7 @@
        <tooltipUp>Increments the time-speed factor</tooltipUp>
        <targetModel>mainMap</targetModel>
       </Slider -->
-    <ProgressBar id="timeProgressBar">
+    <!--ProgressBar id="timeProgressBar">
      <htmlMainProgressBarId>mainProgressBar</htmlMainProgressBarId>
      <htmlProgressBarId>timeProgressBar</htmlProgressBarId>
      <htmlStartTagId>idPBStart</htmlStartTagId>
@@ -147,7 +147,16 @@
      <intervalNumber>200</intervalNumber>
      <valueInterval>1</valueInterval>
      <targetModel>mainMap</targetModel>
-    </ProgressBar>
+    </ProgressBar-->
+    <TimeControlBarWidget id="timeControlBar">
+     <htmlTagId>timeControlBar</htmlTagId>
+     <htmlTimeProgressPaneId>timeProgressPane</htmlTimeProgressPaneId>
+     <width>262</width>
+     <height>30</height>
+     <intervalNumber>200</intervalNumber>
+     <valueInterval>1</valueInterval>
+     <targetModel>mainMap</targetModel>
+    </TimeControlBarWidget>
     <TimestampWidget id="timestamp">
      <htmlTagId>timestamp</htmlTagId>
      <showDate>true</showDate>
