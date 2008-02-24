@@ -1,0 +1,1007 @@
+<?xml version="1.0" encoding="UTF-8"?>
+	
+		My GeoServer WFS
+		
+			This is a description of your Web Feature Server.
+
+			The GeoServer is a full transactional Web Feature Server,
+			you may wish to limit GeoServer to a Basic service level to
+			prevent modificaiton of your geographic data.
+		
+		
+			WFS
+			WMS
+			GEOSERVER
+		
+		WFS
+		1.1.0
+		NONE
+		NONE
+	
+	
+		
+		
+		
+	
+	
+		
+			
+				
+					
+					
+				
+			
+			
+				1.0.0
+				1.1.0
+			
+			
+				text/xml
+			
+		
+		
+			
+				
+					
+					
+				
+			
+			
+				text/gml; subtype=gml/3.1.1
+			
+		
+		
+			
+				
+					
+					
+				
+			
+			
+				results
+				hits
+			
+			
+				text/gml; subtype=gml/3.1.1
+			
+		
+		
+			
+				
+					
+					
+				
+			
+			
+				ALL
+				SOME
+			
+		
+		
+			
+				
+					
+					
+				
+			
+			
+				results
+				hits
+			
+			
+				text/gml; subtype=gml/3.1.1
+			
+		
+		
+			
+				
+					
+					
+				
+			
+			
+				text/gml; subtype=gml/3.1.1
+			
+			
+				GenerateNew
+				UseExisting
+				ReplaceDuplicate
+			
+			
+				ALL
+				SOME
+			
+		
+	
+	
+		
+			Query
+			Insert
+			Update
+			Delete
+			Lock
+		
+		
+			topp:BUILDING
+			BUILDING_Type
+			Generated from BZora
+			
+				BZora BUILDING
+			
+			
+				urn:x-ogc:def:crs:EPSG:6.11.2:258320
+			
+			
+				GML2
+				GML2-GZIP
+				text/xml; subtype=gml/2.1.2
+				text/xml; subtype=gml/3.1.1
+				gml3
+				SHAPE-ZIP
+				json
+			
+			
+				
+					11.275467151436727 46.44334388405273
+				
+				
+					11.425748967904456 46.52794019593957
+				
+			
+		
+		
+			bz10m:buildings
+			BZ Buildings
+			Generated from bz10m
+			
+				bz10m buildings
+			
+			
+				urn:x-ogc:def:crs:EPSG:6.11.2:258320
+			
+			
+				GML2
+				GML2-GZIP
+				text/xml; subtype=gml/2.1.2
+				text/xml; subtype=gml/3.1.1
+				gml3
+				SHAPE-ZIP
+				json
+			
+			
+				
+					11.27546692159258 46.4433430729328
+				
+				
+					11.425749177566077 46.52794066016678
+				
+			
+		
+		
+			bz10m:rivers
+			BZ Rivers
+			Generated from bz10m
+			
+				rivers bz10m
+			
+			
+				urn:x-ogc:def:crs:EPSG:6.11.2:258320
+			
+			
+				GML2
+				GML2-GZIP
+				text/xml; subtype=gml/2.1.2
+				text/xml; subtype=gml/3.1.1
+				gml3
+				SHAPE-ZIP
+				json
+			
+			
+				
+					11.273909891147836 46.44229759772639
+				
+				
+					11.43472423921986 46.531626423795444
+				
+			
+		
+		
+			bz10m:roads_directions
+			BZ Road Directions
+			Generated from bz10m
+			
+				bz10m roads_directions
+			
+			
+				urn:x-ogc:def:crs:EPSG:6.11.2:258320
+			
+			
+				GML2
+				GML2-GZIP
+				text/xml; subtype=gml/2.1.2
+				text/xml; subtype=gml/3.1.1
+				gml3
+				SHAPE-ZIP
+				json
+			
+			
+				
+					11.210597213800785 46.356937952746286
+				
+				
+					11.51404202105545 46.564532644420716
+				
+			
+		
+		
+			bz10m:roads
+			BZ Roads
+			Generated from bz10m
+			
+				roads bz10m
+			
+			
+				urn:x-ogc:def:crs:EPSG:6.11.2:258320
+			
+			
+				GML2
+				GML2-GZIP
+				text/xml; subtype=gml/2.1.2
+				text/xml; subtype=gml/3.1.1
+				gml3
+				SHAPE-ZIP
+				json
+			
+			
+				
+					11.273984840675134 46.44274826266075
+				
+				
+					11.432980977417786 46.531679226305414
+				
+			
+		
+		
+			bz10m:schools
+			BZ Schools
+			Generated from bz10m
+			
+				bz10m schools
+			
+			
+				urn:x-ogc:def:crs:EPSG:6.11.2:258320
+			
+			
+				GML2
+				GML2-GZIP
+				text/xml; subtype=gml/2.1.2
+				text/xml; subtype=gml/3.1.1
+				gml3
+				SHAPE-ZIP
+				json
+			
+			
+				
+					11.314506929696336 46.466397150875366
+				
+				
+					11.377370056488314 46.509018448201076
+				
+			
+		
+		
+			bz10m:shops
+			BZ Shops
+			Generated from bz10m
+			
+				bz10m shops
+			
+			
+				urn:x-ogc:def:crs:EPSG:6.11.2:258320
+			
+			
+				GML2
+				GML2-GZIP
+				text/xml; subtype=gml/2.1.2
+				text/xml; subtype=gml/3.1.1
+				gml3
+				SHAPE-ZIP
+				json
+			
+			
+				
+					11.290130083629643 46.46231231561038
+				
+				
+					11.388921107785226 46.51399403783143
+				
+			
+		
+		
+			topp:BZ_ROADS2_LINK
+			BZ_ROADS2_LINK_Type
+			Generated from BZora
+			
+				BZora BZ_ROADS2_LINK
+			
+			
+				urn:x-ogc:def:crs:EPSG:6.11.2:258320
+			
+			
+				GML2
+				GML2-GZIP
+				text/xml; subtype=gml/2.1.2
+				text/xml; subtype=gml/3.1.1
+				gml3
+				SHAPE-ZIP
+				json
+			
+			
+				
+					11.261009276067222 46.41719840573179
+				
+				
+					11.454285202414328 46.56278130271103
+				
+			
+		
+		
+			bz10m:route10a
+			Bus route10a
+			Generated from bz10m
+			
+				route10a bz10m
+			
+			
+				urn:x-ogc:def:crs:EPSG:6.11.2:258320
+			
+			
+				GML2
+				GML2-GZIP
+				text/xml; subtype=gml/2.1.2
+				text/xml; subtype=gml/3.1.1
+				gml3
+				SHAPE-ZIP
+				json
+			
+			
+				
+					11.30324959823893 46.46622834485398
+				
+				
+					11.35812063637333 46.50372442553893
+				
+			
+		
+		
+			bz10m:route4
+			Bus route4
+			Generated from bz10m
+			
+				route4 bz10m
+			
+			
+				urn:x-ogc:def:crs:EPSG:6.11.2:258320
+			
+			
+				GML2
+				GML2-GZIP
+				text/xml; subtype=gml/2.1.2
+				text/xml; subtype=gml/3.1.1
+				gml3
+				SHAPE-ZIP
+				json
+			
+			
+				
+					11.328716906912813 46.46020198466061
+				
+				
+					11.358097882985492 46.50073873034944
+				
+			
+		
+		
+			topp:RIVER
+			RIVER_Type
+			Generated from BZora
+			
+				BZora RIVER
+			
+			
+				urn:x-ogc:def:crs:EPSG:6.11.2:258320
+			
+			
+				GML2
+				GML2-GZIP
+				text/xml; subtype=gml/2.1.2
+				text/xml; subtype=gml/3.1.1
+				gml3
+				SHAPE-ZIP
+				json
+			
+			
+				
+					11.27391009824463 46.4423012234818
+				
+				
+					11.4347239455867 46.53162261964603
+				
+			
+		
+		
+			topp:SHORTEST_PATH
+			SHORTEST_PATH_Type
+			Generated from BZora
+			
+				BZora SHORTEST_PATH
+			
+			
+				urn:x-ogc:def:crs:EPSG:6.11.2:258320
+			
+			
+				GML2
+				GML2-GZIP
+				text/xml; subtype=gml/2.1.2
+				text/xml; subtype=gml/3.1.1
+				gml3
+				SHAPE-ZIP
+				json
+			
+			
+				
+					11.335093038503155 46.496349410375956
+				
+				
+					11.359732070845755 46.50223160594797
+				
+			
+		
+		
+			bz10m:censuses
+			censuses_Type
+			Generated from bz10m
+			
+				censuses bz10m
+			
+			
+				urn:x-ogc:def:crs:EPSG:6.11.2:258320
+			
+			
+				GML2
+				GML2-GZIP
+				text/xml; subtype=gml/2.1.2
+				text/xml; subtype=gml/3.1.1
+				gml3
+				SHAPE-ZIP
+				json
+			
+			
+				
+					11.273259718180347 46.442567445384384
+				
+				
+					11.434309428021358 46.531940855553145
+				
+			
+		
+		
+			bz10m:stations1
+			stations1
+			Generated from bz10m
+			
+				bz10m stations1
+			
+			
+				urn:x-ogc:def:crs:EPSG:6.11.2:258320
+			
+			
+				GML2
+				GML2-GZIP
+				text/xml; subtype=gml/2.1.2
+				text/xml; subtype=gml/3.1.1
+				gml3
+				SHAPE-ZIP
+				json
+			
+			
+				
+					11.338342794807293 46.49499590257771
+				
+				
+					11.392258223302747 46.50905259382142
+				
+			
+		
+		
+			bz10m:stations10a
+			stations10a
+			Generated from bz10m
+			
+				stations10a bz10m
+			
+			
+				urn:x-ogc:def:crs:EPSG:6.11.2:258320
+			
+			
+				GML2
+				GML2-GZIP
+				text/xml; subtype=gml/2.1.2
+				text/xml; subtype=gml/3.1.1
+				gml3
+				SHAPE-ZIP
+				json
+			
+			
+				
+					11.303650293749918 46.46679636795024
+				
+				
+					11.358261774224008 46.50364938565657
+				
+			
+		
+	
+	
+		
+			
+				gml:Envelope
+				gml:Point
+				
+					gml:LineString
+				
+				gml:Polygon
+			
+			
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+			
+		
+		
+			
+			
+				
+					LessThan
+				
+				
+					GreaterThan
+				
+				
+					LessThanEqualTo
+				
+				
+					GreaterThanEqualTo
+				
+				EqualTo
+				
+					NotEqualTo
+				
+				Like
+				Between
+				
+					NullCheck
+				
+			
+			
+				
+				
+					
+						
+							abs
+						
+						
+							abs_2
+						
+						
+							abs_3
+						
+						
+							abs_4
+						
+						
+							acos
+						
+						
+							Area
+						
+						
+							asin
+						
+						
+							atan
+						
+						
+							atan2
+						
+						
+							between
+						
+						
+							boundary
+						
+						
+							boundaryDimension
+						
+						
+							buffer
+						
+						
+							bufferWithSegments
+						
+						
+							ceil
+						
+						
+							centroid
+						
+						
+							classify
+						
+						
+							Collection_Average
+						
+						
+							Collection_Bounds
+						
+						
+							Collection_Count
+						
+						
+							Collection_Max
+						
+						
+							Collection_Median
+						
+						
+							Collection_Min
+						
+						
+							Collection_Sum
+						
+						
+							Collection_Unique
+						
+						
+							contains
+						
+						
+							convexHull
+						
+						
+							cos
+						
+						
+							crosses
+						
+						
+							difference
+						
+						
+							dimension
+						
+						
+							disjoint
+						
+						
+							distance
+						
+						
+							double2bool
+						
+						
+							endPoint
+						
+						
+							envelope
+						
+						
+							EqualInterval
+						
+						
+							equalsExact
+						
+						
+							equalsExactTolerance
+						
+						
+							equalTo
+						
+						
+							exp
+						
+						
+							exteriorRing
+						
+						
+							floor
+						
+						
+							geometryType
+						
+						
+							geomFromWKT
+						
+						
+							geomLength
+						
+						
+							getGeometryN
+						
+						
+							getX
+						
+						
+							getY
+						
+						
+							getZ
+						
+						
+							greaterEqualThan
+						
+						
+							greaterThan
+						
+						
+							IEEEremainder
+						
+						
+							if_then_else
+						
+						
+							in10
+						
+						
+							in2
+						
+						
+							in3
+						
+						
+							in4
+						
+						
+							in5
+						
+						
+							in6
+						
+						
+							in7
+						
+						
+							in8
+						
+						
+							in9
+						
+						
+							int2bbool
+						
+						
+							int2ddouble
+						
+						
+							interiorPoint
+						
+						
+							interiorRingN
+						
+						
+							intersection
+						
+						
+							intersects
+						
+						
+							isClosed
+						
+						
+							isEmpty
+						
+						
+							isLike
+						
+						
+							isNull
+						
+						
+							isRing
+						
+						
+							isSimple
+						
+						
+							isValid
+						
+						
+							isWithinDistance
+						
+						
+							length
+						
+						
+							lessEqualThan
+						
+						
+							lessThan
+						
+						
+							log
+						
+						
+							max
+						
+						
+							max_2
+						
+						
+							max_3
+						
+						
+							max_4
+						
+						
+							min
+						
+						
+							min_2
+						
+						
+							min_3
+						
+						
+							min_4
+						
+						
+							not
+						
+						
+							notEqualTo
+						
+						
+							numGeometries
+						
+						
+							numInteriorRing
+						
+						
+							numPoints
+						
+						
+							overlaps
+						
+						
+							parseBoolean
+						
+						
+							parseDouble
+						
+						
+							parseInt
+						
+						
+							pointN
+						
+						
+							pow
+						
+						
+							PropertyExists
+						
+						
+							Quantile
+						
+						
+							random
+						
+						
+							relate
+						
+						
+							relatePattern
+						
+						
+							rint
+						
+						
+							round
+						
+						
+							round_2
+						
+						
+							roundDouble
+						
+						
+							sin
+						
+						
+							sqrt
+						
+						
+							StandardDeviation
+						
+						
+							startPoint
+						
+						
+							strConcat
+						
+						
+							strEndsWith
+						
+						
+							strEqualsIgnoreCase
+						
+						
+							strIndexOf
+						
+						
+							strLastIndexOf
+						
+						
+							strLength
+						
+						
+							strMatches
+						
+						
+							strReplace
+						
+						
+							strStartsWith
+						
+						
+							strSubstring
+						
+						
+							strSubstringStart
+						
+						
+							strTrim
+						
+						
+							symDifference
+						
+						
+							tan
+						
+						
+							toDegrees
+						
+						
+							toRadians
+						
+						
+							touches
+						
+						
+							toWKT
+						
+						
+							union
+						
+						
+							UniqueInterval
+						
+						
+							within
+						
+					
+				
+			
+		
+		
+			
+			
+		
+	

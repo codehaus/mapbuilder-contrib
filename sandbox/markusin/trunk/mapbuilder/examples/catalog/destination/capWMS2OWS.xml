@@ -1,0 +1,634 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OWSContext xmlns:wmc="http://www.opengis.net/context" xmlns:wms="http://www.opengis.net/wms"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:ows="http://www.opengis.net/ows"
+            xmlns:sld="http://www.opengis.net/sld"
+            xmlns:ogc="http://www.opengis.net/ogc"
+            xmlns="http://www.opengis.net/ows-context/0.2.1"
+            xmlns:param="http://www.opengis.net/param"
+            version="0.2.1"
+            id="ows-context"
+            xsi:schemaLocation="http://www.opengis.net/ows-context/0.2.1 ../../schemas/owsContext.xsd">
+    <General>
+        <Window width="600" height="410"/>
+        <ows:BoundingBox crs="EPSG:4326">
+            <ows:LowerCorner>11.210597213800785 46.356937952746286</ows:LowerCorner>
+            <ows:UpperCorner>11.51404202105545 46.564532644420716</ows:UpperCorner>
+        </ows:BoundingBox>
+        <ows:Title>My GeoServer WMS</ows:Title>
+        <ows:Abstract>This is a description of your Web Map Server.</ows:Abstract>
+        <ows:Keywords>
+            <ows:Keyword>WFS</ows:Keyword>
+            <ows:Keyword>WMS</ows:Keyword>
+            <ows:Keyword>GEOSERVER</ows:Keyword>
+        </ows:Keywords>
+        <DescriptionURL format="text/html">
+            <OnlineResource xmlns="" xlink:type="simple"
+                            xlink:href="http://maps.inf.unibz.it:80/geoserver/wms"/>
+        </DescriptionURL>
+        <ows:ServiceProvider>
+            <ows:ProviderName>Free University Bozen Bolzano</ows:ProviderName>
+            <ows:ProviderSite xlink:type="simple" xlink:href="http://www.ec.gc.ca/"/>
+            <ows:ServiceContact>
+                <ows:IndividualName>Markus Innerebner</ows:IndividualName>
+                <ows:PositionName>PhD Student</ows:PositionName>
+                <ows:ContactInfo>
+                    <ows:Phone>
+                        <ows:Voice>+39-0471-016223</ows:Voice>
+                        <ows:Facsimile>+39-0471-016223</ows:Facsimile>
+                    </ows:Phone>
+                    <ows:Address>
+                        <ows:DeliveryPoint>Dominikanerplatz 3 - Room 213</ows:DeliveryPoint>
+                        <ows:City>Bozen</ows:City>
+                        <ows:AdministrativeArea>South Tyrol</ows:AdministrativeArea>
+                        <ows:PostalCode>39100</ows:PostalCode>
+                        <ows:Country>Italy</ows:Country>
+                        <ows:ElectronicMailAddress>markus.innerebner@inf.unibz.it</ows:ElectronicMailAddress>
+                    </ows:Address>
+                    <ows:OnlineResource xlink:type="simple" xlink:href="http://www.ec.gc.ca/"/>
+                    <ows:HoursOfService>@TODO</ows:HoursOfService>
+                    <ows:ContactInstructions>@TODO</ows:ContactInstructions>
+                </ows:ContactInfo>
+                <ows:Role>PhD Student</ows:Role>
+            </ows:ServiceContact>
+        </ows:ServiceProvider>
+    </General>
+    <ResourceList namespace="http://www.opengis.net/ows-context/0.2.1">
+        <Layer queryable="1" hidden="0" group="Layers">
+            <ows:Title>BUILDING_Type</ows:Title>
+            <ows:Abstract>Generated from BZora</ows:Abstract>
+            <ows:Identifier>topp:BUILDING</ows:Identifier>
+            <ows:AvailableCRS>EPSG:258320</ows:AvailableCRS>
+            <Server xmlns="http://www.opengis.net/context" service="OGC:WMS" version="1.1.1"
+                    title="My GeoServer WMS">
+                <OnlineResource type="simple"
+                                xlink:href="http://maps.inf.unibz.it:80/geoserver/wms?SERVICE=WMS&amp;"/>
+            </Server>
+            <StyleList xmlns="http://www.opengis.net/context">
+                <Style current="1">
+                    <Name xmlns="">BZ_buildings</Name>
+                    <Title xmlns="">Default Styler</Title>
+                    <Abstract xmlns=""/>
+                    <LegendURL xmlns="" width="20" height="20">
+                        <Format>image/png</Format>
+                        <OnlineResource xlink:type="simple"
+                                        xlink:href="http://maps.inf.unibz.it:80/geoserver/wms/GetLegendGraphic?VERSION=1.0.0&amp;FORMAT=image/png&amp;WIDTH=20&amp;HEIGHT=20&amp;LAYER=topp:BUILDING"/>
+                    </LegendURL>
+                </Style>
+            </StyleList>
+        </Layer>
+        <Layer queryable="1" hidden="0" group="Layers">
+            <ows:Title>BZ Buildings</ows:Title>
+            <ows:Abstract>Generated from bz10m</ows:Abstract>
+            <ows:Identifier>bz10m:buildings</ows:Identifier>
+            <ows:AvailableCRS>EPSG:258320</ows:AvailableCRS>
+            <Server xmlns="http://www.opengis.net/context" service="OGC:WMS" version="1.1.1"
+                    title="My GeoServer WMS">
+                <OnlineResource type="simple"
+                                xlink:href="http://maps.inf.unibz.it:80/geoserver/wms?SERVICE=WMS&amp;"/>
+            </Server>
+            <StyleList xmlns="http://www.opengis.net/context">
+                <Style current="1">
+                    <Name xmlns="">BZ_buildings</Name>
+                    <Title xmlns="">Default Styler</Title>
+                    <Abstract xmlns=""/>
+                    <LegendURL xmlns="" width="20" height="20">
+                        <Format>image/png</Format>
+                        <OnlineResource xlink:type="simple"
+                                        xlink:href="http://maps.inf.unibz.it:80/geoserver/wms/GetLegendGraphic?VERSION=1.0.0&amp;FORMAT=image/png&amp;WIDTH=20&amp;HEIGHT=20&amp;LAYER=bz10m:buildings"/>
+                    </LegendURL>
+                </Style>
+            </StyleList>
+        </Layer>
+        <Layer queryable="1" hidden="0" group="Layers">
+            <ows:Title>BZ Rivers</ows:Title>
+            <ows:Abstract>Generated from bz10m</ows:Abstract>
+            <ows:Identifier>bz10m:rivers</ows:Identifier>
+            <ows:AvailableCRS>EPSG:258320</ows:AvailableCRS>
+            <Server xmlns="http://www.opengis.net/context" service="OGC:WMS" version="1.1.1"
+                    title="My GeoServer WMS">
+                <OnlineResource type="simple"
+                                xlink:href="http://maps.inf.unibz.it:80/geoserver/wms?SERVICE=WMS&amp;"/>
+            </Server>
+            <StyleList xmlns="http://www.opengis.net/context">
+                <Style current="1">
+                    <Name xmlns="">BZ_rivers</Name>
+                    <Title xmlns="">Default Styler</Title>
+                    <Abstract xmlns=""/>
+                    <LegendURL xmlns="" width="20" height="20">
+                        <Format>image/png</Format>
+                        <OnlineResource xlink:type="simple"
+                                        xlink:href="http://maps.inf.unibz.it:80/geoserver/wms/GetLegendGraphic?VERSION=1.0.0&amp;FORMAT=image/png&amp;WIDTH=20&amp;HEIGHT=20&amp;LAYER=bz10m:rivers"/>
+                    </LegendURL>
+                </Style>
+            </StyleList>
+        </Layer>
+        <Layer queryable="1" hidden="0" group="Layers">
+            <ows:Title>BZ Road Directions</ows:Title>
+            <ows:Abstract>Generated from bz10m</ows:Abstract>
+            <ows:Identifier>bz10m:roads_directions</ows:Identifier>
+            <ows:AvailableCRS>EPSG:258320</ows:AvailableCRS>
+            <Server xmlns="http://www.opengis.net/context" service="OGC:WMS" version="1.1.1"
+                    title="My GeoServer WMS">
+                <OnlineResource type="simple"
+                                xlink:href="http://maps.inf.unibz.it:80/geoserver/wms?SERVICE=WMS&amp;"/>
+            </Server>
+            <StyleList xmlns="http://www.opengis.net/context">
+                <Style current="1">
+                    <Name xmlns="">BZ_roads_dir</Name>
+                    <Title xmlns="">A boring default style</Title>
+                    <Abstract xmlns="">A sample style that just prints out a green line</Abstract>
+                    <LegendURL xmlns="" width="20" height="20">
+                        <Format>image/png</Format>
+                        <OnlineResource xlink:type="simple"
+                                        xlink:href="http://maps.inf.unibz.it:80/geoserver/wms/GetLegendGraphic?VERSION=1.0.0&amp;FORMAT=image/png&amp;WIDTH=20&amp;HEIGHT=20&amp;LAYER=bz10m:roads_directions"/>
+                    </LegendURL>
+                </Style>
+            </StyleList>
+        </Layer>
+        <Layer queryable="1" hidden="0" group="Layers">
+            <ows:Title>BZ Roads</ows:Title>
+            <ows:Abstract>Generated from bz10m</ows:Abstract>
+            <ows:Identifier>bz10m:roads</ows:Identifier>
+            <ows:AvailableCRS>EPSG:258320</ows:AvailableCRS>
+            <Server xmlns="http://www.opengis.net/context" service="OGC:WMS" version="1.1.1"
+                    title="My GeoServer WMS">
+                <OnlineResource type="simple"
+                                xlink:href="http://maps.inf.unibz.it:80/geoserver/wms?SERVICE=WMS&amp;"/>
+            </Server>
+            <StyleList xmlns="http://www.opengis.net/context">
+                <Style current="1">
+                    <Name xmlns="">BZ_roads</Name>
+                    <Title xmlns="">Default Styler for simple road segments</Title>
+                    <Abstract xmlns=""/>
+                    <LegendURL xmlns="" width="20" height="20">
+                        <Format>image/png</Format>
+                        <OnlineResource xlink:type="simple"
+                                        xlink:href="http://maps.inf.unibz.it:80/geoserver/wms/GetLegendGraphic?VERSION=1.0.0&amp;FORMAT=image/png&amp;WIDTH=20&amp;HEIGHT=20&amp;LAYER=bz10m:roads"/>
+                    </LegendURL>
+                </Style>
+            </StyleList>
+        </Layer>
+        <Layer queryable="1" hidden="0" group="Layers">
+            <ows:Title>BZ Schools</ows:Title>
+            <ows:Abstract>Generated from bz10m</ows:Abstract>
+            <ows:Identifier>bz10m:schools</ows:Identifier>
+            <ows:AvailableCRS>EPSG:258320</ows:AvailableCRS>
+            <Server xmlns="http://www.opengis.net/context" service="OGC:WMS" version="1.1.1"
+                    title="My GeoServer WMS">
+                <OnlineResource type="simple"
+                                xlink:href="http://maps.inf.unibz.it:80/geoserver/wms?SERVICE=WMS&amp;"/>
+            </Server>
+            <StyleList xmlns="http://www.opengis.net/context">
+                <Style current="1">
+                    <Name xmlns="">BZ_schools</Name>
+                    <Title xmlns="">Default Styler</Title>
+                    <Abstract xmlns=""/>
+                    <LegendURL xmlns="" width="20" height="20">
+                        <Format>image/png</Format>
+                        <OnlineResource xlink:type="simple"
+                                        xlink:href="http://maps.inf.unibz.it:80/geoserver/wms/GetLegendGraphic?VERSION=1.0.0&amp;FORMAT=image/png&amp;WIDTH=20&amp;HEIGHT=20&amp;LAYER=bz10m:schools"/>
+                    </LegendURL>
+                </Style>
+            </StyleList>
+        </Layer>
+        <Layer queryable="1" hidden="0" group="Layers">
+            <ows:Title>BZ Shops</ows:Title>
+            <ows:Abstract>Generated from bz10m</ows:Abstract>
+            <ows:Identifier>bz10m:shops</ows:Identifier>
+            <ows:AvailableCRS>EPSG:258320</ows:AvailableCRS>
+            <Server xmlns="http://www.opengis.net/context" service="OGC:WMS" version="1.1.1"
+                    title="My GeoServer WMS">
+                <OnlineResource type="simple"
+                                xlink:href="http://maps.inf.unibz.it:80/geoserver/wms?SERVICE=WMS&amp;"/>
+            </Server>
+            <StyleList xmlns="http://www.opengis.net/context">
+                <Style current="1">
+                    <Name xmlns="">point</Name>
+                    <Title xmlns="">A boring default style</Title>
+                    <Abstract xmlns="">A sample style that just prints out a purple circle</Abstract>
+                    <LegendURL xmlns="" width="20" height="20">
+                        <Format>image/png</Format>
+                        <OnlineResource xlink:type="simple"
+                                        xlink:href="http://maps.inf.unibz.it:80/geoserver/wms/GetLegendGraphic?VERSION=1.0.0&amp;FORMAT=image/png&amp;WIDTH=20&amp;HEIGHT=20&amp;LAYER=bz10m:shops"/>
+                    </LegendURL>
+                </Style>
+            </StyleList>
+        </Layer>
+        <Layer queryable="1" hidden="0" group="Layers">
+            <ows:Title>BZ_ROADS2_LINK_Type</ows:Title>
+            <ows:Abstract>Generated from BZora</ows:Abstract>
+            <ows:Identifier>topp:BZ_ROADS2_LINK</ows:Identifier>
+            <ows:AvailableCRS>EPSG:258320</ows:AvailableCRS>
+            <Server xmlns="http://www.opengis.net/context" service="OGC:WMS" version="1.1.1"
+                    title="My GeoServer WMS">
+                <OnlineResource type="simple"
+                                xlink:href="http://maps.inf.unibz.it:80/geoserver/wms?SERVICE=WMS&amp;"/>
+            </Server>
+            <StyleList xmlns="http://www.opengis.net/context">
+                <Style current="1">
+                    <Name xmlns="">BZ_oraroads</Name>
+                    <Title xmlns="">A boring default style</Title>
+                    <Abstract xmlns="">A sample style that just prints out a green line</Abstract>
+                    <LegendURL xmlns="" width="20" height="20">
+                        <Format>image/png</Format>
+                        <OnlineResource xlink:type="simple"
+                                        xlink:href="http://maps.inf.unibz.it:80/geoserver/wms/GetLegendGraphic?VERSION=1.0.0&amp;FORMAT=image/png&amp;WIDTH=20&amp;HEIGHT=20&amp;LAYER=topp:BZ_ROADS2_LINK"/>
+                    </LegendURL>
+                </Style>
+            </StyleList>
+        </Layer>
+        <Layer queryable="1" hidden="0" group="Layers">
+            <ows:Title>Bus route10a</ows:Title>
+            <ows:Abstract>Generated from bz10m</ows:Abstract>
+            <ows:Identifier>bz10m:route10a</ows:Identifier>
+            <ows:AvailableCRS>EPSG:258320</ows:AvailableCRS>
+            <Server xmlns="http://www.opengis.net/context" service="OGC:WMS" version="1.1.1"
+                    title="My GeoServer WMS">
+                <OnlineResource type="simple"
+                                xlink:href="http://maps.inf.unibz.it:80/geoserver/wms?SERVICE=WMS&amp;"/>
+            </Server>
+            <StyleList xmlns="http://www.opengis.net/context">
+                <Style current="1">
+                    <Name xmlns="">line</Name>
+                    <Title xmlns="">A boring default style</Title>
+                    <Abstract xmlns="">A sample style that just prints out a green line</Abstract>
+                    <LegendURL xmlns="" width="20" height="20">
+                        <Format>image/png</Format>
+                        <OnlineResource xlink:type="simple"
+                                        xlink:href="http://maps.inf.unibz.it:80/geoserver/wms/GetLegendGraphic?VERSION=1.0.0&amp;FORMAT=image/png&amp;WIDTH=20&amp;HEIGHT=20&amp;LAYER=bz10m:route10a"/>
+                    </LegendURL>
+                </Style>
+            </StyleList>
+        </Layer>
+        <Layer queryable="1" hidden="0" group="Layers">
+            <ows:Title>Bus route4</ows:Title>
+            <ows:Abstract>Generated from bz10m</ows:Abstract>
+            <ows:Identifier>bz10m:route4</ows:Identifier>
+            <ows:AvailableCRS>EPSG:258320</ows:AvailableCRS>
+            <Server xmlns="http://www.opengis.net/context" service="OGC:WMS" version="1.1.1"
+                    title="My GeoServer WMS">
+                <OnlineResource type="simple"
+                                xlink:href="http://maps.inf.unibz.it:80/geoserver/wms?SERVICE=WMS&amp;"/>
+            </Server>
+            <StyleList xmlns="http://www.opengis.net/context">
+                <Style current="1">
+                    <Name xmlns="">line</Name>
+                    <Title xmlns="">A boring default style</Title>
+                    <Abstract xmlns="">A sample style that just prints out a green line</Abstract>
+                    <LegendURL xmlns="" width="20" height="20">
+                        <Format>image/png</Format>
+                        <OnlineResource xlink:type="simple"
+                                        xlink:href="http://maps.inf.unibz.it:80/geoserver/wms/GetLegendGraphic?VERSION=1.0.0&amp;FORMAT=image/png&amp;WIDTH=20&amp;HEIGHT=20&amp;LAYER=bz10m:route4"/>
+                    </LegendURL>
+                </Style>
+            </StyleList>
+        </Layer>
+        <Layer queryable="1" hidden="0" group="Layers">
+            <ows:Title>RIVER_Type</ows:Title>
+            <ows:Abstract>Generated from BZora</ows:Abstract>
+            <ows:Identifier>topp:RIVER</ows:Identifier>
+            <ows:AvailableCRS>EPSG:258320</ows:AvailableCRS>
+            <Server xmlns="http://www.opengis.net/context" service="OGC:WMS" version="1.1.1"
+                    title="My GeoServer WMS">
+                <OnlineResource type="simple"
+                                xlink:href="http://maps.inf.unibz.it:80/geoserver/wms?SERVICE=WMS&amp;"/>
+            </Server>
+            <StyleList xmlns="http://www.opengis.net/context">
+                <Style current="1">
+                    <Name xmlns="">BZ_rivers</Name>
+                    <Title xmlns="">Default Styler</Title>
+                    <Abstract xmlns=""/>
+                    <LegendURL xmlns="" width="20" height="20">
+                        <Format>image/png</Format>
+                        <OnlineResource xlink:type="simple"
+                                        xlink:href="http://maps.inf.unibz.it:80/geoserver/wms/GetLegendGraphic?VERSION=1.0.0&amp;FORMAT=image/png&amp;WIDTH=20&amp;HEIGHT=20&amp;LAYER=topp:RIVER"/>
+                    </LegendURL>
+                </Style>
+            </StyleList>
+        </Layer>
+        <Layer queryable="1" hidden="0" group="Layers">
+            <ows:Title>SHORTEST_PATH_Type</ows:Title>
+            <ows:Abstract>Generated from BZora</ows:Abstract>
+            <ows:Identifier>topp:SHORTEST_PATH</ows:Identifier>
+            <ows:AvailableCRS>EPSG:258320</ows:AvailableCRS>
+            <Server xmlns="http://www.opengis.net/context" service="OGC:WMS" version="1.1.1"
+                    title="My GeoServer WMS">
+                <OnlineResource type="simple"
+                                xlink:href="http://maps.inf.unibz.it:80/geoserver/wms?SERVICE=WMS&amp;"/>
+            </Server>
+            <StyleList xmlns="http://www.opengis.net/context">
+                <Style current="1">
+                    <Name xmlns="">BZ_shortestpath</Name>
+                    <Title xmlns="">A boring default style</Title>
+                    <Abstract xmlns="">A sample style that just prints out a green line</Abstract>
+                    <LegendURL xmlns="" width="20" height="20">
+                        <Format>image/png</Format>
+                        <OnlineResource xlink:type="simple"
+                                        xlink:href="http://maps.inf.unibz.it:80/geoserver/wms/GetLegendGraphic?VERSION=1.0.0&amp;FORMAT=image/png&amp;WIDTH=20&amp;HEIGHT=20&amp;LAYER=topp:SHORTEST_PATH"/>
+                    </LegendURL>
+                </Style>
+            </StyleList>
+        </Layer>
+        <Layer queryable="1" hidden="0" group="Layers">
+            <ows:Title>censuses_Type</ows:Title>
+            <ows:Abstract>Generated from bz10m</ows:Abstract>
+            <ows:Identifier>bz10m:censuses</ows:Identifier>
+            <ows:AvailableCRS>EPSG:258320</ows:AvailableCRS>
+            <Server xmlns="http://www.opengis.net/context" service="OGC:WMS" version="1.1.1"
+                    title="My GeoServer WMS">
+                <OnlineResource type="simple"
+                                xlink:href="http://maps.inf.unibz.it:80/geoserver/wms?SERVICE=WMS&amp;"/>
+            </Server>
+            <StyleList xmlns="http://www.opengis.net/context">
+                <Style current="1">
+                    <Name xmlns="">BZ_censuses</Name>
+                    <Title xmlns="">Censuses of Bolzano Bozen</Title>
+                    <Abstract xmlns="">Cenuses Styles</Abstract>
+                    <LegendURL xmlns="" width="20" height="20">
+                        <Format>image/png</Format>
+                        <OnlineResource xlink:type="simple"
+                                        xlink:href="http://maps.inf.unibz.it:80/geoserver/wms/GetLegendGraphic?VERSION=1.0.0&amp;FORMAT=image/png&amp;WIDTH=20&amp;HEIGHT=20&amp;LAYER=bz10m:censuses"/>
+                    </LegendURL>
+                </Style>
+            </StyleList>
+        </Layer>
+        <Layer queryable="1" hidden="0" group="Layers">
+            <ows:Title>stations1</ows:Title>
+            <ows:Abstract>Generated from bz10m</ows:Abstract>
+            <ows:Identifier>bz10m:stations1</ows:Identifier>
+            <ows:AvailableCRS>EPSG:258320</ows:AvailableCRS>
+            <Server xmlns="http://www.opengis.net/context" service="OGC:WMS" version="1.1.1"
+                    title="My GeoServer WMS">
+                <OnlineResource type="simple"
+                                xlink:href="http://maps.inf.unibz.it:80/geoserver/wms?SERVICE=WMS&amp;"/>
+            </Server>
+            <StyleList xmlns="http://www.opengis.net/context">
+                <Style current="1">
+                    <Name xmlns="">BZ_buildings</Name>
+                    <Title xmlns="">Default Styler</Title>
+                    <Abstract xmlns=""/>
+                    <LegendURL xmlns="" width="20" height="20">
+                        <Format>image/png</Format>
+                        <OnlineResource xlink:type="simple"
+                                        xlink:href="http://maps.inf.unibz.it:80/geoserver/wms/GetLegendGraphic?VERSION=1.0.0&amp;FORMAT=image/png&amp;WIDTH=20&amp;HEIGHT=20&amp;LAYER=bz10m:stations1"/>
+                    </LegendURL>
+                </Style>
+            </StyleList>
+        </Layer>
+        <Layer queryable="1" hidden="0" group="Layers">
+            <ows:Title>stations10a</ows:Title>
+            <ows:Abstract>Generated from bz10m</ows:Abstract>
+            <ows:Identifier>bz10m:stations10a</ows:Identifier>
+            <ows:AvailableCRS>EPSG:258320</ows:AvailableCRS>
+            <Server xmlns="http://www.opengis.net/context" service="OGC:WMS" version="1.1.1"
+                    title="My GeoServer WMS">
+                <OnlineResource type="simple"
+                                xlink:href="http://maps.inf.unibz.it:80/geoserver/wms?SERVICE=WMS&amp;"/>
+            </Server>
+            <StyleList xmlns="http://www.opengis.net/context">
+                <Style current="1">
+                    <Name xmlns="">BZ_buildings</Name>
+                    <Title xmlns="">Default Styler</Title>
+                    <Abstract xmlns=""/>
+                    <LegendURL xmlns="" width="20" height="20">
+                        <Format>image/png</Format>
+                        <OnlineResource xlink:type="simple"
+                                        xlink:href="http://maps.inf.unibz.it:80/geoserver/wms/GetLegendGraphic?VERSION=1.0.0&amp;FORMAT=image/png&amp;WIDTH=20&amp;HEIGHT=20&amp;LAYER=bz10m:stations10a"/>
+                    </LegendURL>
+                </Style>
+            </StyleList>
+        </Layer>
+        <Layer queryable="0" hidden="0" group="Layers">
+            <ows:Title>A Raster with a World File</ows:Title>
+            <ows:Abstract>Generated from worldImageSample</ows:Abstract>
+            <ows:Identifier>nurc:Img_Sample</ows:Identifier>
+            <ows:AvailableCRS>EPSG:4326</ows:AvailableCRS>
+            <Server xmlns="http://www.opengis.net/context" service="OGC:WMS" version="1.1.1"
+                    title="My GeoServer WMS">
+                <OnlineResource type="simple"
+                                xlink:href="http://maps.inf.unibz.it:80/geoserver/wms?SERVICE=WMS&amp;"/>
+            </Server>
+            <StyleList xmlns="http://www.opengis.net/context">
+                <Style current="1">
+                    <Name xmlns="">raster</Name>
+                    <Title xmlns="">A boring default style</Title>
+                    <Abstract xmlns="">A sample style for rasters</Abstract>
+                    <LegendURL xmlns="" width="20" height="20">
+                        <Format>image/png</Format>
+                        <OnlineResource xlink:type="simple"
+                                        xlink:href="http://maps.inf.unibz.it:80/geoserver/wms/GetLegendGraphic?VERSION=1.0.0&amp;FORMAT=image/png&amp;WIDTH=20&amp;HEIGHT=20&amp;LAYER=nurc:Img_Sample"/>
+                    </LegendURL>
+                </Style>
+            </StyleList>
+        </Layer>
+        <Layer queryable="0" hidden="0" group="Layers">
+            <ows:Title>A sample ArcGrid file</ows:Title>
+            <ows:Abstract>Generated from arcGridSample</ows:Abstract>
+            <ows:Identifier>nurc:Arc_Sample</ows:Identifier>
+            <ows:AvailableCRS>EPSG:4326</ows:AvailableCRS>
+            <Server xmlns="http://www.opengis.net/context" service="OGC:WMS" version="1.1.1"
+                    title="My GeoServer WMS">
+                <OnlineResource type="simple"
+                                xlink:href="http://maps.inf.unibz.it:80/geoserver/wms?SERVICE=WMS&amp;"/>
+            </Server>
+            <StyleList xmlns="http://www.opengis.net/context">
+                <Style current="1">
+                    <Name xmlns="">raster</Name>
+                    <Title xmlns="">A boring default style</Title>
+                    <Abstract xmlns="">A sample style for rasters</Abstract>
+                    <LegendURL xmlns="" width="20" height="20">
+                        <Format>image/png</Format>
+                        <OnlineResource xlink:type="simple"
+                                        xlink:href="http://maps.inf.unibz.it:80/geoserver/wms/GetLegendGraphic?VERSION=1.0.0&amp;FORMAT=image/png&amp;WIDTH=20&amp;HEIGHT=20&amp;LAYER=nurc:Arc_Sample"/>
+                    </LegendURL>
+                </Style>
+            </StyleList>
+        </Layer>
+        <Layer queryable="0" hidden="0" group="Layers">
+            <ows:Title>Pk50095 is a A raster file accompanied by a spatial data file</ows:Title>
+            <ows:Abstract>Generated from img_sample2</ows:Abstract>
+            <ows:Identifier>nurc:Pk50095</ows:Identifier>
+            <ows:AvailableCRS>EPSG:32633</ows:AvailableCRS>
+            <Server xmlns="http://www.opengis.net/context" service="OGC:WMS" version="1.1.1"
+                    title="My GeoServer WMS">
+                <OnlineResource type="simple"
+                                xlink:href="http://maps.inf.unibz.it:80/geoserver/wms?SERVICE=WMS&amp;"/>
+            </Server>
+            <StyleList xmlns="http://www.opengis.net/context">
+                <Style current="1">
+                    <Name xmlns="">raster</Name>
+                    <Title xmlns="">A boring default style</Title>
+                    <Abstract xmlns="">A sample style for rasters</Abstract>
+                    <LegendURL xmlns="" width="20" height="20">
+                        <Format>image/png</Format>
+                        <OnlineResource xlink:type="simple"
+                                        xlink:href="http://maps.inf.unibz.it:80/geoserver/wms/GetLegendGraphic?VERSION=1.0.0&amp;FORMAT=image/png&amp;WIDTH=20&amp;HEIGHT=20&amp;LAYER=nurc:Pk50095"/>
+                    </LegendURL>
+                </Style>
+            </StyleList>
+        </Layer>
+        <Layer queryable="0" hidden="0" group="Layers">
+            <ows:Title>Pk50095_1 is a A raster file accompanied by a spatial data file</ows:Title>
+            <ows:Abstract>Generated from img_sample2</ows:Abstract>
+            <ows:Identifier>nurc:Pk50095_1</ows:Identifier>
+            <ows:AvailableCRS>EPSG:32633</ows:AvailableCRS>
+            <Server xmlns="http://www.opengis.net/context" service="OGC:WMS" version="1.1.1"
+                    title="My GeoServer WMS">
+                <OnlineResource type="simple"
+                                xlink:href="http://maps.inf.unibz.it:80/geoserver/wms?SERVICE=WMS&amp;"/>
+            </Server>
+            <StyleList xmlns="http://www.opengis.net/context">
+                <Style current="1">
+                    <Name xmlns="">raster</Name>
+                    <Title xmlns="">A boring default style</Title>
+                    <Abstract xmlns="">A sample style for rasters</Abstract>
+                    <LegendURL xmlns="" width="20" height="20">
+                        <Format>image/png</Format>
+                        <OnlineResource xlink:type="simple"
+                                        xlink:href="http://maps.inf.unibz.it:80/geoserver/wms/GetLegendGraphic?VERSION=1.0.0&amp;FORMAT=image/png&amp;WIDTH=20&amp;HEIGHT=20&amp;LAYER=nurc:Pk50095_1"/>
+                    </LegendURL>
+                </Style>
+            </StyleList>
+        </Layer>
+        <Layer queryable="0" hidden="0" group="Layers">
+            <ows:Title>mosaic is a Image mosaicking plugin</ows:Title>
+            <ows:Abstract>Generated from mosaic</ows:Abstract>
+            <ows:Identifier>nurc:mosaic</ows:Identifier>
+            <ows:AvailableCRS>EPSG:4326</ows:AvailableCRS>
+            <Server xmlns="http://www.opengis.net/context" service="OGC:WMS" version="1.1.1"
+                    title="My GeoServer WMS">
+                <OnlineResource type="simple"
+                                xlink:href="http://maps.inf.unibz.it:80/geoserver/wms?SERVICE=WMS&amp;"/>
+            </Server>
+            <StyleList xmlns="http://www.opengis.net/context">
+                <Style current="1">
+                    <Name xmlns="">raster</Name>
+                    <Title xmlns="">A boring default style</Title>
+                    <Abstract xmlns="">A sample style for rasters</Abstract>
+                    <LegendURL xmlns="" width="20" height="20">
+                        <Format>image/png</Format>
+                        <OnlineResource xlink:type="simple"
+                                        xlink:href="http://maps.inf.unibz.it:80/geoserver/wms/GetLegendGraphic?VERSION=1.0.0&amp;FORMAT=image/png&amp;WIDTH=20&amp;HEIGHT=20&amp;LAYER=nurc:mosaic"/>
+                    </LegendURL>
+                </Style>
+            </StyleList>
+        </Layer>
+        <Layer queryable="0" hidden="0" group="Layers">
+            <ows:Title>mosaic_1 is a Image mosaicking plugin</ows:Title>
+            <ows:Abstract>Generated from mosaic</ows:Abstract>
+            <ows:Identifier>nurc:mosaic_1</ows:Identifier>
+            <ows:AvailableCRS>EPSG:4326</ows:AvailableCRS>
+            <Server xmlns="http://www.opengis.net/context" service="OGC:WMS" version="1.1.1"
+                    title="My GeoServer WMS">
+                <OnlineResource type="simple"
+                                xlink:href="http://maps.inf.unibz.it:80/geoserver/wms?SERVICE=WMS&amp;"/>
+            </Server>
+            <StyleList xmlns="http://www.opengis.net/context">
+                <Style current="1">
+                    <Name xmlns="">raster</Name>
+                    <Title xmlns="">A boring default style</Title>
+                    <Abstract xmlns="">A sample style for rasters</Abstract>
+                    <LegendURL xmlns="" width="20" height="20">
+                        <Format>image/png</Format>
+                        <OnlineResource xlink:type="simple"
+                                        xlink:href="http://maps.inf.unibz.it:80/geoserver/wms/GetLegendGraphic?VERSION=1.0.0&amp;FORMAT=image/png&amp;WIDTH=20&amp;HEIGHT=20&amp;LAYER=nurc:mosaic_1"/>
+                    </LegendURL>
+                </Style>
+            </StyleList>
+        </Layer>
+        <Layer queryable="0" hidden="0" group="Layers">
+            <ows:Title>precip30min is a Arc Grid Coverage Format</ows:Title>
+            <ows:Abstract>Generated from arcGridSample</ows:Abstract>
+            <ows:Identifier>nurc:precip30min</ows:Identifier>
+            <ows:AvailableCRS>EPSG:4326</ows:AvailableCRS>
+            <Server xmlns="http://www.opengis.net/context" service="OGC:WMS" version="1.1.1"
+                    title="My GeoServer WMS">
+                <OnlineResource type="simple"
+                                xlink:href="http://maps.inf.unibz.it:80/geoserver/wms?SERVICE=WMS&amp;"/>
+            </Server>
+            <StyleList xmlns="http://www.opengis.net/context">
+                <Style current="1">
+                    <Name xmlns="">raster</Name>
+                    <Title xmlns="">A boring default style</Title>
+                    <Abstract xmlns="">A sample style for rasters</Abstract>
+                    <LegendURL xmlns="" width="20" height="20">
+                        <Format>image/png</Format>
+                        <OnlineResource xlink:type="simple"
+                                        xlink:href="http://maps.inf.unibz.it:80/geoserver/wms/GetLegendGraphic?VERSION=1.0.0&amp;FORMAT=image/png&amp;WIDTH=20&amp;HEIGHT=20&amp;LAYER=nurc:precip30min"/>
+                    </LegendURL>
+                </Style>
+            </StyleList>
+        </Layer>
+        <Layer queryable="0" hidden="0" group="Layers">
+            <ows:Title>usa is a A raster file accompanied by a spatial data file</ows:Title>
+            <ows:Abstract>Generated from worldImageSample</ows:Abstract>
+            <ows:Identifier>nurc:usa</ows:Identifier>
+            <ows:AvailableCRS>EPSG:4326</ows:AvailableCRS>
+            <Server xmlns="http://www.opengis.net/context" service="OGC:WMS" version="1.1.1"
+                    title="My GeoServer WMS">
+                <OnlineResource type="simple"
+                                xlink:href="http://maps.inf.unibz.it:80/geoserver/wms?SERVICE=WMS&amp;"/>
+            </Server>
+            <StyleList xmlns="http://www.opengis.net/context">
+                <Style current="1">
+                    <Name xmlns="">raster</Name>
+                    <Title xmlns="">A boring default style</Title>
+                    <Abstract xmlns="">A sample style for rasters</Abstract>
+                    <LegendURL xmlns="" width="20" height="20">
+                        <Format>image/png</Format>
+                        <OnlineResource xlink:type="simple"
+                                        xlink:href="http://maps.inf.unibz.it:80/geoserver/wms/GetLegendGraphic?VERSION=1.0.0&amp;FORMAT=image/png&amp;WIDTH=20&amp;HEIGHT=20&amp;LAYER=nurc:usa"/>
+                    </LegendURL>
+                </Style>
+            </StyleList>
+        </Layer>
+        <Layer queryable="0" hidden="0" group="Layers">
+            <ows:Title>~gtiff172030523_192_106_197_2_0 is a Tagged Image File Format with Geographic information</ows:Title>
+            <ows:Abstract>Generated from sample_geotiff</ows:Abstract>
+            <ows:Identifier>nurc:~gtiff172030523_192_106_197_2_0</ows:Identifier>
+            <ows:AvailableCRS>EPSG:4326</ows:AvailableCRS>
+            <Server xmlns="http://www.opengis.net/context" service="OGC:WMS" version="1.1.1"
+                    title="My GeoServer WMS">
+                <OnlineResource type="simple"
+                                xlink:href="http://maps.inf.unibz.it:80/geoserver/wms?SERVICE=WMS&amp;"/>
+            </Server>
+            <StyleList xmlns="http://www.opengis.net/context">
+                <Style current="1">
+                    <Name xmlns="">raster</Name>
+                    <Title xmlns="">A boring default style</Title>
+                    <Abstract xmlns="">A sample style for rasters</Abstract>
+                    <LegendURL xmlns="" width="20" height="20">
+                        <Format>image/png</Format>
+                        <OnlineResource xlink:type="simple"
+                                        xlink:href="http://maps.inf.unibz.it:80/geoserver/wms/GetLegendGraphic?VERSION=1.0.0&amp;FORMAT=image/png&amp;WIDTH=20&amp;HEIGHT=20&amp;LAYER=nurc:~gtiff172030523_192_106_197_2_0"/>
+                    </LegendURL>
+                </Style>
+            </StyleList>
+        </Layer>
+        <Layer queryable="0" hidden="0" group="Layers">
+            <ows:Title>~gtiff172030523_192_106_197_2_0_1 is a Tagged Image File Format with Geographic information</ows:Title>
+            <ows:Abstract>Generated from sample_geotiff</ows:Abstract>
+            <ows:Identifier>nurc:~gtiff172030523_192_106_197_2_0_1</ows:Identifier>
+            <ows:AvailableCRS>EPSG:4326</ows:AvailableCRS>
+            <Server xmlns="http://www.opengis.net/context" service="OGC:WMS" version="1.1.1"
+                    title="My GeoServer WMS">
+                <OnlineResource type="simple"
+                                xlink:href="http://maps.inf.unibz.it:80/geoserver/wms?SERVICE=WMS&amp;"/>
+            </Server>
+            <StyleList xmlns="http://www.opengis.net/context">
+                <Style current="1">
+                    <Name xmlns="">raster</Name>
+                    <Title xmlns="">A boring default style</Title>
+                    <Abstract xmlns="">A sample style for rasters</Abstract>
+                    <LegendURL xmlns="" width="20" height="20">
+                        <Format>image/png</Format>
+                        <OnlineResource xlink:type="simple"
+                                        xlink:href="http://maps.inf.unibz.it:80/geoserver/wms/GetLegendGraphic?VERSION=1.0.0&amp;FORMAT=image/png&amp;WIDTH=20&amp;HEIGHT=20&amp;LAYER=nurc:~gtiff172030523_192_106_197_2_0_1"/>
+                    </LegendURL>
+                </Style>
+            </StyleList>
+        </Layer>
+    </ResourceList>
+</OWSContext>
