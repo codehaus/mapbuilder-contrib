@@ -1,6 +1,6 @@
 /*
 License: LGPL as per: http://www.gnu.org/copyleft/lesser.html
-$Id: FeatureSelectHandler.js 3723 2007-12-11 23:32:54Z ahocevar $
+$Id: FeatureSelectHandler.js 3842 2008-02-13 17:22:04Z ahocevar $
 */
 
 // Ensure this object's dependancies are loaded.
@@ -87,8 +87,8 @@ function FeatureSelectHandler(toolNode, model) {
     } else {
       // if we hava a plain model, just use it
       objRef.sourceModels.push(objRef.model);
-    }
-		for (var i = 0; i < objRef.sourceModels.length; i++) {
+    } 
+    for (var i=0; i<objRef.sourceModels.length; i++) {
       objRef.sourceModels[i].addListener('highlightFeature', objRef.highlight, objRef);
       objRef.sourceModels[i].addListener('dehighlightFeature', objRef.dehighlight, objRef);
     }
@@ -111,7 +111,9 @@ function FeatureSelectHandler(toolNode, model) {
           select: function(feature) {
             feature.mbFeatureSelectHandler = this.mbFeatureSelectHandler;
             if (feature.mbSelectStyle) {
-              this.selectStyle = feature.mbSelectStyle;
+              this.selectStyle = feature.mbSelectStyle.createSymbolizer ?
+                  feature.mbSelectStyle.createSymbolizer(feature) :
+                  feature.mbSelectStyle;
             }
             OpenLayers.Control.SelectFeature.prototype.select.apply(this, arguments);
           }
@@ -157,7 +159,7 @@ function FeatureSelectHandler(toolNode, model) {
   this.onSelect = function(feature) {
     if (!feature) return;
     var objRef = this.mbFeatureSelectHandler;
-		for (var i = 0; i < objRef.sourceModels.length; i++) {
+    for (var i=0; i<objRef.sourceModels.length; i++) {
       objRef.sourceModels[i].setParam("mouseoverFeature", feature.fid);
     }
     // check if onSelect was triggered by a mouse event. If not, do not register for
@@ -181,7 +183,7 @@ function FeatureSelectHandler(toolNode, model) {
   this.onUnselect = function(feature) {
     if (!feature) return;
     var objRef = this.mbFeatureSelectHandler || feature.mbFeatureSelectHandler;
-		for (var i = 0; i < objRef.sourceModels.length; i++) {
+    for (var i=0; i<objRef.sourceModels.length; i++) {
       objRef.sourceModels[i].setParam("mouseoutFeature", feature.fid);
     }
     objRef.model.setParam("olFeatureOut", feature);
@@ -239,7 +241,7 @@ function FeatureSelectHandler(toolNode, model) {
   this.highlight = function(objRef, fid) {
     var model, feature;
     var layer = objRef.model.getParam('gmlRendererLayer');
-		for (var i = 0; i < objRef.sourceModels.length; i++) {
+    for (var i=0; i<objRef.sourceModels.length; i++) {
       model = objRef.sourceModels[i]
       if (!layer) return;
       if (!fid) {
@@ -266,7 +268,7 @@ function FeatureSelectHandler(toolNode, model) {
   this.dehighlight = function(objRef, fid) {
     var model, feature;
     var layer = objRef.model.getParam('gmlRendererLayer');
-		for (var i = 0; i < objRef.sourceModels.length; i++) {
+    for (var i=0; i<objRef.sourceModels.length; i++) {
       model = objRef.sourceModels[i];
       if (!layer) return;
       if (!fid) {

@@ -1,6 +1,6 @@
 /*
 License: LGPL as per: http://www.gnu.org/copyleft/lesser.html
-$Id: ButtonBase.js 3678 2007-12-05 22:39:34Z ahocevar $
+$Id: ButtonBase.js 3840 2008-02-13 16:38:50Z ahocevar $
 */
 
 // Ensure this object's dependancies are loaded.
@@ -204,10 +204,12 @@ function ButtonBase(widgetNode, model) {
       deactivate: function() {
         if (this.superclass.deactivate.call(this)) {
           this.panel_div.style.backgroundImage = "url(\""+objRef.disabledImage+"\")";
-          this.map.div.style.cursor = "";
-          this.map.mbCursor = "";
           objRef.enabled = false;
           this.active = false;
+          if (map.getControlsBy("active", true).length == 0) {
+            this.map.div.style.cursor = "";
+            this.map.mbCursor = "";
+          }
           objRef.doSelect(objRef, false)
         }
       },

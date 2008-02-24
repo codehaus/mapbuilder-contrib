@@ -2,7 +2,7 @@
 License:      LGPL as per: http://www.gnu.org/copyleft/lesser.html
 Dependancies: Sarissa
 
-$Id: Util.js 3781 2007-12-22 12:12:11Z ahocevar $
+$Id: Util.js 3866 2008-02-22 15:14:23Z ahocevar $
 */
 
 // some basic browser detection
@@ -649,7 +649,7 @@ function mbFormatMessage(messageFormat)
 {
   var message = messageFormat;
   var varArgs = [].slice.call(arguments, mbFormatMessage.length);
-	for (var i = 0; i < varArgs.length; i++) {
+  for (var i=0; i<varArgs.length; i++) {
     var parm = new RegExp("\\{" + i + "\\}", "g");
     message = message.replace(parm, varArgs[i]);
   }
@@ -690,6 +690,17 @@ function sld2UrlParam(node) {
  * @return OpenLayers style object
  */
 function sld2OlStyle(node) {
+  // OpenLayers SLD parsing
+  if (node) {
+    var ruleNode = node.selectSingleNode("wmc:SLD/sld:FeatureTypeStyle");
+    if (ruleNode) {
+      var format = new OpenLayers.Format.SLD();
+      return new OpenLayers.Format.SLD().parseUserStyle(ruleNode);
+    }
+  }
+  
+  // fallback to native SLD parsing for older OwsContext docs
+  
   // sld-conform default style
   var defaultStyle = {
             fillColor: "#808080",
@@ -791,4 +802,38 @@ function getNodeValue(sResult){
   if(sResult.nodeType == 1) return sResult.firstChild ? sResult.firstChild.nodeValue : "";
   if(sResult.nodeType < 5) return sResult.nodeValue;
   return sResult;
+}
+
+/**
+ * Convenience method that is used to parse dom nodes.
+ * @param domNode node to find the property in
+ * @param propertyName string of the property name (including namespace prefix)
+ * @param defaultValue value to return if property is not found (null by default)
+ * @return the property value
+ */
+Mapbuilder.getProperty = function(domNode, propertyName, defaultValue) {
+  if (typeof defaultValue == "undefined") {
+    defaultValue = null;
+  }
+  var property = domNode.selectSingleNode(propertyName);
+  return property ? getNodeValue(property) : defaultValue;
+}
+
+/**
+ * Convenience method to parse a string or number as a boolean value
+ * @param value string (true/false) or number (1/0)
+ * @return boolean value
+ */
+Mapbuilder.parseBoolean = function(value) {
+  var result = null;
+  if (value == 0) {
+    result = false;
+  } else if (value == 1) {
+      result = true;
+  } else if (value.match(/true/i)) {
+    result = true;
+  } else if (value.match(/false/i)){
+    return false;
+  }
+  return result;
 }

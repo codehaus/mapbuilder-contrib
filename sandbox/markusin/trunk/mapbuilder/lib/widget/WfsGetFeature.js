@@ -1,7 +1,7 @@
 /*
 License: LGPL as per: http://www.gnu.org/copyleft/lesser.html
 Dependancies: Context
-$Id: WfsGetFeature.js 3703 2007-12-10 00:48:43Z rdewit $
+$Id: WfsGetFeature.js 3844 2008-02-15 15:16:11Z ahocevar $
 */
 
 // Ensure this object's dependancies are loaded.
@@ -35,6 +35,13 @@ function WfsGetFeature(widgetNode, model) {
   this.maxFeatures = this.maxFeatures ? this.maxFeatures.firstChild.nodeValue : 1;
   this.webServiceUrl= widgetNode.selectSingleNode('mb:webServiceUrl').firstChild.nodeValue;
   this.webServiceUrl += this.webServiceUrl.indexOf("?") > -1 ? '&' : '?';
+
+  var webServiceSrs= widgetNode.selectSingleNode('mb:webServiceSrs');
+  if (webServiceSrs) {
+    this.webServiceSrs = new OpenLayers.Projection(getNodeValue(webServiceSrs));
+  } else {
+    this.webServiceSrs = new OpenLayers.Projection(getNodeValue(webServiceSrs));
+  }
   
   // override default cursor by user
   // cursor can be changed by spefying a new cursor in config file
@@ -71,6 +78,11 @@ function WfsGetFeature(widgetNode, model) {
             new OpenLayers.Pixel(position.x-this.tolerance, position.y+this.tolerance));
           maxXY = this.map.getLonLatFromPixel(
             new OpenLayers.Pixel(position.x+this.tolerance, position.y-this.tolerance));
+        }
+        
+        if (this.map.projection.projCode != this.objRef.webServiceSrs.projCode) {
+          minXY.transform(this.map.projection, this.objRef.webServiceSrs);
+          maxXY.transform(this.map.projection, this.objRef.webServiceSrs);
         }
         bounds = new OpenLayers.Bounds(minXY.lon, minXY.lat, maxXY.lon, maxXY.lat);
 

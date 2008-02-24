@@ -14,7 +14,7 @@ Licence:     LGPL as specified in http://www.gnu.org/copyleft/lesser.html .
 
 
 
-$Id: wfs_Delete.xsl 2546 2007-01-23 12:07:39Z gjvoosten $
+$Id: wfs_Delete.xsl 3824 2008-02-01 14:55:07Z ahocevar $
 
 -->
 
@@ -40,7 +40,7 @@ $Id: wfs_Delete.xsl 2546 2007-01-23 12:07:39Z gjvoosten $
 
   <xsl:template match="/">
 
-    <wfs:Transaction service="WFS" version="1.0.0">
+    <wfs:Transaction service="WFS" version="1.0.0" xmlns:topp="http://www.openplans.org/topp">
 
       <xsl:apply-templates/>
 

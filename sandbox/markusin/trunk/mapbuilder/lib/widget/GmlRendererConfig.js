@@ -2,7 +2,7 @@
 Author:       Andreas Hocevar andreas.hocevarATgmail.com
 License:      LGPL as per: http://www.gnu.org/copyleft/lesser.html
 
-$Id: GmlRendererConfig.js 3091 2007-08-09 12:21:54Z gjvoosten $
+$Id: GmlRendererConfig.js 3836 2008-02-13 09:21:20Z ahocevar $
 */
 
 // Ensure this object's dependancies are loaded.
@@ -28,7 +28,7 @@ function GmlRendererConfig(widgetNode, model) {
   this.init = function(objRef) {
     if (targetWidget) {
       if (!model.config) {
-        model.config = new Array();
+        model.config = {};
       }
       model.config[targetWidget] = objRef.config;
     }

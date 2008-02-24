@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8" standalone="no" ?>
 <StyledLayerDescriptor version="1.0.0" xsi:schemaLocation="http://www.opengis.net/sld StyledLayerDescriptor.xsd" xmlns="http://www.opengis.net/sld" xmlns:ogc="http://www.opengis.net/ogc" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<!--
-    $Id: features.sld 2957 2007-07-09 12:21:10Z steven $
+    $Id: features.sld 3821 2008-02-01 13:58:30Z ahocevar $
   -->
 	<NamedLayer>
-		<Name>featureCollection</Name>
+		<Name>testGmlRenderer</Name>
 		<UserStyle>
 			<Name>default</Name>
 			<IsDefault>true</IsDefault>

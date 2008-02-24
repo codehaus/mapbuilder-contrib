@@ -1,6 +1,6 @@
 /*
 License: LGPL as per: http://www.gnu.org/copyleft/lesser.html
-$Id: OwsContext.js 3736 2007-12-12 23:30:07Z ahocevar $
+$Id: OwsContext.js 3864 2008-02-21 06:01:53Z rdewit $
 */
 
 // Ensure this object's dependancies are loaded.
@@ -141,7 +141,7 @@ function OwsContext(modelNode, parent) {
    * @return Proj Object of  The Spatial Reference System.
    */
   this.initProj=function(objRef) {
-    objRef.proj=new Proj4js.Proj(objRef.getSRS());
+    objRef.proj=new OpenLayers.Projection(objRef.getSRS());
   }
   this.addFirstListener( "loadModel", this.initProj, this );
 
@@ -383,7 +383,6 @@ function OwsContext(modelNode, parent) {
   this.addLayer = function(objRef, layerNode) {
     if( objRef.doc != null ) {
       var parentNode = objRef.doc.selectSingleNode("/wmc:OWSContext/wmc:ResourceList");
-      parentNode.appendChild(layerNode);
 
       // Generate layer id if layer doesn't have an id
       var randomNumber = Math.round(10000 * Math.random());
@@ -395,9 +394,10 @@ function OwsContext(modelNode, parent) {
       var str = "/wmc:OWSContext/wmc:ResourceList/"+layerNode.nodeName+"[@id='"+id+"']";
       var node = objRef.doc.selectSingleNode(str);
       if( node != null ) {
-        parentNode.removeChild(node)
+        parentNode.removeChild(node);
       }
 
+      parentNode.appendChild(layerNode);
       objRef.modified = true;
       if (this.debug) {
          mbDebugMessage( "Adding layer:"+(new XMLSerializer()).serializeToString( layerNode ) );

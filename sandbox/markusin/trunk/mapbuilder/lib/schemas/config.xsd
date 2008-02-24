@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <xs:schema targetNamespace="http://mapbuilder.sourceforge.net/mapbuilder" xmlns:mb="http://mapbuilder.sourceforge.net/mapbuilder" xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="0.2.1">
   <xs:annotation>
-    <xs:appinfo>$Id: config.xsd 3807 2008-01-18 13:57:21Z ahocevar $</xs:appinfo>
+    <xs:appinfo>$Id: config.xsd 3844 2008-02-15 15:16:11Z ahocevar $</xs:appinfo>
     <xs:documentation xml:lang="en">
       <xs:description>Application schema for Mapbuilder runtime configuration</xs:description>
       <xs:copyright>License: LGPL as per: http://www.gnu.org/copyleft/lesser.html</xs:copyright>
@@ -805,7 +805,11 @@
       <xs:extension base="mb:AbstractWidgetBaseType">
         <xs:sequence>
           <xs:element name="loadingSrc" type="mb:urlPathType" minOccurs="0"/>
-          <xs:element name="maxExtent" type="xs:string" minOccurs="0"/>
+          <xs:element name="maxExtent" type="xs:string" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>Sets the maximum extent of the map. This is not the initial extent when the map is loaded (that's the bounding box from the context), but it is the maximum extent that the user can navigate around in.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
           <xs:element name="maxResolution" type="xs:double" minOccurs="0"/>
           <xs:element name="minResolution" type="xs:double" minOccurs="0"/>
           <xs:element name="resolutions" type="xs:string" minOccurs="0">
@@ -1107,6 +1111,11 @@
           <xs:element name="webServiceUrl" type="mb:urlPathType">
             <xs:annotation>
               <xs:documentation>The base URL of the Web Service that will be queried.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="webServiceSrs" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>The SRS to be used when requesting features from the server.</xs:documentation>
             </xs:annotation>
           </xs:element>
           <xs:element name="typeName" type="xs:string">

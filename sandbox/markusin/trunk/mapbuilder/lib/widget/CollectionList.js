@@ -2,7 +2,7 @@
 Author:       Cameron Shorter cameronAtshorter.net
 License:      LGPL as per: http://www.gnu.org/copyleft/lesser.html
 
-$Id: CollectionList.js 3664 2007-12-02 20:13:00Z madair $
+$Id: CollectionList.js 3821 2008-02-01 13:58:30Z ahocevar $
 */
 
 // Ensure this object's dependancies are loaded.
@@ -47,12 +47,12 @@ function CollectionList(widgetNode, model) {
 
     var bbox = objRef.extent.toBBOX().split(/,/);  
     if (objRef.targetModel.getSRS().toUpperCase() != objRef.srs.toUpperCase()) {
-      var targetProj = new Proj4js.Proj(objRef.targetModel.getSRS());
-      var srcProj = new Proj4js.Proj(objRef.srs);
-    	var ptLL=new Proj4js.Point(bbox[0],bbox[1]);
-    	var ptUR=new Proj4js.Point(bbox[2],bbox[3]);
-  		Proj4js.transform(srcProj, targetProj, ptLL);
-	    Proj4js.transform(srcProj, targetProj, ptUR);
+      var targetProj = new OpenLayers.Projection(objRef.targetModel.getSRS());
+      var srcProj = new OpenLayers.Projection(objRef.srs);
+    	var ptLL=new OpenLayers.Geometry.Point(bbox[0],bbox[1]);
+    	var ptUR=new OpenLayers.Geometry.Point(bbox[2],bbox[3]);
+  		ptLL.transform(srcProj, targetProj);
+	    ptUR.transform(srcProj, targetProj);
       objRef.extent = new OpenLayers.Bounds(ptLL.x, ptLL.y, ptUR.x, ptUR.y);
     }
     if (objRef.targetModel.map.getExtent().containsBounds(objRef.extent, false, false)) {

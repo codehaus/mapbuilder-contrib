@@ -1,6 +1,6 @@
 /*
 License: LGPL as per: http://www.gnu.org/copyleft/lesser.html
-$Id: Mapbuilder.js 3810 2008-01-21 11:07:07Z ahocevar $
+$Id: Mapbuilder.js 3819 2008-02-01 00:31:29Z ahocevar $
 */
 
 /** get a time stamp at start of the page load */
@@ -242,20 +242,22 @@ function Mapbuilder() {
   }
 
   //derive the baseDir value by looking for the script tag that loaded this file
-  var head = document.getElementsByTagName('head')[0];
-  var nodes = head.childNodes;
-  for (var i=0; i<nodes.length; ++i ){
-    var src = nodes.item(i).src;
-    if (src) {
-      //var index = src.indexOf("/Mapbuilder.js");
-      // Modified so it will work with original or compressed file
-      var index = src.indexOf("/Mapbuilder.js");
-      if (index>=0) {
-        baseDir = src.substring(0, index);
-      } else {
-        index = src.indexOf("/MapbuilderCompressed.js");
+  if (!baseDir) {
+    var head = document.getElementsByTagName('head')[0];
+    var nodes = head.childNodes;
+    for (var i=0; i<nodes.length; ++i ){
+      var src = nodes.item(i).src;
+      if (src) {
+        //var index = src.indexOf("/Mapbuilder.js");
+        // Modified so it will work with original or compressed file
+        var index = src.indexOf("/Mapbuilder.js");
         if (index>=0) {
           baseDir = src.substring(0, index);
+        } else {
+          index = src.indexOf("/MapbuilderCompressed.js");
+          if (index>=0) {
+            baseDir = src.substring(0, index);
+          }
         }
       }
     }

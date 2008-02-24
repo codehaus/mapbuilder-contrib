@@ -345,7 +345,7 @@ MapScaleBar.prototype.update = function(objRef) {
 	var bestTieBreaker = Number.POSITIVE_INFINITY;
 	var numDec = 0;
 	for(var unitIndex = 0; unitIndex < comparisonArray.length; ++unitIndex) {
-		for (var valueIndex = 0; valueIndex < comparisonArray[unitIndex].length; valueIndex) {
+		for(valueIndex in comparisonArray[unitIndex]) {
 			if((comparisonArray[unitIndex][valueIndex].score < bestScore) || ((comparisonArray[unitIndex][valueIndex].score == bestScore) && (comparisonArray[unitIndex][valueIndex].tieBreaker < bestTieBreaker))) {
 				bestScore = comparisonArray[unitIndex][valueIndex].score;
 				bestTieBreaker = comparisonArray[unitIndex][valueIndex].tieBreaker;

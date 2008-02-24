@@ -1,6 +1,6 @@
 /*
 License: LGPL as per: http://www.gnu.org/copyleft/lesser.html
-$Id: MergeModels.js 3091 2007-08-09 12:21:54Z gjvoosten $
+$Id: MergeModels.js 3842 2008-02-13 17:22:04Z ahocevar $
 */
 
 // Ensure this object's dependancies are loaded.
@@ -73,7 +73,7 @@ function MergeModels(toolNode, model) {
     if (!objRef.template) return;
     objRef.model.callListeners('newModel');
     objRef.model.doc = objRef.template.cloneNode(true);
-		for (var i = 0; i < objRef.model.mergeModels.length; i++) {
+    for (var i=0; i<objRef.model.mergeModels.length; i++) {
       objRef.mergeModel(objRef, objRef.model.mergeModels[i]);
     }
     objRef.model.callListeners('loadModel');

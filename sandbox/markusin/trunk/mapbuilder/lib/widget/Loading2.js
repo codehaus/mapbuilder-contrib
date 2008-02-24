@@ -1,6 +1,6 @@
 /*
 License: LGPL as per: http://www.gnu.org/copyleft/lesser.html
-$Id: Loading2.js 3621 2007-11-19 23:31:49Z ahocevar $
+$Id: Loading2.js 3843 2008-02-14 15:14:51Z ahocevar $
 */
 
 // Ensure this object's dependancies are loaded.
@@ -44,6 +44,9 @@ function Loading2(widgetNode, model) {
 
   //check to see if this is to be put over a map if there isa mapContainerID supplied
   this.mapContainerNode = widgetNode.selectSingleNode("mb:mapContainerId");
+  if (!this.mapContainerNode) {
+    this.mapContainerNode = widgetNode.selectSingleNode("mb:targetModel");
+  }
   if (this.mapContainerNode) {
     this.containerNodeId = this.mapContainerNode.firstChild.nodeValue;
     this.htmlTagId = this.containerNodeId;

@@ -1,6 +1,6 @@
 /*
 License: LGPL as per: http://www.gnu.org/copyleft/lesser.html
-$Id: Listener.js 2516 2007-01-10 15:40:18Z gjvoosten $
+$Id: Listener.js 3835 2008-02-13 02:20:23Z ahocevar $
 */
 
 /**
@@ -41,7 +41,7 @@ function Listener() {
     //}
     this.listeners[param].push(new Array(listener,target));
     if( !listener ) {
-       alert(mbGetMessage("undefinedListener", target));
+       alert(mbGetMessage("undefinedListener", target.id));
     }
   }
 

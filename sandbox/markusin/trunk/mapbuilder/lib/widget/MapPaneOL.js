@@ -2,7 +2,7 @@
 Author:       Cameron Shorter cameronAtshorter.net
 License:      LGPL as per: http://www.gnu.org/copyleft/lesser.html
 
-$Id: MapPaneOL.js 3817 2008-01-29 09:25:06Z ahocevar $
+$Id: MapPaneOL.js 3866 2008-02-22 15:14:23Z ahocevar $
 */
 
 // Ensure this object's dependancies are loaded.
@@ -36,61 +36,48 @@ function MapPaneOL(widgetNode, model) {
     this.model.addFirstListener( "loadModel", this.model.extent.firstInit, this.model.extent );
   }
 
-  var tileGutter = widgetNode.selectSingleNode("mb:tileGutter");
   /**
    * For tiled wms layers: Overlap of map tiles in pixels. Useful for
    * preventing rendering artefacts at tile edges. Recommended values:
    * 0-15, default is 0 (no gutter at all).
    */
-  this.tileGutter = tileGutter ? parseInt(tileGutter.firstChild.nodeValue) : 0;
+  this.tileGutter = Mapbuilder.getProperty(widgetNode, "mb:tileGutter", 0);
   
-  var tileBuffer = widgetNode.selectSingleNode("mb:tileBuffer");
   /**
    * For tiled wms layers: how many rows of tiles should be preloaded
    * outside the visible map? Large values mean slow loading, small
    * ones mean longer delays when panning. Recommended values: 1-3,
    * default is 2.
    */
-  this.tileBuffer = tileBuffer ? parseInt(tileBuffer.firstChild.nodeValue) : 2;
+  this.tileBuffer = parseInt(Mapbuilder.getProperty(widgetNode, "mb:tileBuffer", 2));
   
-  var tileSize = widgetNode.selectSingleNode("mb:tileSize");
   /**
    * For tiled wms layers: how many pixels should the size of one tile
    * be? Default is 256.
    */
-  this.tileSize = tileSize ? parseInt(tileSize.firstChild.nodeValue) : 256;
-
+  this.tileSize = parseInt(Mapbuilder.getProperty(widgetNode, "mb:tileSize", 256));
+  
   var imageReproject = widgetNode.selectSingleNode("mb:imageReproject");
   /**
    * For WMS on top of Google Maps you need to reproject the WMS image. This will stretch
    * the WMS images to fit the odd sized google tiles. Default is false
    */
-  this.imageReproject = imageReproject ? imageReproject.firstChild.nodeValue : 'false';
-  if (this.imageReproject.match(/true/i)) {
-    this.imageReproject = true;
-  } else {
-    this.imageReproject = false;
-  }
+  this.imageReproject = Mapbuilder.parseBoolean(
+      Mapbuilder.getProperty(widgetNode, "mb:imageReproject", 'false'));
   
-  var imageBuffer = widgetNode.selectSingleNode("mb:imageBuffer");
   /**
    * for untiled wms layers: how many times should the map image be
    * larger than the visible map. Large values mean slow loading, small
    * ones mean many reloads when panning. Recommended values: 1-3,
    * default is 2.
    */
-  this.imageBuffer = imageBuffer ? parseInt(imageBuffer.firstChild.nodeValue) : 2;
+  this.imageBuffer = parseInt(Mapbuilder.getProperty(widgetNode, "mb:imageBuffer", 2));
   
-  var displayOutsideMaxExtent = widgetNode.selectSingleNode("mb:displayOutsideMaxExtent");
   /**
    * Should layers also be rendered outside the map extent? Default is false.
    */
-  this.displayOutsideMaxExtent = displayOutsideMaxExtent ? displayOutsideMaxExtent.firstChild.nodeValue : 'false';
-  if (this.displayOutsideMaxExtent.match(/true/i)) {
-    this.displayOutsideMaxExtent = true;
-  } else {
-    this.displayOutsideMaxExtent = false;
-  }
+  this.displayOutsideMaxExtent = Mapbuilder.parseBoolean(
+      Mapbuilder.getProperty(widgetNode, "mb:displayOutsideMaxExtent", 'false'));
   
   /**
    * Number of layers that are currently being loaded
@@ -111,7 +98,7 @@ function MapPaneOL(widgetNode, model) {
     var layers = layerId ?
         [objRef.getLayer(objRef, layerId)] :
         objRef.model.map.layers;
-		for (var i = 0; i < layers.length; i++) {
+    for (var i in layers) {
       if (layers[i].CLASS_NAME.indexOf('OpenLayers.Layer.WMS') == 0) {
         layers[i].mergeNewParams({uniqueId: uniqueId});
       }
@@ -176,15 +163,17 @@ MapPaneOL.prototype.paint = function(objRef, refresh) {
   minResolution=(minResolution) ? parseFloat(minResolution.firstChild.nodeValue) : undefined;
   
   //units
-  var units = proj.units == 'meters' ? 'm' : proj.units;
+  var units = proj.getUnits() == 'meters' ? 'm' : proj.getUnits();
   
   //resolutions
   //TBD: if resolutions is both set here and for the baselayer and they are different weird things may happen
   //     this needs to be solved
   var resolutions=objRef.widgetNode.selectSingleNode("mb:resolutions");
   resolutions = resolutions ? resolutions.firstChild.nodeValue.split(",") : null;
-	for (var r = 0; r < resolutions.length; r++) {
-    resolutions[r] = parseFloat(resolutions[r]);
+  if (resolutions) {
+    for (var r=0; r<resolutions.length; r++) {
+      resolutions[r] = parseFloat(resolutions[r]);
+    }
   }
 
   //fixed scales - overrides resolutions
@@ -192,7 +181,7 @@ MapPaneOL.prototype.paint = function(objRef, refresh) {
   if(scales){
     scales = scales.firstChild.nodeValue.split(",");
     resolutions = new Array();
-		for (var s = 0; s < scales.length; s++) {
+    for (var s=0; s<scales.length; s++) {
       resolutions.push(OpenLayers.Util.getResolutionFromScale(scales[s], units));
     }
   }
@@ -210,12 +199,13 @@ MapPaneOL.prototype.paint = function(objRef, refresh) {
     node.style.width = objRef.model.getWindowWidth()+"px";
     node.style.height = objRef.model.getWindowHeight()+"px";
   }
-    
+  
   //default map options
   var mapOptions = {
         controls:[],
-        projection: proj.srsCode,
+        projection: proj,
         units: units,
+        fractionalZoom: true,
         maxExtent: maxExtent,
         maxResolution: maxResolution,
         minResolution: minResolution,
@@ -249,7 +239,7 @@ MapPaneOL.prototype.paint = function(objRef, refresh) {
       var baseSrs = baseLayerNode.selectSingleNode("ows:TileSet/ows:SRS");
       if(baseSrs) objRef.model.setSRS(baseSrs.firstChild.nodeValue);
       //overrule the units in the Context with the updated SRS units
-      units = proj.units == 'meters' ? 'm' : proj.units;
+      units = proj.getUnits() == 'meters' ? 'm' : proj.getUnits();
       //overrule the boundingbox in the Context with the maxExtent from the BaseLayer
       var maxExtentNode = baseLayerNode.selectSingleNode("ows:TileSet/ows:BoundingBox");
       if(maxExtentNode) maxExtent = new OpenLayers.Bounds(maxExtentNode.selectSingleNode('@minx').nodeValue,maxExtentNode.selectSingleNode('@miny').nodeValue,maxExtentNode.selectSingleNode('@maxx').nodeValue,maxExtentNode.selectSingleNode('@maxy').nodeValue);
@@ -257,8 +247,10 @@ MapPaneOL.prototype.paint = function(objRef, refresh) {
       //@TODO: check if the firstChild is really needed
       var resolutions =baseLayerNode.selectSingleNode("ows:TileSet/ows:Resolutions");
       resolutions = resolutions ? resolutions.firstChild.nodeValue.split(",") : null;
-			for (var r = 0; r < resolutions.length; r++) {
-         resolutions[r] = parseFloat(resolutions[r]);
+      if (resolutions) {
+        for (var r=0; r<resolutions.length; r++) {
+           resolutions[r] = parseFloat(resolutions[r]);
+        }
       }
       //overrule tileSize in the Context with the one from the BaseLayer
       //right now we only support square tiles which are defined by their width:		  
@@ -286,7 +278,7 @@ MapPaneOL.prototype.paint = function(objRef, refresh) {
       
       var baseLayerOptions = {
               units: units,
-              projection: proj.srsCode,
+              projection: proj,
               maxExtent: maxExtent,
              
               alpha: false,            //option for png transparency with ie6
@@ -329,6 +321,7 @@ MapPaneOL.prototype.paint = function(objRef, refresh) {
             },
             baseLayerOptions
           );
+          objRef.model.map.fractionalZoom = false;
         break;
     
         case "GMAP":
@@ -349,9 +342,9 @@ MapPaneOL.prototype.paint = function(objRef, refresh) {
             default:
               baseLayerType=G_HYBRID_MAP;
           }
-          baseLayer = new OpenLayers.Layer.Google( baseLayerName , {type: baseLayerType, minZoomLevel: 0, maxZoomLevel:19, sphericalMercator: sphericalMercator }, baseLayerOptions );
+          baseLayer = new OpenLayers.Layer.Google( baseLayerName , {type: baseLayerType, minZoomLevel: 0, maxZoomLevel:19, sphericalMercator: sphericalMercator, maxResolution: 156543.0339 }, baseLayerOptions );
           objRef.model.map.numZoomLevels = 20;
-
+          objRef.model.map.fractionalZoom = false;
         break;
     
         case "YMAP":
@@ -361,6 +354,7 @@ MapPaneOL.prototype.paint = function(objRef, refresh) {
           //check if we have spherical projection
           var sphericalMercator = (objRef.model.getSRS()=='EPSG:900913')?true:false;          
           baseLayer = new OpenLayers.Layer.Yahoo(  baseLayerName , { maxZoomLevel:21, sphericalMercator: sphericalMercator }, baseLayerOptions );
+          objRef.model.map.fractionalZoom = false;
         break;
     
         case "VE":
@@ -382,6 +376,7 @@ MapPaneOL.prototype.paint = function(objRef, refresh) {
               baseLayerType=VEMapStyle.Hybrid;
           }
           baseLayer = new OpenLayers.Layer.VirtualEarth( baseLayerName,{minZoomLevel: 0, maxZoomLevel: 21,type: baseLayerType});
+          objRef.model.map.fractionalZoom = false;
         break;
     
         case "MultiMap":
@@ -389,6 +384,7 @@ MapPaneOL.prototype.paint = function(objRef, refresh) {
            //check if we have spherical projection
           var sphericalMercator = (objRef.model.getSRS()=='EPSG:900913')?true:false;          
           baseLayer = new OpenLayers.Layer.MultiMap( baseLayerName , { maxZoomLevel:21, sphericalMercator: sphericalMercator }, baseLayerOptions );
+          objRef.model.map.fractionalZoom = false;
         break;
         default:
           alert(mbGetMessage("layerTypeNotSupported", service));
@@ -419,7 +415,6 @@ MapPaneOL.prototype.paint = function(objRef, refresh) {
   else {
     objRef.deleteAllLayers(objRef);
   }
-  
     
   var layers = objRef.model.getAllLayers();
   if (!objRef.oLlayers){
@@ -731,7 +726,7 @@ MapPaneOL.prototype.addLayer = function(objRef, layerNode) {
           isBaseLayer: false,
           displayOutsideMaxExtent: objRef.displayOutsideMaxExtent
      };
-
+     
   switch(service){
     // WMS Layer (Untiled)
     case "OGC":
@@ -823,6 +818,7 @@ MapPaneOL.prototype.addLayer = function(objRef, layerNode) {
         },
         layerOptions
       );
+      objRef.model.map.fractionalZoom = false;
     break;
 
     // WFS Layer
@@ -831,7 +827,7 @@ MapPaneOL.prototype.addLayer = function(objRef, layerNode) {
     case "OGC:WFS":
       style = sld2OlStyle(currentStyle);
       if(style){
-        layerOptions.style=style;
+        layerOptions.styleMap=new OpenLayers.StyleMap(style);
       }
       else{
         layerOptions.style=objRef.getWebSafeStyle(objRef, 2*i+1);
@@ -852,7 +848,7 @@ MapPaneOL.prototype.addLayer = function(objRef, layerNode) {
     case "OGC:GML":
       style = sld2OlStyle(currentStyle);
       if(style){
-        layerOptions.style=style;
+        layerOptions.styleMap=new OpenLayers.StyleMap(style);
       }
       else{
         layerOptions.style=objRef.getWebSafeStyle(objRef, 2*i+1);
